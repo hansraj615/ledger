@@ -3,6 +3,7 @@
 @section('adminlte_css')
     <link rel="stylesheet"
           href="{{ asset('vendor/adminlte/dist/css/skins/skin-' . config('adminlte.skin', 'blue') . '.min.css')}} ">
+          <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     @stack('css')
     @yield('css')
 @stop
@@ -155,6 +156,12 @@
 
 @section('adminlte_js')
     <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+        <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+        {!! Toastr::message() !!}
+    <!-- InputMask -->
+<script src="{{asset('vendor/adminlte/vendor/input-mask/jquery.inputmask.js') }}"></script>
+<script src="{{asset('vendor/adminlte/vendor/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
+<script src="{{asset('vendor/adminlte/vendor/input-mask/jquery.inputmask.extensions.js') }}"></script>
     @stack('js')
     @yield('js')
 @stop

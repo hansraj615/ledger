@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Gallery')
+@section('title', 'Company')
 @push('css')
 
 <link href="{{asset('css/jquery.magnify.css')}}" rel="stylesheet">
@@ -66,7 +66,16 @@
             <div class="box-header">
               <h3 class="box-title">Data Table With Full Features</h3>
             </div>
-            <!-- /.box-header -->
+            <div class="row">
+                    <div class="col-lg-12">
+                        <a href="{{route('admin.company.create')}}">
+                            <button class="btn btn-success pull-right">
+                                    Create <span class="badge badge-primary">new</span>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -89,9 +98,9 @@
                         <li>Email <i class="fa fa-envelope text-green" aria-hidden="true"></i>:- {{$company->email}}</li>
                     </td>
                     <td>
-                        <li>Country <i class="fa  fa-map-pin text-green" aria-hidden="true"></i> :- {{$company->country}}</li>
-                        <li>State <i class="fa  fa-map-pin text-green" aria-hidden="true"></i> :- {{$company->state}}</li>
-                        <li>City <i class="fa  fa-map-pin text-green" aria-hidden="true"></i> :- {{$company->city}}</li>
+                        <li>Country <i class="fa  fa-map-pin text-green" aria-hidden="true"></i> :- {{$company->country_name}}</li>
+                        <li>State <i class="fa  fa-map-pin text-green" aria-hidden="true"></i> :- {{$company->state_name}}</li>
+                        <li>City <i class="fa  fa-map-pin text-green" aria-hidden="true"></i> :- {{$company->city_name}}</li>
                         <li>Address <i class="fa fa-map text-green" aria-hidden="true"></i> :- {{$company->address}}</li>
                     </td>
                     <td>{{$company->created_at?$company->created_at->diffForHumans():''}}</td>

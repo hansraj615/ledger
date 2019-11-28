@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Brian2694\Toastr\Facades\Toastr;
 use App\Ledger\Repositories\Company\CompanyInterface;
 
 class CompnayController extends Controller
@@ -24,8 +25,10 @@ class CompnayController extends Controller
             $companies = $this->company->getAllCompany();
 
         } catch(\Exception $e){
+            Toastr::danger($e->getMessage() ,'Danger');
             return redirect()->route('compnay.index')->with('danger', $e->getMessage());
         }
+
         return view('admin.company.index',compact('companies'));
     }
 
@@ -36,7 +39,7 @@ class CompnayController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.company.create');
     }
 
     /**
@@ -47,7 +50,13 @@ class CompnayController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+                $companies = $this->company->storeCompany($request);
+        } catch(\Exception $e){
+            return redirect()->route('company.index')->with('danger', $e->getMessage());
+        }
+        Toastr::success("New Company  ".$request->input('name')." Has Been Created");
+        return redirect()->route('company.index')->with('danger', "created");
     }
 
     /**
@@ -69,7 +78,12 @@ class CompnayController extends Controller
      */
     public function edit($id)
     {
-        //
+        try{
+            $companies = $this->company->editCompany($id);
+        } catch(\Exception $e){
+            return redirect()->route('company.index')->with('danger', $e->getMessage());
+        }
+        return view('admin.company.edit',compact('companies'));
     }
 
     /**
@@ -94,4 +108,37 @@ class CompnayController extends Controller
     {
         //
     }
+    public function searchCountry($keyword=null)
+    {
+        $countries = $this->company->searchCountry($keyword);
+        $countryArray=[];
+        foreach ($countries as $countrykey=>$country){
+            $countryArray[$countrykey]['id']=$country->id;
+            $countryArray[$countrykey]['text']=$country->country_name;
+        }
+        return $countryArray;
+    }
+
+    public function searchState($keyword=null,Request $request)
+    {
+        $states = $this->company->searchState($keyword,$request);
+        $stateArray=[];
+        foreach ($states as $stateykey=>$state){
+            $stateArray[$stateykey]['id']=$state->id;
+            $stateArray[$stateykey]['text']=$state->state_name;
+        }
+        return $stateArray;
+    }
+
+    public function searchCity($keyword=null,Request $request)
+    {
+        $cities = $this->company->searchCity($keyword,$request);
+        $cityArray=[];
+        foreach ($cities as $citykey=>$city){
+            $cityArray[$citykey]['id']=$city->id;
+            $cityArray[$citykey]['text']=$city->city_name;
+        }
+        return $cityArray;
+    }
+
 }
