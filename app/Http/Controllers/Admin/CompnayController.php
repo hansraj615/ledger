@@ -55,7 +55,13 @@ class CompnayController extends Controller
         } catch(\Exception $e){
             return redirect()->route('company.index')->with('danger', $e->getMessage());
         }
-        Toastr::success("New Company  ".$request->input('name')." Has Been Created");
+        if(!empty($request->edit))
+        {
+            Toastr::success(''.$request->input('name').' Has Been Updated');
+        }else{
+            Toastr::success("New Company  ".$request->input('name')." Has Been Created");
+
+        }
         return redirect()->route('company.index')->with('danger', "created");
     }
 
@@ -106,7 +112,13 @@ class CompnayController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $delete_country = $this->company->deleteCompany($id);
+        }catch(\Exception $e){
+            return redirect()->route('company.index')->with('danger', $e->getMessage());
+        }
+        Toastr::Warning('Company Successfully Deleted :)','Success');
+        return redirect()->route('company.index');
     }
     public function searchCountry($keyword=null)
     {

@@ -10,5 +10,6 @@ interface CompanyInterface
     public function searchCity($keyword = null,$request);
     public function storeCompany($request);
     public function editCompany($id);
+    public function deleteCompany($id);
 }
 

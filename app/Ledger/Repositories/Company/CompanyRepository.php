@@ -16,12 +16,13 @@ class CompanyRepository implements CompanyInterface
         $companies = Company::all();
         $company_details = [];
         foreach($companies as $company){
-        $countries_name =Country::where('id',$company->country)->select('country_name')->first();
+        $countries_name =Country::where('id',$company->country)->select('country_name','country_code')->first();
         $cities_name =City::where('id',$company->city)->select('city_name')->first();
         $states_name =State::where('id',$company->state)->select('state_name')->first();
         $company->city_name = $cities_name->city_name;
         $company->state_name = $states_name->state_name;
         $company->country_name = $countries_name->country_name;
+        $company->country_code = $countries_name->country_code;
         $company_details[] = $company;
         }
         return $company_details;
@@ -62,6 +63,13 @@ class CompanyRepository implements CompanyInterface
         $company->state_name = $states_name->state_name;
         $company->country_name = $countries_name->country_name;
         return $company;
+    }
+
+    public function deleteCompany($id)
+    {
+        $album=Company::find($id);
+        $album->delete();
+        return $album;
     }
 
     public function searchCountry($keyword = null)
