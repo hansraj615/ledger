@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Create Company')
+@section('title', 'Edit SubCompany')
 @push('css')
 
 @endpush
@@ -48,18 +48,27 @@
               </div>
               <div class="box-body">
                 <div class="row">
-                <form class="form" action="{{route('admin.company.store')}}" method="POST">
+                <form class="form" action="{{route('admin.subcompany.store')}}" method="POST">
                         {{csrf_field()}}
                     <div class="col-md-12">
-                  <div class="col-lg-4">
+                        <div class="col-lg-3">
+
+                            <div class="form-group">
+                              <label for="name">Company Name</label>
+                              <input type="text" name="company_name" id="name" value= "{{$subcompanies->company->name}}" class="form-control" placeholder="" aria-describedby="helpId" autocomplete="off">
+                              <small id="helpId" class="text-muted">Help text</small>
+                            </div>
+                          </div>
+                        <input type="hidden" name="companyname" value="{{$subcompanies->company_id}}">
+                  <div class="col-lg-3">
 
                     <div class="form-group">
-                      <label for="name">Compnay Name</label>
-                      <input type="text" name="name" id="name" class="form-control" placeholder="" aria-describedby="helpId">
+                      <label for="name">SubCompany Name</label>
+                      <input type="text" name="name" id="name" value= "{{$subcompanies->name}}" class="form-control" placeholder="" aria-describedby="helpId" autocomplete="off">
                       <small id="helpId" class="text-muted">Help text</small>
                     </div>
                   </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                 <!-- Date dd/mm/yyyy -->
                 <div class="form-group">
                   <label>Mobile Number:</label>
@@ -68,13 +77,13 @@
                     <div class="input-group-addon">
                         <i class="fa fa-mobile"></i>
                     </div>
-                    <input type="text" name="mobile_number" id="mobile_number" class="form-control" data-inputmask='"mask": "(+\\91) 999-9999999"' data-mask>
+                    <input type="text" id="mobile_number" name="mobile_number" class="form-control" value= "{{$subcompanies->mobile_no}}" data-inputmask='"mask": "(+\\91) 999-9999999"' data-mask>
                   </div>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                     <!-- Date dd/mm/yyyy -->
                     <div class="form-group">
                       <label>Phone Number:</label>
@@ -83,7 +92,7 @@
                         <div class="input-group-addon">
                             <i class="fa fa-phone"></i>
                         </div>
-                        <input type="text" name="phone_number" id="phone_number" class="form-control" data-inputmask='"mask": "(099) 999-99999"' data-mask>
+                        <input type="text" id="phone_number" name="phone_number" class="form-control" value= "{{$subcompanies->phone_no}}" data-inputmask='"mask": "(099) 999-99999"' data-mask>
                       </div>
                       <!-- /.input group -->
                     </div>
@@ -94,7 +103,7 @@
                 <div class="col-lg-3">
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="" aria-describedby="helpId">
+                        <input type="text" name="email" id="email" value= "{{$subcompanies->email}}" class="form-control" placeholder="" aria-describedby="helpId">
                         <small id="helpId" class="text-muted">Help text</small>
                     </div>
                 </div>
@@ -103,7 +112,6 @@
                         <label for="country">Country</label>
                         <select id="country_name" class="selectpicker form-control country-select2"
                         data-show-subtext="true" name="country_name" data-live-search="true" title="">
-
                     </select>
                         <small id="helpId" class="text-muted">Help text</small>
                     </div>
@@ -133,22 +141,22 @@
             </div>
 
             <div class="col-md-12">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label for="address">Address</label>
-                        <input type="text" name="address" id="address" class="form-control" placeholder="" aria-describedby="helpId">
+                    <input type="text" name="address" value="{{$subcompanies->address}}" id="address" class="form-control" placeholder="" aria-describedby="helpId">
                         <small id="helpId" class="text-muted">Help text</small>
                     </div>
                 </div>
+            <input type="hidden" name="edit" value="{{$subcompanies->id}}">
 
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label for="pincode">Pincode</label>
-                        <input type="text" name="pincode" id="pincode" class="form-control" placeholder="Enter Pincode" aria-describedby="helpId" autocomplete="off">
+                        <input type="text" name="pincode" value="{{$subcompanies->pincode}}" id="pincode" class="form-control" placeholder="Enter Pincode" aria-describedby="helpId" autocomplete="off">
                         <small id="helpId" class="text-muted">Help text</small>
                     </div>
                 </div>
-              
                 <button type="submit" class="btn btn-success center-block">Submit</button>
             </form>
             </div>
@@ -169,6 +177,22 @@
 @endsection
 
 @push('js')
+@if(!empty($subcompanies))
+<script>
+
+     $(document).ready(function () {
+        var country = "{{$subcompanies->country}}";
+        var country_name = "{{$subcompanies->country_name}}";
+        var state = "{{$subcompanies->state}}";
+        var state_name = "{{$subcompanies->state_name}}";
+        var city = "{{$subcompanies->city}}";
+        var city_name = "{{$subcompanies->city_name}}";
+        $('.country-select2').append("<option value="+country+" selected>"+country_name+"</option>").trigger('change');
+        $('.state-select2').append("<option value="+state+" selected>"+state_name+"</option>").trigger('change');
+        $('.city-select2').append("<option value="+city+" selected>"+city_name+"</option>").trigger('change');
+     })
+</script>
+@endif
 <script>
     $(function () {
       $('#example1').DataTable()

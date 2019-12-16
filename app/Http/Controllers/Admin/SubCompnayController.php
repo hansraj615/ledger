@@ -4,31 +4,35 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Brian2694\Toastr\Facades\Toastr;
+use App\Ledger\Repositories\SubCompany\SubCompanyInterface;
 use App\Ledger\Repositories\Company\CompanyInterface;
+use Brian2694\Toastr\Facades\Toastr;
 
-class CompnayController extends Controller
+class SubCompnayController extends Controller
 {
-    private $company;
-    public function __construct(CompanyInterface $company){
-        $this->company = $company;
-    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+    private $subcompany;
+    private $company;
+
+    public function __construct(SubCompanyInterface $subcompany,CompanyInterface $company){
+        $this->subcompany = $subcompany;
+        $this->company = $company;
+    }
     public function index()
     {
         try{
-            $companies = $this->company->getAllCompany();
+            $subcompanies = $this->subcompany->getAllSubCompany();
 
         } catch(\Exception $e){
             Toastr::danger($e->getMessage() ,'Danger');
-            return redirect()->route('compnay.index')->with('danger', $e->getMessage());
+            return redirect()->route('subcompnay.index')->with('danger', $e->getMessage());
         }
 
-        return view('admin.company.index',compact('companies'));
+        return view('admin.subcompany.index',compact('subcompanies'));
     }
 
     /**
@@ -38,7 +42,18 @@ class CompnayController extends Controller
      */
     public function create()
     {
-        return view('admin.company.create');
+        //
+       /* try{
+            
+
+        } catch(\Exception $e){
+            Toastr::danger($e->getMessage() ,'Danger');
+            return redirect()->route('subcompnay.index')->with('danger', $e->getMessage());
+        }*/
+        // $companies = $this->subcompany->getCompany();
+        $companies = $this->company->getAllCompany();
+    //    dd($companies);
+        return view('admin.subcompany.create',compact('companies'));
     }
 
     /**
@@ -49,19 +64,22 @@ class CompnayController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-                $companies = $this->company->storeCompany($request);
-        } catch(\Exception $e){
-            return redirect()->route('company.index')->with('danger', $e->getMessage());
-        }
-        if(!empty($request->edit))
-        {
-            Toastr::success(''.$request->input('name').' Has Been Updated');
-        }else{
-            Toastr::success("New Company  ".$request->input('name')." Has Been Created");
+       // dd($request->all());
+          try{
+            $subcompanies = $this->subcompany->storeSubCompany($request);
+            //dd($subcompanies);
+    } catch(\Exception $e){
+        dd($e->getMessage());
+        return redirect()->route('subcompany.index')->with('danger', $e->getMessage());
+    }
+    if(!empty($request->edit))
+    {
+        Toastr::success(''.$request->input('name').' Has Been Updated');
+    }else{
+        Toastr::success("New SubCompany  ".$request->input('name')." Has Been Created");
 
-        }
-        return redirect()->route('company.index')->with('danger', "created");
+    }
+    return redirect()->route('subcompany.index')->with('danger', "created");
     }
 
     /**
@@ -83,12 +101,13 @@ class CompnayController extends Controller
      */
     public function edit($id)
     {
+        //
         try{
-            $companies = $this->company->editCompany($id);
+            $subcompanies = $this->subcompany->editSubCompany($id);
         } catch(\Exception $e){
-            return redirect()->route('company.index')->with('danger', $e->getMessage());
+            return redirect()->route('subcompany.index')->with('danger', $e->getMessage());
         }
-        return view('admin.company.edit',compact('companies'));
+        return view('admin.subcompany.edit',compact('subcompanies'));
     }
 
     /**
@@ -111,17 +130,19 @@ class CompnayController extends Controller
      */
     public function destroy($id)
     {
+        //
         try{
-            $delete_country = $this->company->deleteCompany($id);
+            $delete_country = $this->subcompany->deleteSubCompany($id);
         }catch(\Exception $e){
-            return redirect()->route('company.index')->with('danger', $e->getMessage());
+            return redirect()->route('subcompany.index')->with('danger', $e->getMessage());
         }
-        Toastr::Warning('Company Successfully Deleted :)','Success');
-        return redirect()->route('company.index');
+        Toastr::Warning('SubCompany Successfully Deleted :)','Success');
+        return redirect()->route('subcompany.index');
     }
+
     public function searchCountry($keyword=null)
     {
-        $countries = $this->company->searchCountry($keyword);
+        $countries = $this->subcompany->searchCountry($keyword);
         $countryArray=[];
         foreach ($countries as $countrykey=>$country){
             $countryArray[$countrykey]['id']=$country->id;
@@ -132,7 +153,7 @@ class CompnayController extends Controller
 
     public function searchState($keyword=null,Request $request)
     {
-        $states = $this->company->searchState($keyword,$request);
+        $states = $this->subcompany->searchState($keyword,$request);
         $stateArray=[];
         foreach ($states as $stateykey=>$state){
             $stateArray[$stateykey]['id']=$state->id;
@@ -143,7 +164,7 @@ class CompnayController extends Controller
 
     public function searchCity($keyword=null,Request $request)
     {
-        $cities = $this->company->searchCity($keyword,$request);
+        $cities = $this->subcompany->searchCity($keyword,$request);
         $cityArray=[];
         foreach ($cities as $citykey=>$city){
             $cityArray[$citykey]['id']=$city->id;

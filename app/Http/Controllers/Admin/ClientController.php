@@ -4,31 +4,29 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Ledger\Repositories\Client\ClientInterface;
 use Brian2694\Toastr\Facades\Toastr;
-use App\Ledger\Repositories\Company\CompanyInterface;
 
-class CompnayController extends Controller
+class ClientController extends Controller
 {
-    private $company;
-    public function __construct(CompanyInterface $company){
-        $this->company = $company;
+      
+     private $client;
+    public function __construct(ClientInterface $client){
+        $this->client = $client;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        try{
-            $companies = $this->company->getAllCompany();
-
-        } catch(\Exception $e){
-            Toastr::danger($e->getMessage() ,'Danger');
-            return redirect()->route('compnay.index')->with('danger', $e->getMessage());
+        try
+        {
+            $clients = $this->client->getClient();           
         }
-
-        return view('admin.company.index',compact('companies'));
+        catch(\Exception $e)
+        {
+             Toastr::danger($e->getMessage(),'Danger');
+            return redirect()->route('client.index')->with('danger',$e->getMessage());
+        }
+        return view('admin.client.index',compact('clients'));
     }
 
     /**
@@ -38,7 +36,7 @@ class CompnayController extends Controller
      */
     public function create()
     {
-        return view('admin.company.create');
+        return view('admin.client.create');
     }
 
     /**
@@ -50,18 +48,23 @@ class CompnayController extends Controller
     public function store(Request $request)
     {
         try{
-                $companies = $this->company->storeCompany($request);
-        } catch(\Exception $e){
-            return redirect()->route('company.index')->with('danger', $e->getMessage());
+            $clients = $this->client->storeClient($request);
         }
+        catch(\Exception $e)
+        {
+            dd($e->getMessage());
+            return redirect()->route('client.index')->with('danger',$e->getMessage());
+        }
+
         if(!empty($request->edit))
         {
-            Toastr::success(''.$request->input('name').' Has Been Updated');
-        }else{
-            Toastr::success("New Company  ".$request->input('name')." Has Been Created");
-
+            Toastr::success(''.$request->input('name').' Has been Updated');
         }
-        return redirect()->route('company.index')->with('danger', "created");
+        else
+        {
+            Toastr::success('New Company '.$request->input('name').' Has been Created');
+        }
+        return redirect()->route('client.index')->with('danger','created');
     }
 
     /**
@@ -84,11 +87,13 @@ class CompnayController extends Controller
     public function edit($id)
     {
         try{
-            $companies = $this->company->editCompany($id);
-        } catch(\Exception $e){
-            return redirect()->route('company.index')->with('danger', $e->getMessage());
+            $clients = $this->client->editClient($id);
         }
-        return view('admin.company.edit',compact('companies'));
+        catch(\Exception $e)
+        {
+            return redirect()->route('client.index')->with('danger',$e->getMessage());
+        }
+        return view('admin.client.edit',compact('clients'));
     }
 
     /**
@@ -112,16 +117,17 @@ class CompnayController extends Controller
     public function destroy($id)
     {
         try{
-            $delete_country = $this->company->deleteCompany($id);
+            $delete_client = $this->client->deleteClient($id);
         }catch(\Exception $e){
-            return redirect()->route('company.index')->with('danger', $e->getMessage());
+            return redirect()->route('client.index')->with('danger', $e->getMessage());
         }
-        Toastr::Warning('Company Successfully Deleted :)','Success');
-        return redirect()->route('company.index');
+        Toastr::Warning('Client Successfully Deleted :)','Success');
+        return redirect()->route('client.index');
     }
+
     public function searchCountry($keyword=null)
     {
-        $countries = $this->company->searchCountry($keyword);
+        $countries = $this->client->searchCountry($keyword);
         $countryArray=[];
         foreach ($countries as $countrykey=>$country){
             $countryArray[$countrykey]['id']=$country->id;
@@ -132,7 +138,7 @@ class CompnayController extends Controller
 
     public function searchState($keyword=null,Request $request)
     {
-        $states = $this->company->searchState($keyword,$request);
+        $states = $this->client->searchState($keyword,$request);
         $stateArray=[];
         foreach ($states as $stateykey=>$state){
             $stateArray[$stateykey]['id']=$state->id;
@@ -143,7 +149,7 @@ class CompnayController extends Controller
 
     public function searchCity($keyword=null,Request $request)
     {
-        $cities = $this->company->searchCity($keyword,$request);
+        $cities = $this->client->searchCity($keyword,$request);
         $cityArray=[];
         foreach ($cities as $citykey=>$city){
             $cityArray[$citykey]['id']=$city->id;

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Create Company')
+@section('title', 'Create Client')
 @push('css')
 
 @endpush
@@ -36,38 +36,31 @@
 
       <!-- Main content -->
       <section class="content">
-
-
         <!-- /.box -->
-
-
-
             <div class="box box-danger">
-              <div class="box-header">
-                <h3 class="box-title">Input masks</h3>
-              </div>
+                <div class="box-header">
+                  <h3 class="box-title">Input masks</h3>
+                </div>
               <div class="box-body">
                 <div class="row">
-                <form class="form" action="{{route('admin.company.store')}}" method="POST">
+                  <form class="form" action="{{route('admin.client.store')}}" method="POST">
                         {{csrf_field()}}
                     <div class="col-md-12">
-                  <div class="col-lg-4">
-
-                    <div class="form-group">
-                      <label for="name">Compnay Name</label>
-                      <input type="text" name="name" id="name" class="form-control" placeholder="" aria-describedby="helpId">
-                      <small id="helpId" class="text-muted">Help text</small>
-                    </div>
-                  </div>
-                <div class="col-md-4">
-                <!-- Date dd/mm/yyyy -->
-                <div class="form-group">
-                  <label>Mobile Number:</label>
-
-                  <div class="input-group">
-                    <div class="input-group-addon">
-                        <i class="fa fa-mobile"></i>
-                    </div>
+                      <div class="col-lg-4">
+                        <div class="form-group">
+                          <label for="name">Client Name</label>
+                          <input type="text" name="name" id="name" class="form-control" placeholder="" aria-describedby="helpId">
+                          <small id="helpId" class="text-muted">Help text</small>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <!-- Date dd/mm/yyyy -->
+                        <div class="form-group">
+                          <label>Mobile Number:</label>
+                            <div class="input-group">
+                             <div class="input-group-addon">
+                               <i class="fa fa-mobile"></i>
+                              </div>
                     <input type="text" name="mobile_number" id="mobile_number" class="form-control" data-inputmask='"mask": "(+\\91) 999-9999999"' data-mask>
                   </div>
                   <!-- /.input group -->
@@ -148,7 +141,7 @@
                         <small id="helpId" class="text-muted">Help text</small>
                     </div>
                 </div>
-              
+              </div>
                 <button type="submit" class="btn btn-success center-block">Submit</button>
             </form>
             </div>

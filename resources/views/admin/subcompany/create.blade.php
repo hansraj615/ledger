@@ -39,7 +39,7 @@
 
 
         <!-- /.box -->
-
+{{-- {{dd($companies)}} --}}
 
 
             <div class="box box-danger">
@@ -48,18 +48,32 @@
               </div>
               <div class="box-body">
                 <div class="row">
-                <form class="form" action="{{route('admin.company.store')}}" method="POST">
+                <form class="form" action="{{route('admin.subcompany.store')}}" method="POST">
                         {{csrf_field()}}
                     <div class="col-md-12">
-                  <div class="col-lg-4">
+                        <div class="col-lg-3">
+
+                            <div class="form-group">
+                              <label for="name">Company Name</label>
+                              {{-- <input type="text" name="name" id="companyname" class="form-control" placeholder="" aria-describedby="helpId"> --}}
+                              <select name="companyname" class="form-control select2" id="">
+                                <option value=""></option>
+                                @foreach($companies as $key=>$value)
+                                <option value="{{$value->id}}">{{$value->name}}</option>
+                                @endforeach
+                              </select>
+                              <small id="helpId" class="text-muted">Help text</small>
+                            </div>
+                          </div>
+                  <div class="col-lg-3">
 
                     <div class="form-group">
-                      <label for="name">Compnay Name</label>
+                      <label for="name">SubCompany Name</label>
                       <input type="text" name="name" id="name" class="form-control" placeholder="" aria-describedby="helpId">
                       <small id="helpId" class="text-muted">Help text</small>
                     </div>
                   </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                 <!-- Date dd/mm/yyyy -->
                 <div class="form-group">
                   <label>Mobile Number:</label>
@@ -74,7 +88,7 @@
                 </div>
                 <!-- /.form group -->
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                     <!-- Date dd/mm/yyyy -->
                     <div class="form-group">
                       <label>Phone Number:</label>
@@ -133,7 +147,7 @@
             </div>
 
             <div class="col-md-12">
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label for="address">Address</label>
                         <input type="text" name="address" id="address" class="form-control" placeholder="" aria-describedby="helpId">
@@ -141,14 +155,13 @@
                     </div>
                 </div>
 
-                <div class="col-lg-4">
+                <div class="col-lg-6">
                     <div class="form-group">
                         <label for="pincode">Pincode</label>
                         <input type="text" name="pincode" id="pincode" class="form-control" placeholder="Enter Pincode" aria-describedby="helpId" autocomplete="off">
                         <small id="helpId" class="text-muted">Help text</small>
                     </div>
                 </div>
-              
                 <button type="submit" class="btn btn-success center-block">Submit</button>
             </form>
             </div>

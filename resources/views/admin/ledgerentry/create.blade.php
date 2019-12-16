@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Create Company')
+@section('title', 'Create Ledger Entry')
 @push('css')
 
 @endpush
@@ -39,116 +39,74 @@
 
 
         <!-- /.box -->
-
-
-
             <div class="box box-danger">
               <div class="box-header">
                 <h3 class="box-title">Input masks</h3>
               </div>
               <div class="box-body">
                 <div class="row">
-                <form class="form" action="{{route('admin.company.store')}}" method="POST">
+                <form class="form" action="{{route('admin.ledger.store')}}" method="POST">
                         {{csrf_field()}}
                     <div class="col-md-12">
-                  <div class="col-lg-4">
+                        <div class="col-lg-3">
+
+                            <div class="form-group">
+                              <label for="name">SubCompany Name</label>
+                              {{-- <input type="text" name="name" id="companyname" class="form-control" placeholder="" aria-describedby="helpId"> --}}
+                              <select name="subcompanyname" class="form-control select2" id="">
+                                <option value=""></option>
+                                @foreach($subcompanies as $key=>$value)
+                                <option value="{{$value->id}}">{{$value->name}}</option>
+                                @endforeach
+                              </select>
+                              <small id="helpId" class="text-muted">Help text</small>
+                            </div>
+                          </div>
+                  <div class="col-lg-3">
 
                     <div class="form-group">
-                      <label for="name">Compnay Name</label>
-                      <input type="text" name="name" id="name" class="form-control" placeholder="" aria-describedby="helpId">
-                      <small id="helpId" class="text-muted">Help text</small>
-                    </div>
+                        <label for="name">Client Name</label>
+                        {{-- <input type="text" name="name" id="companyname" class="form-control" placeholder="" aria-describedby="helpId"> --}}
+                        <select name="clientname" class="form-control select2" id="">
+                          <option value=""></option>
+                          @foreach($clients as $key=>$value)
+                          <option value="{{$value->id}}">{{$value->name}}</option>
+                          @endforeach
+                        </select>
+                        <small id="helpId" class="text-muted">Help text</small>
+                      </div>
                   </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                 <!-- Date dd/mm/yyyy -->
                 <div class="form-group">
-                  <label>Mobile Number:</label>
-
-                  <div class="input-group">
-                    <div class="input-group-addon">
-                        <i class="fa fa-mobile"></i>
-                    </div>
-                    <input type="text" name="mobile_number" id="mobile_number" class="form-control" data-inputmask='"mask": "(+\\91) 999-9999999"' data-mask>
-                  </div>
+                    <label for="name">Amount Type</label>
+                    {{-- <input type="text" name="name" id="companyname" class="form-control" placeholder="" aria-describedby="helpId"> --}}
+                    <select name="amounttype" class="form-control select2" id="">
+                      <option value=""></option>
+                      @foreach(config('constant.amount_type') as $key => $value)
+                      <option value="{{$key}}">{{$value}}</option>
+                      @endforeach
+                    </select>
+                    <small id="helpId" class="text-muted">Help text</small>
                   <!-- /.input group -->
                 </div>
                 <!-- /.form group -->
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                     <!-- Date dd/mm/yyyy -->
                     <div class="form-group">
-                      <label>Phone Number:</label>
+                      <label>Amount:</label>
 
                       <div class="input-group">
-                        <div class="input-group-addon">
-                            <i class="fa fa-phone"></i>
-                        </div>
-                        <input type="text" name="phone_number" id="phone_number" class="form-control" data-inputmask='"mask": "(099) 999-99999"' data-mask>
+                        
+                        <input type="text" name="amount" id="amount" class="form-control" >
                       </div>
                       <!-- /.input group -->
                     </div>
                     <!-- /.form group -->
                 </div>
             </div>
-            <div class="col-lg-12">
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" name="email" id="email" class="form-control" placeholder="" aria-describedby="helpId">
-                        <small id="helpId" class="text-muted">Help text</small>
-                    </div>
-                </div>
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="country">Country</label>
-                        <select id="country_name" class="selectpicker form-control country-select2"
-                        data-show-subtext="true" name="country_name" data-live-search="true" title="">
-
-                    </select>
-                        <small id="helpId" class="text-muted">Help text</small>
-                    </div>
-                </div>
-
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="state">State</label>
-                        <select id="state_name" class="selectpicker form-control state-select2"
-                        data-show-subtext="true" name="state_name" data-live-search="true" title="">
-
-                    </select>
-                        <small id="helpId" class="text-muted">Help text</small>
-                    </div>
-                </div>
-
-                <div class="col-lg-3">
-                    <div class="form-group">
-                        <label for="city">City</label>
-                        <select id="city_name" class="selectpicker form-control city-select2"
-                        data-show-subtext="true" name="city_name" data-live-search="true" title="">
-
-                    </select>
-                        <small id="helpId" class="text-muted">Help text</small>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-md-12">
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" name="address" id="address" class="form-control" placeholder="" aria-describedby="helpId">
-                        <small id="helpId" class="text-muted">Help text</small>
-                    </div>
-                </div>
-
-                <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="pincode">Pincode</label>
-                        <input type="text" name="pincode" id="pincode" class="form-control" placeholder="Enter Pincode" aria-describedby="helpId" autocomplete="off">
-                        <small id="helpId" class="text-muted">Help text</small>
-                    </div>
-                </div>
-              
+           
                 <button type="submit" class="btn btn-success center-block">Submit</button>
             </form>
             </div>

@@ -152,6 +152,33 @@ return [
             'label'       => 4,
             'label_color' => 'success',
         ],
+        [
+            'text'        => 'SubComapny',
+            'url'         => 'admin/subcompany',
+            'icon'        => 'far fa-file',
+            'label'       => 4,
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'SubComapny OpeningBalance',
+            'url'         => 'admin/subcompanystock',
+            'icon'        => 'far fa-file',
+            'label'       => 4,
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'Client',
+            'url'         => 'admin/client',
+            'icon'        => 'far fa-file',
+            'label'       => 4,
+            'label_color' => 'success',
+        ],[
+            'text'        => 'LedgerEntry',
+            'url'         => 'admin/ledger',
+            'icon'        => 'far fa-file',
+            'label'       => 4,
+            'label_color' => 'success',
+        ],
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
