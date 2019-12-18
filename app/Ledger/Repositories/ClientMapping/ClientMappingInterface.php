@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Ledger\Repositories\LedgerEntry;
+namespace App\Ledger\Repositories\ClientMapping;
 
 interface ClientMappingInterface
 {
     
-     public function getAllSubCompany();
-     //public function getAllSubClient();
-     // public function editSubCompanyStock($id);
+     public function getAllMapping();
+     public function storeClientMapping($request);
+     public function searchSubClient($keyword = null);
      // public function storeSubCompanyStock($request);
      // public function getAllOpening();
      // public function deleteSubCompanyStock($id);

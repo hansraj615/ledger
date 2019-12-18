@@ -42,17 +42,13 @@ class SubCompnayController extends Controller
      */
     public function create()
     {
-        //
-       /* try{
-            
+        try{
+            $companies = $this->company->getAllCompany();
 
         } catch(\Exception $e){
             Toastr::danger($e->getMessage() ,'Danger');
             return redirect()->route('subcompnay.index')->with('danger', $e->getMessage());
-        }*/
-        // $companies = $this->subcompany->getCompany();
-        $companies = $this->company->getAllCompany();
-    //    dd($companies);
+        }
         return view('admin.subcompany.create',compact('companies'));
     }
 
@@ -64,13 +60,12 @@ class SubCompnayController extends Controller
      */
     public function store(Request $request)
     {
-       // dd($request->all());
+      
           try{
             $subcompanies = $this->subcompany->storeSubCompany($request);
-            //dd($subcompanies);
+           
     } catch(\Exception $e){
-        dd($e->getMessage());
-        return redirect()->route('subcompany.index')->with('danger', $e->getMessage());
+          return redirect()->route('subcompany.index')->with('danger', $e->getMessage());
     }
     if(!empty($request->edit))
     {

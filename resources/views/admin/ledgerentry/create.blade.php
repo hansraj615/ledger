@@ -49,14 +49,12 @@
                         {{csrf_field()}}
                     <div class="col-md-12">
                         <div class="col-lg-3">
-
                             <div class="form-group">
                               <label for="name">SubCompany Name</label>
-                              {{-- <input type="text" name="name" id="companyname" class="form-control" placeholder="" aria-describedby="helpId"> --}}
-                              <select name="subcompanyname" class="form-control select2" id="">
+                              <select name="subcompanyname" class="form-control subcompany-select2" id="subcompanyname">
                                 <option value=""></option>
                                 @foreach($subcompanies as $key=>$value)
-                                <option value="{{$value->id}}">{{$value->name}}</option>
+                                <option value="{{$value->subcompany_id}}">{{$value->subcompany->name}}</option>
                                 @endforeach
                               </select>
                               <small id="helpId" class="text-muted">Help text</small>
@@ -67,11 +65,8 @@
                     <div class="form-group">
                         <label for="name">Client Name</label>
                         {{-- <input type="text" name="name" id="companyname" class="form-control" placeholder="" aria-describedby="helpId"> --}}
-                        <select name="clientname" class="form-control select2" id="">
+                        <select name="clientname" class="form-control client-select2" id="clientname">
                           <option value=""></option>
-                          @foreach($clients as $key=>$value)
-                          <option value="{{$value->id}}">{{$value->name}}</option>
-                          @endforeach
                         </select>
                         <small id="helpId" class="text-muted">Help text</small>
                       </div>
@@ -139,39 +134,20 @@
         'autoWidth'   : false
       })
     })
-    $(document).ready(function () {
-      $(".country-select2").select2({
-        ajax: {
-            url: function (params) {
-                return "{{route('admin.search-country').'/'}}" + params.term;
-            },
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {q: params.term, };
-            },
-            processResults: function (data, params) {
-                return {results: data};
-            },
-            cache: true
-        },
-        minimumInputLength: 3,
-    });
-
-
-    $( ".country-select2" ) .change(function () {
-        $("#state_name").val('');
-        $("#city_name").val('');
+    
+    $( ".subcompany-select2" ) .change(function () {
         let param_new = $(this).val();
-        var param_country = "?country_id="+param_new;
-        $(".state-select2").select2({
+        console.log(param_new);
+        // var subcompany_id = "?subcompany_id="+param_new;
+        $(".client-select2").select2({
         ajax: {
             url: function (param) {
-                return "{{route('admin.search-state').'/'}}" + param.term + param_country;
+                return "{{route('ledger.search-client').'/'}}" +param_new ;
             },
             dataType: 'json',
             delay: 250,
             data: function (param) {
+              console.log(param);
                 return {q: param.term, };
             },
             processResults: function (data, param) {
@@ -182,30 +158,6 @@
         // minimumInputLength: 3,
     });
     });
-
-    $( ".state-select2" ) .change(function () {
-        $("#city_name").val('');
-        let param_new = $(this).val();
-        var param_state = "?state_id="+param_new;
-        $(".city-select2").select2({
-        ajax: {
-            url: function (param) {
-                return "{{route('admin.search-city').'/'}}" + param.term + param_state;
-            },
-            dataType: 'json',
-            delay: 250,
-            data: function (param) {
-                return {q: param.term, };
-            },
-            processResults: function (data, param) {
-                return {results: data};
-            },
-            cache: true
-        },
-        // minimumInputLength: 3,
-    });
-    });
-    })
   </script>
   <script>
     $(function () {

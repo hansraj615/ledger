@@ -41,7 +41,7 @@
                               </button>
                     </div>
                     <div class="col-lg-6">
-                      <a href="{{route('admin.clientmapping.create')}}">
+                      <a href="{{route('admin.clientmapping.index')}}">
                         <button class="btn btn-success pull-right">
                                 Create <span class="badge badge-primary">Mapping</span>
                         </button>

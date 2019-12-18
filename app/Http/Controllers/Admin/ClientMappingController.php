@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Ledger\Repositories\Client\ClientInterface;
-use App\Ledger\Repositories\LedgerEntry\ClientMappingInterface;
+use App\Ledger\Repositories\ClientMapping\ClientMappingInterface;
 use App\Ledger\Repositories\SubCompany\SubCompanyInterface;
 use Brian2694\Toastr\Facades\Toastr;
 
@@ -29,7 +29,14 @@ class ClientMappingController extends Controller
     }
     public function index()
     {
-        //
+        try{
+            $clients=$this->clientmapping->getAllMapping();
+        }catch(\Exception $e)
+        {
+            Toastr::danger($e->getMessage() ,'Danger');
+            return redirect()->route('admin.clientmapping.index');
+        }
+        return view('admin.clientmapping.index',compact('clients'));
     }
 
     /**
@@ -58,7 +65,16 @@ class ClientMappingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $clients=$this->clientmapping->storeClientMapping($request);
+        }
+        catch(\Exception $e)
+        {
+            dd($e->getMessage());
+            Toastr::danger($e->getMessage() ,'Danger');
+            return redirect()->route('admin.clientmapping.create');
+        }
+        return redirect()->route('admin.clientmapping.index');
     }
 
     /**

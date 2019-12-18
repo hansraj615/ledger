@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Ledger\Repositories\Client\ClientInterface;
+use App\Ledger\Repositories\ClientMapping\ClientMappingInterface;
 use App\Ledger\Repositories\LedgerEntry\LedgerEntryInterface;
 use App\Ledger\Repositories\SubCompany\SubCompanyInterface;
 use Brian2694\Toastr\Facades\Toastr;
@@ -20,12 +21,14 @@ class LedgerEntryController extends Controller
      private $ledger;
      private $subcompany;
      private $client;
-
-     public function __construct(LedgerEntryInterface $ledger,SubCompanyInterface $subcompany,ClientInterface $client)
+     private $clientmapping;
+     
+     public function __construct(LedgerEntryInterface $ledger,SubCompanyInterface $subcompany,ClientInterface $client,ClientMappingInterface $clientmapping)
      {
          $this->ledger=$ledger;
          $this->subcompany=$subcompany;
          $this->client=$client;
+         $this->clientmapping=$clientmapping;
      }
     public function index()
     {
@@ -48,8 +51,8 @@ class LedgerEntryController extends Controller
     public function create()
     {
         try{
-            $subcompanies = $this->subcompany->getAllSubCompany();
-            $clients = $this->client->getClient();
+            $subcompanies = $this->ledger->getAllClientSubCompany();
+            $clients = $this->ledger->getAllSubClient();
 
         } catch(\Exception $e){
             Toastr::danger($e->getMessage() ,'Danger');
@@ -113,5 +116,16 @@ class LedgerEntryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function SearchClient($keyword=null)
+    {
+        $clients = $this->clientmapping->searchSubClient($keyword);
+        $clientArray=[];
+        foreach ($clients as $clientkey=>$client){
+             $clientArray[$clientkey]['id']=$client->client_id;
+            $clientArray[$clientkey]['text']=$client->client->name;
+        }
+        return $clientArray;
     }
 }

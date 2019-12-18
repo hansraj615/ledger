@@ -10,7 +10,6 @@ class LedgerEntry extends Model
     {
         
         return $this->belongsTo(SubCompany::class,'subcompany_id');
-        //return $this->hasMany(SubCompany::class);
        
     }
 
@@ -19,9 +18,9 @@ class LedgerEntry extends Model
         return $this->belongsTo(CompanyStock::class);
     }
 
-    public function client()
-    {
-       return $this->belongsTo(Client::class,'client_id');
-        return $this->hasMany(Client::class);
-    }
+    // public function client()
+    // {
+    //    return $this->belongsTo(Client::class,'client_id');
+    //     return $this->hasMany(Client::class);
+    // }
 }

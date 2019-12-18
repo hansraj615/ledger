@@ -45,7 +45,7 @@
               </div>
               <div class="box-body">
                 <div class="row">
-                <form class="form" action="{{route('admin.ledger.store')}}" method="POST">
+                <form class="form" action="{{route('admin.clientmapping.store')}}" method="POST">
                         {{csrf_field()}}
                     <div class="col-md-12">
                         <div class="col-lg-3">
@@ -53,7 +53,7 @@
                             <div class="form-group">
                               <label for="name">SubCompany Name</label>
                               {{-- <input type="text" name="name" id="companyname" class="form-control" placeholder="" aria-describedby="helpId"> --}}
-                              <select name="subcompanyname" class="form-control select2" id="">
+                              <select name="subcompanyname" class="form-control select2" id="" data-placeholder="Select Subcompany">
                                 <option value=""></option>
                                 @foreach($subcompanies as $key=>$value)
                                 <option value="{{$value->id}}">{{$value->name}}</option>
@@ -67,8 +67,8 @@
                     <div class="form-group">
                         <label for="name">Client Name</label>
                         {{-- <input type="text" name="name" id="companyname" class="form-control" placeholder="" aria-describedby="helpId"> --}}
-                        <select name="clientname" class="form-control select2" id="">
-                          <option value=""></option>
+                        <select name="clientname[]" class="form-control select2" id="clientname" data-placeholder="Select Client"multiple>
+                          
                           @foreach($clients as $key=>$value)
                           <option value="{{$value->id}}">{{$value->name}}</option>
                           @endforeach
@@ -76,35 +76,8 @@
                         <small id="helpId" class="text-muted">Help text</small>
                       </div>
                   </div>
-                <div class="col-md-3">
-                <!-- Date dd/mm/yyyy -->
-                <div class="form-group">
-                    <label for="name">Amount Type</label>
-                    {{-- <input type="text" name="name" id="companyname" class="form-control" placeholder="" aria-describedby="helpId"> --}}
-                    <select name="amounttype" class="form-control select2" id="">
-                      <option value=""></option>
-                      @foreach(config('constant.amount_type') as $key => $value)
-                      <option value="{{$key}}">{{$value}}</option>
-                      @endforeach
-                    </select>
-                    <small id="helpId" class="text-muted">Help text</small>
-                  <!-- /.input group -->
-                </div>
-                <!-- /.form group -->
-            </div>
-            <div class="col-md-3">
-                    <!-- Date dd/mm/yyyy -->
-                    <div class="form-group">
-                      <label>Amount:</label>
-
-                      <div class="input-group">
-                        
-                        <input type="text" name="amount" id="amount" class="form-control" >
-                      </div>
-                      <!-- /.input group -->
-                    </div>
-                    <!-- /.form group -->
-                </div>
+               
+            
             </div>
            
                 <button type="submit" class="btn btn-success center-block">Submit</button>
@@ -139,86 +112,75 @@
         'autoWidth'   : false
       })
     })
-    $(document).ready(function () {
-      $(".country-select2").select2({
-        ajax: {
-            url: function (params) {
-                return "{{route('admin.search-country').'/'}}" + params.term;
-            },
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {q: params.term, };
-            },
-            processResults: function (data, params) {
-                return {results: data};
-            },
-            cache: true
-        },
-        minimumInputLength: 3,
-    });
-
-
-    $( ".country-select2" ) .change(function () {
-        $("#state_name").val('');
-        $("#city_name").val('');
-        let param_new = $(this).val();
-        var param_country = "?country_id="+param_new;
-        $(".state-select2").select2({
-        ajax: {
-            url: function (param) {
-                return "{{route('admin.search-state').'/'}}" + param.term + param_country;
-            },
-            dataType: 'json',
-            delay: 250,
-            data: function (param) {
-                return {q: param.term, };
-            },
-            processResults: function (data, param) {
-                return {results: data};
-            },
-            cache: true
-        },
-        // minimumInputLength: 3,
-    });
-    });
-
-    $( ".state-select2" ) .change(function () {
-        $("#city_name").val('');
-        let param_new = $(this).val();
-        var param_state = "?state_id="+param_new;
-        $(".city-select2").select2({
-        ajax: {
-            url: function (param) {
-                return "{{route('admin.search-city').'/'}}" + param.term + param_state;
-            },
-            dataType: 'json',
-            delay: 250,
-            data: function (param) {
-                return {q: param.term, };
-            },
-            processResults: function (data, param) {
-                return {results: data};
-            },
-            cache: true
-        },
-        // minimumInputLength: 3,
-    });
-    });
-    })
+    
   </script>
-  <script>
-    $(function () {
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2()
 
-      //Datemask dd/mm/yyyy
-      $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
-      //Datemask2 mm/dd/yyyy
-      $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
-      //Money Euro
-      $('[data-mask]').inputmask()
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+    //Money Euro
+    $('[data-mask]').inputmask()
 
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({ timePicker: true, timePickerIncrement: 30, locale: { format: 'MM/DD/YYYY hh:mm A' }})
+    //Date range as a button
+    $('#daterange-btn').daterangepicker(
+      {
+        ranges   : {
+          'Today'       : [moment(), moment()],
+          'Yesterday'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days' : [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month'  : [moment().startOf('month'), moment().endOf('month')],
+          'Last Month'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate  : moment()
+      },
+      function (start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
     })
-  </script>
+
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass   : 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass   : 'iradio_flat-green'
+    })
+
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
+</script>
 
 
 @endpush

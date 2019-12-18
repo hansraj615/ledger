@@ -40,13 +40,13 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-lg-12">
-                    <a href="{{route('admin.ledger.create')}}">
+                    <a href="{{route('admin.clientmapping.create')}}">
                             <button class="btn btn-success pull-right">
                                     Create <span class="badge badge-primary">new</span>
                             </button>
                         </a>
                             <button class="btn btn-success pull-left">
-                                    Total SubCompany <span class="badge badge-primary">{{count($ledger)}}</span>
+                                    Total ClientMapping <span class="badge badge-primary">{{count($clients)}}</span>
                             </button>
                     </div>
                 </div>
@@ -57,34 +57,29 @@
                    
                   <th>SubCompany Name <span class="text-red">[SubCompany Code]</span> </th>
                   <th>Client Name <span class="text-red">[Client Code]</span> </th>
-                  <th>Amount Type <i class="fa fa-phone text-green" aria-hidden="true"></i> </th>
-                  <th>Amount</th>
-                  <th>Final Amount</th>
-                  <th>AmountHealth</th>
+                  
                   <th>Created At</th>
                   <th>Updated At</th>
                   <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($ledger as $ledgers)
-                    <tr> 
-                        <td class="text-capitalize">{{($ledgers->subcompany->name)}}<span class="text-red">[{{$ledgers->subcompany->subcompany_code??""}}]</span></td>
-                        <td class="text-capitalize">{{($ledgers->client->name)}}<span class="text-red">[{{$ledgers->client->client_code??""}}]</span></td>
-                        <td class="text-capitalize">{{config('constant.amount_type')[$ledgers->amount_type]}} </span></td>
-                        <td class="text-capitalize">{{($ledgers->amount)}}</td>
-                        <td class="text-capitalize">{{($ledgers->finalamount)}}</td>
-                        <td class="text-capitalize">{{config('constant.amount_health')[$ledgers->amounthealth]}} </span></td>
+                  {{-- {{dd($clients[1]->client)}} --}}
+                    @foreach($clients as $client)
                     
-                    <td>{{$ledgers->created_at?$ledgers->created_at->diffForHumans():''}}</td>
-                    <td>{{$ledgers->updated_at?$ledgers->updated_at->diffForHumans():''}}</td>
+                    <tr> 
+                        <td class="text-capitalize">{{($client->subcompany->name)}}<span class="text-red">[{{$client->subcompany->subcompany_code??""}}]</span></td>
+                        <td class="text-capitalize">{{($client->client->name)}}<span class="text-red">[{{$client->client->client_code??""}}]</span></td>
+                                         
+                    <td>{{$client->created_at?$client->created_at->diffForHumans():''}}</td>
+                    <td>{{$client->updated_at?$client->updated_at->diffForHumans():''}}</td>
                     <td>
                         <div class="btn-group btn-group-sm">
-                        <a href="{{route('ledger.edit',$ledgers->id)}}" class="edit-model btn btn-warning btn-sm " ><i class="fa fa-edit"></i></a>
-                                <button class="delete-model btn btn-danger btn-sm " type="button" onclick="deleteLedger({{ $ledgers->id }})">
+                        <a href="{{route('ledger.edit',$client->id)}}" class="edit-model btn btn-warning btn-sm " ><i class="fa fa-edit"></i></a>
+                                <button class="delete-model btn btn-danger btn-sm " type="button" onclick="deleteLedger({{ $client->id }})">
                                     <i class="fa fa-trash"></i>
                                 </button>
-                                <form id="delete-form-{{ $ledgers->id }}" action="{{ route('ledger.destroy',$ledgers->id) }}" method="POST" style="display: none;">
+                                <form id="delete-form-{{ $client->id }}" action="{{ route('ledger.destroy',$client->id) }}" method="POST" style="display: none;">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
                         </div>
@@ -96,11 +91,8 @@
                 <tr>
                    
                     <th>SubCompany Name</th>
-                    <th>Amount Type <i class="fa fa-phone text-green" aria-hidden="true"></i> </th>
-                    <th>Amount</th>
-                    <th>Final Amount</th>
-                    <th>AmountHealth</th>
-                    <th>Creted At</th>
+                    <th>Client Name</th>
+                    <th>Created At</th>
                     <th>Updated At</th>
                     <th>Action</th>
                 </tr>

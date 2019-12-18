@@ -5,6 +5,7 @@ namespace App\Ledger\Repositories\ClientMapping;
 use App\Admin\Client;
 use App\Models\Country;
 use App\Models\City;
+use App\Models\ClientMapping;
 use App\Models\Company;
 use App\Models\CompanyStock;
 use App\Models\LedgerEntry;
@@ -15,38 +16,40 @@ use Illuminate\Support\Facades\Auth;
 class ClientMappingRepository implements ClientMappingInterface
 {
    
-    public function getAllSubCompany()
+    public function getAllMapping()
     {
-        $subcompanies = SubCompany::all();
-        return $subcompanies;
+        $clients = ClientMapping::all();
+        return $clients;
     }
-    // public function getAllSubClient()
-    // {
-    //     $clients = Client::all();
-    //     return $clients;
-    // }
+   
+    public function storeClientMapping($request)
+    {
+        // if(!empty($request->edit))
+        // {
+        //     $subcompanystock=CompanyStock::find($request->edit);
+        // }
+        // else
+        // {
+        //     $subcompanystock=new CompanyStock();
+        // }
+       
+       $client_ids = $request->clientname;
+       foreach($client_ids as $client_id)
+       {
+        $clientmapping=new ClientMapping();
+        $clientmapping->subcompany_id = $request->subcompanyname;
+        $clientmapping->client_id = $client_id;
+        $clientmapping->save();
+        
+       }
+       return $clientmapping;
+        
+    }
 
-    // public function editSubCompanyStock($id)
-    // {
-    //     $subcompanystock=CompanyStock::find($id);
-    //     return $subcompanystock;
-    // }
-
-    // public function storeSubCompanyStock($request)
-    // {
-    //     if(!empty($request->edit))
-    //     {
-    //         $subcompanystock=CompanyStock::find($request->edit);
-    //     }
-    //     else
-    //     {
-    //         $subcompanystock=new CompanyStock();
-    //     }
-    //     $subcompanystock->subcompany_id = $request->subcompanyname;
-    //     $subcompanystock->opening_balance = $request->opening_balance;
-    //     $subcompanystock->save();
-    //     return $subcompanystock;
-    // }
+    public function searchSubClient($keyword = null) 
+    {
+        return  $clint_name =ClientMapping::where('subcompany_id', '=', $keyword)->select('client_id')->get();
+    }
     
     // public function getAllOpening()
     // {

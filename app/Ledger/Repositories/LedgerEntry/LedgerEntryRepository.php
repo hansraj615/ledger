@@ -5,6 +5,7 @@ namespace App\Ledger\Repositories\LedgerEntry;
 use App\Admin\Client;
 use App\Models\Country;
 use App\Models\City;
+use App\Models\ClientMapping;
 use App\Models\Company;
 use App\Models\CompanyStock;
 use App\Models\LedgerEntry;
@@ -19,54 +20,20 @@ class LedgerEntryRepository implements LedgerEntryInterface
         $ledger = LedgerEntry::all();
         return $ledger;
     }
-    public function getAllSubCompany()
+    public function getAllClientSubCompany()
     {
-        $subcompanies = SubCompany::all();
+        $subcompanies = ClientMapping::select('subcompany_id')->distinct()->get();
         return $subcompanies;
     }
     public function getAllSubClient()
     {
-        $clients = Client::all();
+        $clients = ClientMapping::select('client_id')->get();
         return $clients;
     }
+    public function searchSubCompany($keyword = null)
+    {
+        return  $subcompany_name =Country::where('country_name', 'like', '%'.$keyword.'%')->select('id', 'country_name')->limit(10)->get();
+    }
 
-    // public function editSubCompanyStock($id)
-    // {
-    //     $subcompanystock=CompanyStock::find($id);
-    //     return $subcompanystock;
-    // }
-
-    // public function storeSubCompanyStock($request)
-    // {
-    //     if(!empty($request->edit))
-    //     {
-    //         $subcompanystock=CompanyStock::find($request->edit);
-    //     }
-    //     else
-    //     {
-    //         $subcompanystock=new CompanyStock();
-    //     }
-    //     $subcompanystock->subcompany_id = $request->subcompanyname;
-    //     $subcompanystock->opening_balance = $request->opening_balance;
-    //     $subcompanystock->save();
-    //     return $subcompanystock;
-    // }
     
-    // public function getAllOpening()
-    // {
-    //     $subcompanystock = CompanyStock::pluck('subcompany_id');
-    //     // dd( $subcompanystock->toArray());
-    //     $subcompany_name = SubCompany::select('id','name')->whereNotIn('id',$subcompanystock)->get();
-    //     return $subcompany_name;
-    // }
-
-    // public function deleteSubCompanyStock($id)
-    // {
-    //     $companystockid = CompanyStock::find($id);
-    //     $companystockid->delete();
-    //     return $companystockid;
-
-    // }
-
-   
 }
