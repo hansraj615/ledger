@@ -5,13 +5,7 @@
 @section('content')
 
 <section>
-  {{-- {{dd($ledger[0]->amount_type)}} --}}
-{{-- {{dd(config('constant.amount_type')[$ledger[0]->amount_type])}} --}}
 
-{{-- @foreach(config('constant.amount_type') as $key => $value)
-{{dd($value)}}
-@endforeach --}}
-    <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
         Data Tables
@@ -42,70 +36,55 @@
                     <div class="col-lg-12">
                     <a href="{{route('admin.ledger.create')}}">
                             <button class="btn btn-success pull-right">
-                                    Create <span class="badge badge-primary">new</span>
+                                    Create <span class="badge badge-primary">new </span>
                             </button>
                         </a>
                             <button class="btn btn-success pull-left">
-                                    Total SubCompany <span class="badge badge-primary">{{count($ledger)}}</span>
+                                    Total LedgerEntry <span class="badge badge-primary">{{count($ledger)}}</span>
                             </button>
                     </div>
                 </div>
                 <div class="row">&nbsp;</div>
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                   
-                  <th>SubCompany Name <span class="text-red">[SubCompany Code]</span> </th>
-                  <th>Client Name <span class="text-red">[Client Code]</span> </th>
-                  <th>Amount Type <i class="fa fa-phone text-green" aria-hidden="true"></i> </th>
-                  <th>Amount</th>
-                  <th>Final Amount</th>
-                  <th>AmountHealth</th>
-                  <th>Created At</th>
-                  <th>Updated At</th>
-                  <th>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                    @foreach($ledger as $ledgers)
-                    <tr> 
-                        <td class="text-capitalize">{{($ledgers->subcompany->name)}}<span class="text-red">[{{$ledgers->subcompany->subcompany_code??""}}]</span></td>
-                        <td class="text-capitalize">{{($ledgers->client->name)}}<span class="text-red">[{{$ledgers->client->client_code??""}}]</span></td>
-                        <td class="text-capitalize">{{config('constant.amount_type')[$ledgers->amount_type]}} </span></td>
-                        <td class="text-capitalize">{{($ledgers->amount)}}</td>
-                        <td class="text-capitalize">{{($ledgers->finalamount)}}</td>
-                        <td class="text-capitalize">{{config('constant.amount_health')[$ledgers->amounthealth]}} </span></td>
-                    
-                    <td>{{$ledgers->created_at?$ledgers->created_at->diffForHumans():''}}</td>
-                    <td>{{$ledgers->updated_at?$ledgers->updated_at->diffForHumans():''}}</td>
-                    <td>
-                        <div class="btn-group btn-group-sm">
-                        <a href="{{route('ledger.edit',$ledgers->id)}}" class="edit-model btn btn-warning btn-sm " ><i class="fa fa-edit"></i></a>
-                                <button class="delete-model btn btn-danger btn-sm " type="button" onclick="deleteLedger({{ $ledgers->id }})">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                                <form id="delete-form-{{ $ledgers->id }}" action="{{ route('ledger.destroy',$ledgers->id) }}" method="POST" style="display: none;">
-                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                </form>
+                <div class="box">
+                  <div class="box-header">
+                    <h3 class="box-title">Data Table With Full Features</h3>
+                  </div>
+      
+      
+                  <div class="box-body">
+                      <div class="row">
+<div class="col-lg-12">
+  <div class="col-lg-4 border-right bordered-bottom-2 border-primary" style='border-bottom:1px solid #ccc;'>
+<span> hjdfsjksdf</span>: <p>asd</p>
+  </div>
+  <div class="col-lg-4 border-right">
+sdf sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg 
+  </div>
+  <div class="col-lg-4 border-right">
+sdf sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg 
+  </div>
+</div>
+
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="col-lg-4 border-bottom border-right">
+                      sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg 
                         </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-                <tfoot>
-                <tr>
-                   
-                    <th>SubCompany Name</th>
-                    <th>Amount Type <i class="fa fa-phone text-green" aria-hidden="true"></i> </th>
-                    <th>Amount</th>
-                    <th>Final Amount</th>
-                    <th>AmountHealth</th>
-                    <th>Creted At</th>
-                    <th>Updated At</th>
-                    <th>Action</th>
-                </tr>
-                </tfoot>
-              </table>
+                        <div class="col-lg-4 border-right">
+                      sdf sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg 
+                        </div>
+                        <div class="col-lg-4 border-right">
+                      sdf sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg 
+                        </div>
+                      </div>
+                      
+                      
+                                            </div>
+                                          </div>
+                  </div>
             </div>
             <!-- /.box-body -->
           </div>
@@ -172,39 +151,6 @@
 // USAGE:
 
   </script>
-  <script type="text/javascript">
-  function deleteLedger(id) {
-   const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: 'btn btn-success',
-    cancelButton: 'btn btn-danger'
-  },
-  buttonsStyling: false
-})
-
-swalWithBootstrapButtons.fire({
-  title: 'Are you sure?',
-  text: "You won't be able to revert this!",
-  type: 'warning',
-  showCancelButton: true,
-  confirmButtonText: 'Yes, delete it!',
-  cancelButtonText: 'No, cancel!',
-  reverseButtons: true
-}).then((result) => {
-  if (result.value) {
-    event.preventDefault();
-      document.getElementById('delete-form-'+id).submit();
-  } else if (
-    /* Read more about handling dismissals below */
-    result.dismiss === Swal.DismissReason.cancel
-  ) {
-    swalWithBootstrapButtons.fire(
-      'Cancelled',
-      'Your imaginary file is safe :)',
-      'error'
-    )
-  }
-})
-  }</script>
+ 
 @endpush
 @yield('js')

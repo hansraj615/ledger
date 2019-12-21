@@ -71,16 +71,6 @@ class ClientRepository implements ClientInterface
         return $client;
     }
 
-   
-    
-    // public function getAllOpening()
-    // {
-    //     $subcompanystock = CompanyStock::pluck('subcompany_id');
-    //     // dd( $subcompanystock->toArray());
-    //     $subcompany_name = SubCompany::select('id','name')->whereNotIn('id',$subcompanystock)->get();
-    //     return $subcompany_name;
-    // }
-
     public function deleteClient($id)
     {
         $clientid = Client::find($id);
@@ -104,9 +94,4 @@ class ClientRepository implements ClientInterface
         return  $states_name =City::where('state_id',$request->state_id)->where('city_name', 'like', '%'.$request->q.'%')->select('id', 'city_name')->get();
     }
 
-    // public function getCompany()
-    // {
-    //     $company_name = Company::select('id','name')->get();
-    //     return $company_name;
-    // }
 }

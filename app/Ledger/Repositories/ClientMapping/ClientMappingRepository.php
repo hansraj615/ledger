@@ -2,9 +2,10 @@
 
 namespace App\Ledger\Repositories\ClientMapping;
 
-use App\Admin\Client;
+
 use App\Models\Country;
 use App\Models\City;
+use App\Models\Client;
 use App\Models\ClientMapping;
 use App\Models\Company;
 use App\Models\CompanyStock;
@@ -18,54 +19,53 @@ class ClientMappingRepository implements ClientMappingInterface
    
     public function getAllMapping()
     {
-        $clients = ClientMapping::all();
-        return $clients;
+        $clientmappingdetailsArray = [];
+        $clintmappingdetails = ClientMapping::all(); 
+        foreach($clintmappingdetails as $keys=>$clintmappingdetail){
+        $clientmappingids = explode(',',$clintmappingdetail->client_id);
+        $client_name = [];
+        foreach($clientmappingids as $key => $clientmappingid){
+        $Client = Client::where('id',$clientmappingid)->first();
+        $client_name[] = $Client->name;
+        }
+        $clintmappingdetail->client_name = implode(' , ',$client_name);
+        $clientmappingdetailsArray[] = $clintmappingdetail; 
+        }
+        return  $clientmappingdetailsArray;
     }
    
     public function storeClientMapping($request)
     {
-        // if(!empty($request->edit))
-        // {
-        //     $subcompanystock=CompanyStock::find($request->edit);
-        // }
-        // else
-        // {
-        //     $subcompanystock=new CompanyStock();
-        // }
        
-       $client_ids = $request->clientname;
-       foreach($client_ids as $client_id)
-       {
-        $clientmapping=new ClientMapping();
+        if(!empty($request->edit))
+        {
+            $clientmapping=ClientMapping::find($request->edit);
+        }
+        else
+        {
+            $clientmapping=new ClientMapping();
+        }
         $clientmapping->subcompany_id = $request->subcompanyname;
-        $clientmapping->client_id = $client_id;
+        $clientmapping->client_id =implode(",",$request->clientname);
         $clientmapping->save();
-        
-       }
-       return $clientmapping;
-        
+        return $clientmapping;
     }
 
     public function searchSubClient($keyword = null) 
     {
         return  $clint_name =ClientMapping::where('subcompany_id', '=', $keyword)->select('client_id')->get();
     }
-    
-    // public function getAllOpening()
-    // {
-    //     $subcompanystock = CompanyStock::pluck('subcompany_id');
-    //     // dd( $subcompanystock->toArray());
-    //     $subcompany_name = SubCompany::select('id','name')->whereNotIn('id',$subcompanystock)->get();
-    //     return $subcompany_name;
-    // }
+    public function editClientMapping($id)
+    {
+        $clientmappingid=ClientMapping::find($id);
+        return $clientmappingid;
+    }
+    public function deleteClientMapping($id)
+    {
+        $clientmappingid = ClientMapping::find($id);
+        $clientmappingid->delete();
+        return $clientmappingid;
 
-    // public function deleteSubCompanyStock($id)
-    // {
-    //     $companystockid = CompanyStock::find($id);
-    //     $companystockid->delete();
-    //     return $companystockid;
-
-    // }
-
-   
+    }
+       
 }

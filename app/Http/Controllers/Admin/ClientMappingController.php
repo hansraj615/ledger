@@ -70,7 +70,7 @@ class ClientMappingController extends Controller
         }
         catch(\Exception $e)
         {
-            dd($e->getMessage());
+           // dd($e->getMessage());
             Toastr::danger($e->getMessage() ,'Danger');
             return redirect()->route('admin.clientmapping.create');
         }
@@ -96,7 +96,18 @@ class ClientMappingController extends Controller
      */
     public function edit($id)
     {
-        //
+        try
+        {
+            $subcompanies = $this->subcompany->getAllSubCompany();
+            $clients = $this->client->getClient();
+            $clientmappingid=$this->clientmapping->editClientMapping($id);
+        }
+        catch(\Exception $e)
+        {
+            Toastr::danger($e->getMessage() ,'Danger');
+            return redirect('admin.clientmapping.index');
+        }
+        return view('admin.clientmapping.edit',compact('clientmappingid','subcompanies','clients'));
     }
 
     /**
@@ -119,6 +130,12 @@ class ClientMappingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $delete_clientmapping = $this->clientmapping->deleteClientMapping($id);
+        }catch(\Exception $e){
+            return redirect()->route('admin.clientmapping.index')->with('danger', $e->getMessage());
+        }
+        Toastr::Warning('CLientMapping Successfully Deleted :)','Success');
+        return redirect()->route('admin.clientmapping.index');
     }
 }

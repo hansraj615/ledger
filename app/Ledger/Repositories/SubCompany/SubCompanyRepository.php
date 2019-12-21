@@ -43,7 +43,7 @@ class SubCompanyRepository implements SubCompanyInterface
 
     public function storeSubCompany($request)
     {
-       // dd($request->all());
+      
         if(!empty($request->edit))
         {
             $subcompanies =  SubCompany::find($request->edit);
@@ -61,25 +61,12 @@ class SubCompanyRepository implements SubCompanyInterface
         $subcompanies->city = $request->city_name;
         $subcompanies->pincode = $request->pincode;
         $subcompanies->address = $request->address;
-        //dd($subcompanies);
         $subcompanies->save();
         
         return $subcompanies;
 
     }
 
-    // public function editCompany($id)
-    // {
-    //     $company = Company::find($id);
-    //     $company_details = [];
-    //     $countries_name =Country::where('id',$company->country)->select('country_name')->first();
-    //     $cities_name =City::where('id',$company->city)->select('city_name')->first();
-    //     $states_name =State::where('id',$company->state)->select('state_name')->first();
-    //     $company->city_name = $cities_name->city_name;
-    //     $company->state_name = $states_name->state_name;
-    //     $company->country_name = $countries_name->country_name;
-    //     return $company;
-    // }
 
     public function deleteSubCompany($id)
     {

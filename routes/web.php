@@ -62,10 +62,12 @@ Route::group(["prefix" => "admin", "namespace" => "Admin"], function () {
     Route::get('/ledger/create', 'LedgerEntryController@create')->name('admin.ledger.create');
     Route::get('/search-client/{keyword?}', 'LedgerEntryController@SearchClient')->name('ledger.search-client');
 
-    /***********************LedgerEntry */ 
+    /***********************CLient Mapping */ 
     Route::get('/clientmapping', 'ClientMappingController@index')->name('admin.clientmapping.index'); 
     Route::get('/clientmapping/create', 'ClientMappingController@create')->name('admin.clientmapping.create');
     Route::POST('/clientmapping/store', 'ClientMappingController@store')->name('admin.clientmapping.store');
+    Route::get('/clientmapping/edit/{reference_id}','ClientMappingController@edit')->name('clientmapping.edit');
+    Route::post('/clientmapping/destroy/{reference_id}','ClientMappingController@destroy')->name('clientmapping.destroy');
 
 
 });

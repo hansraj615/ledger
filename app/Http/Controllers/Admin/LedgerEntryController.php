@@ -9,7 +9,7 @@ use App\Ledger\Repositories\ClientMapping\ClientMappingInterface;
 use App\Ledger\Repositories\LedgerEntry\LedgerEntryInterface;
 use App\Ledger\Repositories\SubCompany\SubCompanyInterface;
 use Brian2694\Toastr\Facades\Toastr;
-
+use App\Models\Client;
 class LedgerEntryController extends Controller
 {
     /**
@@ -70,7 +70,21 @@ class LedgerEntryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $ledgerentries = $this->ledger->storeLedgerEntry($request);
+           
+    } catch(\Exception $e){
+        dd($e->getMessage()); 
+        return redirect()->route('admin.ledger.create')->with('danger', $e->getMessage());
+    }
+    if(!empty($request->edit))
+    {
+        Toastr::success(''.$request->input('name').' Has Been Updated');
+    }else{
+        Toastr::success("New Entry  Has Been Added");
+
+    }
+    return redirect()->route('admin.ledger.create');
     }
 
     /**
@@ -121,11 +135,19 @@ class LedgerEntryController extends Controller
     public function SearchClient($keyword=null)
     {
         $clients = $this->clientmapping->searchSubClient($keyword);
-        $clientArray=[];
-        foreach ($clients as $clientkey=>$client){
-             $clientArray[$clientkey]['id']=$client->client_id;
-            $clientArray[$clientkey]['text']=$client->client->name;
+        $clientmappingdetailsArray=[];
+        foreach($clients as $keys=>$clintmappingdetail){
+            $clientArray=[];
+            $clientmappingids = explode(',',$clintmappingdetail->client_id);
+            foreach($clientmappingids as $key => $clientmappingid){
+            $Client = Client::where('id',$clientmappingid)->first();
+            $client_name = $Client->name;
+            $client_id = $Client->id;
+            $clientArray[$key]['id']=$client_id;
+            $clientArray[$key]['text']=$client_name;
         }
         return $clientArray;
+    }
+       
     }
 }

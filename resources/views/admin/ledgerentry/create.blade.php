@@ -75,16 +75,15 @@
                 <!-- Date dd/mm/yyyy -->
                 <div class="form-group">
                     <label for="name">Amount Type</label>
-                    {{-- <input type="text" name="name" id="companyname" class="form-control" placeholder="" aria-describedby="helpId"> --}}
-                    <select name="amounttype" class="form-control select2" id="">
-                      <option value=""></option>
-                      @foreach(config('constant.amount_type') as $key => $value)
-                      <option value="{{$key}}">{{$value}}</option>
-                      @endforeach
-                    </select>
-                    <small id="helpId" class="text-muted">Help text</small>
-                  <!-- /.input group -->
+                   
                 </div>
+                <div class="form-group">
+                  
+                 
+                    @foreach(config('constant.amount_type') as $key => $value)
+                    <input type="radio" name="amounttype" class="minimal" value="{{$key}}">{{$value}}
+                    @endforeach
+                 </div>
                 <!-- /.form group -->
             </div>
             <div class="col-md-3">
@@ -169,6 +168,11 @@
       //Money Euro
       $('[data-mask]').inputmask()
 
+    })
+
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
     })
   </script>
 

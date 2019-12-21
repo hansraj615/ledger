@@ -35,5 +35,56 @@ class LedgerEntryRepository implements LedgerEntryInterface
         return  $subcompany_name =Country::where('country_name', 'like', '%'.$keyword.'%')->select('id', 'country_name')->limit(10)->get();
     }
 
+    public function storeLedgerEntry($request)
+    {
+        // dd($request->all());
+        $finaltotalamount="0";
+        $amounthealth=0;
+        $getfinalamount = LedgerEntry::where('subcompany_id','=', $request->subcompanyname)->orderBy('id', 'desc')->first();
+        // dd($getfinalamount);
+        if(!empty($getfinalamount))
+        {
+            $lastfinalamount = $getfinalamount->finalamount;
+
+        } else {
+            $getamount = CompanyStock::where('subcompany_id','=', $request->subcompanyname)->orderBy('id', 'desc')->first();
+            $lastfinalamount = $getamount->opening_balance;
+        }
+        
+        if($request->amounttype ==0)
+        {
+            $finaltotalamount=$lastfinalamount-($request->amount);
+        }
+        if($request->amounttype ==1)
+        {
+            $finaltotalamount=$lastfinalamount+$request->amount;
+            //dd($finaltotalamount);
+        }
+        if($finaltotalamount<0)
+        {
+            $amounthealth="0";
+        }
+        else if($finaltotalamount==0)
+        {
+            $amounthealth="2";
+        }
+        else if($finaltotalamount>0)
+        {
+            $amounthealth ="1";
+        }
+        
+        $ledgerentries = new LedgerEntry();
+        $ledgerentries->subcompany_id = $request->subcompanyname;
+        $ledgerentries->client_id = $request->clientname;
+        $ledgerentries->amount_type = $request->amounttype;
+        $ledgerentries->amount = $request->amount;
+        $ledgerentries->finalamount = $finaltotalamount;
+        $ledgerentries->amounthealth = $amounthealth;
+      // dd($ledgerentries);
+        $ledgerentries->save();
+        return $ledgerentries;
+
+    }
+
     
 }

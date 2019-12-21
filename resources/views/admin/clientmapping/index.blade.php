@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'LedgerEntry')
+@section('title', 'ClientMapping')
 
 @section('content')
 
@@ -64,22 +64,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                  {{-- {{dd($clients[1]->client)}} --}}
                     @foreach($clients as $client)
                     
                     <tr> 
                         <td class="text-capitalize">{{($client->subcompany->name)}}<span class="text-red">[{{$client->subcompany->subcompany_code??""}}]</span></td>
-                        <td class="text-capitalize">{{($client->client->name)}}<span class="text-red">[{{$client->client->client_code??""}}]</span></td>
+                        <td class="text-capitalize">{{($client->client_name)}}</td>
                                          
                     <td>{{$client->created_at?$client->created_at->diffForHumans():''}}</td>
                     <td>{{$client->updated_at?$client->updated_at->diffForHumans():''}}</td>
                     <td>
                         <div class="btn-group btn-group-sm">
-                        <a href="{{route('ledger.edit',$client->id)}}" class="edit-model btn btn-warning btn-sm " ><i class="fa fa-edit"></i></a>
-                                <button class="delete-model btn btn-danger btn-sm " type="button" onclick="deleteLedger({{ $client->id }})">
+                        <a href="{{route('clientmapping.edit',$client->id)}}" class="edit-model btn btn-warning btn-sm " ><i class="fa fa-edit"></i></a>
+                                <button class="delete-model btn btn-danger btn-sm " type="button" onclick="deleteClientMapping({{ $client->id }})">
                                     <i class="fa fa-trash"></i>
                                 </button>
-                                <form id="delete-form-{{ $client->id }}" action="{{ route('ledger.destroy',$client->id) }}" method="POST" style="display: none;">
+                                <form id="delete-form-{{ $client->id }}" action="{{ route('clientmapping.destroy',$client->id) }}" method="POST" style="display: none;">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
                         </div>
@@ -165,7 +164,7 @@
 
   </script>
   <script type="text/javascript">
-  function deleteLedger(id) {
+  function deleteClientMapping(id) {
    const swalWithBootstrapButtons = Swal.mixin({
   customClass: {
     confirmButton: 'btn btn-success',

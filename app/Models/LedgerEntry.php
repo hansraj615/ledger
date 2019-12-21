@@ -18,9 +18,5 @@ class LedgerEntry extends Model
         return $this->belongsTo(CompanyStock::class);
     }
 
-    // public function client()
-    // {
-    //    return $this->belongsTo(Client::class,'client_id');
-    //     return $this->hasMany(Client::class);
-    // }
+    
 }
