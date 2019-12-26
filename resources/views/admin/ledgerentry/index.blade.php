@@ -30,7 +30,9 @@
               <h3 class="box-title">Data Table With Full Features</h3>
             </div>
 
-
+@foreach($ledger as $value)
+{{dd($value)}}
+@endforeach
             <div class="box-body">
                 <div class="row">
                     <div class="col-lg-12">
@@ -50,41 +52,42 @@
                     <h3 class="box-title">Data Table With Full Features</h3>
                   </div>
       
-      
+                
                   <div class="box-body">
-                      <div class="row">
-<div class="col-lg-12">
-  <div class="col-lg-4 border-right bordered-bottom-2 border-primary" style='border-bottom:1px solid #ccc;'>
-<span> hjdfsjksdf</span>: <p>asd</p>
-  </div>
-  <div class="col-lg-4 border-right">
-sdf sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg 
-  </div>
-  <div class="col-lg-4 border-right">
-sdf sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg 
-  </div>
-</div>
-
-
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <div class="col-lg-4 border-bottom border-right">
-                      sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg 
-                        </div>
-                        <div class="col-lg-4 border-right">
-                      sdf sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg 
-                        </div>
-                        <div class="col-lg-4 border-right">
-                      sdf sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg 
-                        </div>
-                      </div>
-                      
-                      
-                                            </div>
-                                          </div>
+                    @foreach($ledger as $ledgerrntry)
+              
+               <div class="container">
+               
+                <div class="row grid-divider">
+                <div class="col-sm-4">
+                  <div class="col-padding">
+                  <h3>{{$ledgerrntry->client->name}}</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima expedita incidunt rerum.</p>
                   </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="col-padding">
+                    <h3>Column 2</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate placeat suscipit maxime tenetur officiis asperiores quae molestias fugiat praesentium dolorum.</p>
+                  </div>
+                </div>
+                <div class="col-sm-4">
+                  <div class="col-padding">
+                    <h3>Column 3</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab veniam aperiam numquam cupiditate maiores repudiandae ea dicta, sunt rerum corporis. Ab veniam aperiam numquam cupiditate maiores repudiandae ea dicta, sunt rerum corporis. Ab veniam aperiam numquam cupiditate maiores repudiandae ea dicta.</p>
+                  </div>
+                </div>
+                </div>
+            
+            </div>
+            <hr/>
+            @endforeach
+                    </div>
+                   
+                </div>
+              </div>
+              
+            
             </div>
             <!-- /.box-body -->
           </div>
@@ -99,16 +102,43 @@ sdf sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg
 @endsection
 @push('css')
 <style>
-.country {
-    margin: 10px;
-    padding: 4px 6px;
-    border: 1px solid #999;
-    border-radius: 5px;
-    display: inline-block;
-    font-family: tahoma;
-    font-size: 12px
+@media ( min-width: 768px ) {
+    .grid-divider {
+        position: relative;
+        padding: 0;
+    }
+    .grid-divider>[class*='col-'] {
+        position: static;
+    }
+    .grid-divider>[class*='col-']:nth-child(n+2):before {
+        content: "";
+        border-left: 1px solid #DDD;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+    }
+    .col-padding {
+        padding: 0 15px;
+    }
+}@media ( min-width: 768px ) {
+    .grid-divider {
+        position: relative;
+        padding: 0;
+    }
+    .grid-divider>[class*='col-'] {
+        position: static;
+    }
+    .grid-divider>[class*='col-']:nth-child(n+2):before {
+        content: "";
+        border-left: 1px solid #DDD;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+    }
+    .col-padding {
+        padding: 0 15px;
+    }
 }
-
 </style>
 @endpush
 @push('js')
@@ -149,7 +179,20 @@ sdf sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg df dfg sd sdgds sdrg
 })(jQuery);
 
 // USAGE:
-
+$(document).on('click', '.panel-heading span.clickable', function(e){
+    var $this = $(this);
+	if(!$this.hasClass('panel-collapsed')) {
+		$this.parents('.panel').find('.panel-body').slideUp();
+		$this.addClass('panel-collapsed');
+		$this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+		
+	} else {
+		$this.parents('.panel').find('.panel-body').slideDown();
+		$this.removeClass('panel-collapsed');
+		$this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+		
+	}
+})
   </script>
  
 @endpush

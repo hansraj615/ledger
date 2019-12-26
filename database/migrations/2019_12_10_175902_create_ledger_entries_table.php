@@ -23,6 +23,7 @@ class CreateLedgerEntriesTable extends Migration
             $table->bigInteger('amount');
             $table->bigInteger('finalamount');
             $table->bigInteger('amounthealth');
+            $table->string('description');
 
             $table->timestamps();
         });

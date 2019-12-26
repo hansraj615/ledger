@@ -36,6 +36,7 @@ class LedgerEntryController extends Controller
             $ledger = $this->ledger->getAllLedger();
 
         } catch(\Exception $e){
+            dd($e->getMessage());
             Toastr::danger($e->getMessage() ,'Danger');
             return redirect()->route('ledger.index')->with('danger', $e->getMessage());
         }

@@ -71,7 +71,7 @@
                         <small id="helpId" class="text-muted">Help text</small>
                       </div>
                   </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                 <!-- Date dd/mm/yyyy -->
                 <div class="form-group">
                     <label for="name">Amount Type</label>
@@ -86,7 +86,7 @@
                  </div>
                 <!-- /.form group -->
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                     <!-- Date dd/mm/yyyy -->
                     <div class="form-group">
                       <label>Amount:</label>
@@ -99,7 +99,21 @@
                     </div>
                     <!-- /.form group -->
                 </div>
+                <div class="col-md-2">
+                  <!-- Date dd/mm/yyyy -->
+                  <div class="form-group">
+                    <label>Description:</label>
+
+                    <div class="input-group">
+                      
+                      <input type="text" name="description" id="description" class="form-control" >
+                    </div>
+                    <!-- /.input group -->
+                  </div>
+                  <!-- /.form group -->
+              </div>
             </div>
+            
            
                 <button type="submit" class="btn btn-success center-block">Submit</button>
             </form>
