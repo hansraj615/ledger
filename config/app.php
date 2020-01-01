@@ -164,11 +164,12 @@ return [
         JeroenNoten\LaravelAdminLte\ServiceProvider::class,
         Yajra\Datatables\DatatablesServiceProvider::class,
         Brian2694\Toastr\ToastrServiceProvider::class,
-
+        Collective\Html\HtmlServiceProvider::class,
+        Proengsoft\JsValidation\JsValidationServiceProvider::class,
         /*
          * Package Service Providers...
          */
-
+        Zizaco\Entrust\EntrustServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -231,6 +232,10 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Datatables' => Yajra\Datatables\Facades\Datatables::class,
         'Toastr'  => Brian2694\Toastr\Facades\Toastr::class,
+        'Entrust' => Zizaco\Entrust\EntrustFacade::class,
+        'JsValidator' => Proengsoft\JsValidation\Facades\JsValidatorFacade::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
 
     ],
 

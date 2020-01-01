@@ -36,12 +36,6 @@
 
       <!-- Main content -->
       <section class="content">
-
-
-        <!-- /.box -->
-
-
-
             <div class="box box-danger">
               <div class="box-header">
                 <h3 class="box-title">Input masks</h3>

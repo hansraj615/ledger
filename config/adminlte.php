@@ -195,11 +195,19 @@ return [
             'icon'    => 'fas fa-fw fa-share',
             'submenu' => [
                 [
-                    'text' => 'level_one',
+                    'text' => 'Role',
+                    'url'  => 'admin/roles',
+                ],
+                [
+                    'text' => 'Permission',
+                    'url'  => 'admin/permissions',
+                ],
+                [
+                    'text' => 'User Management',
                     'url'  => '#',
                 ],
                 [
-                    'text'    => 'level_one',
+                    'text'    => 'qwe',
                     'url'     => '#',
                     'submenu' => [
                         [

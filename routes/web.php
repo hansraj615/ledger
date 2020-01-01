@@ -36,7 +36,7 @@ Route::group(["prefix" => "admin", "namespace" => "Admin"], function () {
     Route::get('/subcompany','SubCompnayController@index')->name('subcompany.index');
     Route::get('/subcompany/edit/{reference_id}','SubCompnayController@edit')->name('subcompany.edit');
     Route::POST('/subcompany/store', 'SubCompnayController@store')->name('admin.subcompany.store');
-   
+
     Route::post('/subcompany/destroy/{reference_id}','SubCompnayController@destroy')->name('subcompany.destroy');
     Route::get('/subcompany/create', 'SubCompnayController@create')->name('admin.subcompany.create');
 
@@ -47,14 +47,14 @@ Route::group(["prefix" => "admin", "namespace" => "Admin"], function () {
      Route::post('/subcompanystock/destroy/{reference_id}','CompanyStockController@destroy')->name('subcompanystock.destroy');
      Route::get('/subcompanystock/create', 'CompanyStockController@create')->name('admin.subcompanystock.create');
 
-     /***********************Client */  
+     /***********************Client */
     Route::get('/client','ClientController@index')->name('client.index');
     Route::get('/client/edit/{reference_id}','ClientController@edit')->name('client.edit');
     Route::POST('/client/store', 'ClientController@store')->name('admin.client.store');
     Route::post('/client/destroy/{reference_id}','ClientController@destroy')->name('client.destroy');
     Route::get('/client/create', 'ClientController@create')->name('admin.client.create');
 
-    /***********************LedgerEntry */  
+    /***********************LedgerEntry */
     Route::get('/ledger','LedgerEntryController@index')->name('ledger.index');
     Route::get('/ledger/edit/{reference_id}','LedgerEntryController@edit')->name('ledger.edit');
     Route::POST('/ledger/store', 'LedgerEntryController@store')->name('admin.ledger.store');
@@ -62,13 +62,20 @@ Route::group(["prefix" => "admin", "namespace" => "Admin"], function () {
     Route::get('/ledger/create', 'LedgerEntryController@create')->name('admin.ledger.create');
     Route::get('/search-client/{keyword?}', 'LedgerEntryController@SearchClient')->name('ledger.search-client');
 
-    /***********************CLient Mapping */ 
-    Route::get('/clientmapping', 'ClientMappingController@index')->name('admin.clientmapping.index'); 
+    /***********************CLient Mapping */
+    Route::get('/clientmapping', 'ClientMappingController@index')->name('admin.clientmapping.index');
     Route::get('/clientmapping/create', 'ClientMappingController@create')->name('admin.clientmapping.create');
     Route::POST('/clientmapping/store', 'ClientMappingController@store')->name('admin.clientmapping.store');
     Route::get('/clientmapping/edit/{reference_id}','ClientMappingController@edit')->name('clientmapping.edit');
     Route::post('/clientmapping/destroy/{reference_id}','ClientMappingController@destroy')->name('clientmapping.destroy');
 
+    /*********role and permission */
+    Route::resource('/roles', 'RoleController');
+    Route::post('/roles/destroy/{reference_id}','RoleController@destroy')->name('roles.destroy');
+    Route::post('/company/destroy/{reference_id}','CompnayController@destroy')->name('company.destroy');
+    Route::resource('/permissions', 'PermissionController');
+    Route::post('/permissions/destroy/{reference_id}','PermissionController@destroy')->name('permissions.destroy');
+    Route::resource('/pod-users', 'PodUsersController');
 
 });
 
