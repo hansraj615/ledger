@@ -35,11 +35,13 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-lg-12">
+                        @permission('create-company')
                         <a href="{{route('admin.company.create')}}">
                             <button class="btn btn-success pull-right">
                                     Create <span class="badge badge-primary">new</span>
                             </button>
                         </a>
+                        @endpermission
                             <button class="btn btn-success pull-left">
                                     Total Company <span class="badge badge-primary">{{count($companies)}}</span>
                             </button>
@@ -77,12 +79,14 @@
                     <td>
                         <div class="btn-group btn-group-sm">
                             <a href="{{ route('company.edit',$company->id) }}" class="edit-model btn btn-warning btn-sm " ><i class="fa fa-edit"></i></a>
+                            @permission('delete-company')
                                 <button class="delete-model btn btn-danger btn-sm " type="button" onclick="deleteCompany({{ $company->id }})">
                                     <i class="fa fa-trash"></i>
                                 </button>
                                 <form id="delete-form-{{ $company->id }}" action="{{ route('company.destroy',$company->id) }}" method="POST" style="display: none;">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
+                                @endpermission
                         </div>
                         </td>
                     </tr>

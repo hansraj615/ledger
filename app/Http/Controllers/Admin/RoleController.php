@@ -33,7 +33,7 @@ class RoleController extends Controller
 
         $this->permission = $permission;
     }
-    public function index()
+    public function index(AllRoleRrequest $request)
     {
         // $keyword = $request->get('search') ? trim($request->get('search')) : null;
 
@@ -47,7 +47,7 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(CreateRoleRequest $request)
     {
         $permissions = $this->permission->getList();
         return view('admin.roles.create', compact('permissions'));
@@ -60,7 +60,7 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateRoleRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -91,7 +91,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id ,EditRoleRrequest $request)
     {
         try {
             $role = $this->role->find($id);
@@ -112,7 +112,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRoleRequest $request, $id)
     {
         DB::beginTransaction();
         try {

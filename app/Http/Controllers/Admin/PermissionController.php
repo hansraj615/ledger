@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Permission\CreatePermissionRequest;
+use App\Http\Requests\Permission\DeletePermissionRequest;
+use App\Http\Requests\Permission\EditPermissionRequest;
+use App\Http\Requests\Permission\IndexPermissionRequest;
+use App\Http\Requests\Permission\ShowPermissionRequest;
+use App\Http\Requests\Permission\UpdatePermissionRequest;
 use App\Ledger\Repositories\Permission\PermissionInterface;
 use App\Http\Requests\Permission\StorePermissionRequest;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +27,7 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(IndexPermissionRequest $request)
     {
         $permissions = $this->permission->getAll();
 
@@ -33,7 +39,7 @@ class PermissionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(CreatePermissionRequest $request)
     {
         return view('admin.permissions.create');
     }
@@ -44,7 +50,7 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePermissionRequest $request)
     {
         DB::beginTransaction();
         try {
@@ -64,7 +70,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id ,ShowPermissionRequest $request)
     {
         //
     }
@@ -75,7 +81,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Request $request)
+    public function edit($id, EditPermissionRequest $request)
     {
         $permission = $this->permission->find($id);
         return view('admin.permissions.edit', compact('permission'));
@@ -88,7 +94,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePermissionRequest $request, $id)
     {
         DB::beginTransaction();
         try {
@@ -115,7 +121,7 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id ,DeletePermissionRequest $request)
     {
         DB::beginTransaction();
         try {

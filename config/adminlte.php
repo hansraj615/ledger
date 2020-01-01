@@ -150,6 +150,8 @@ return [
             'url'         => 'admin/company',
             'icon'        => 'far fa-file',
             'label'       => 4,
+            'role'        => ['owner','admin','general-user'],
+            'permission'  => 'list-company',
             'label_color' => 'success',
         ],
         [
@@ -197,10 +199,14 @@ return [
                 [
                     'text' => 'Role',
                     'url'  => 'admin/roles',
+                    'role'        => ['owner','admin'],
+                    'permission'  => 'list-role',
                 ],
                 [
                     'text' => 'Permission',
                     'url'  => 'admin/permissions',
+                    'role'        => ['owner','admin'],
+                    'permission'  => 'list-permission',
                 ],
                 [
                     'text' => 'User Management',
@@ -271,6 +277,7 @@ return [
         JeroenNoten\LaravelAdminLte\Menu\Filters\ClassesFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\GateFilter::class,
         JeroenNoten\LaravelAdminLte\Menu\Filters\LangFilter::class,
+        \App\Ledger\Helpers\MyMenuFilter::class,
     ],
 
     /*

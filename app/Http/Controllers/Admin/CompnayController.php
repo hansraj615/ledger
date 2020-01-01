@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Company\EditCompanyRequest;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Ledger\Repositories\Company\CompanyInterface;
 
@@ -81,7 +82,7 @@ class CompnayController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id ,EditCompanyRequest $request)
     {
         try{
             $companies = $this->company->editCompany($id);

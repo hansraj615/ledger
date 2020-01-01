@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Permission;
+namespace App\Http\Requests\Permission;
 
 use App\Permission;
 use Illuminate\Foundation\Http\FormRequest;

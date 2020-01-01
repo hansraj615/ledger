@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Permission;
+namespace App\Http\Requests\Company;
 
-use App\Permission;
+use App\Models\Company;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdatePermissionRequest extends FormRequest
+class EditCompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,7 @@ class UpdatePermissionRequest extends FormRequest
      */
     public function authorize()
     {
-        return policy(Permission::class)->update($this->user());
+        return policy(Company::class)->update($this->user());
     }
 
     /**
@@ -25,9 +25,7 @@ class UpdatePermissionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:3|unique:permissions,name,'.$this->route('permission'),
-            'display_name' => 'required|min:3',
-            'description' => 'required',
+            //
         ];
     }
 
