@@ -12,10 +12,10 @@ class CreateSubCompaniesTable extends Migration
      * @return void
      */
     public function up()
-    { 
+    {
             Schema::create('sub_companies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('company_id');
+            $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->string('subcompany_code');
             $table->string('name');

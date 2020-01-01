@@ -14,8 +14,8 @@ class CreateCompanyStocksTable extends Migration
     public function up()
     {
         Schema::create('company_stocks', function (Blueprint $table) {
-            $table->bigIncrements('id'); 
-            $table->integer('subcompany_id');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('subcompany_id');
             $table->foreign('subcompany_id')->references('id')->on('sub_companies');
             $table->bigInteger('opening_balance');
             $table->timestamps();

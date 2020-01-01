@@ -15,9 +15,9 @@ class CreateLedgerEntriesTable extends Migration
     {
         Schema::create('ledger_entries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('subcompany_id');
+            $table->unsignedBigInteger('subcompany_id');
             $table->foreign('subcompany_id')->references('id')->on('sub_companies');
-            $table->integer('client_id');
+            $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
             $table->integer('amount_type');
             $table->bigInteger('amount');

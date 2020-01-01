@@ -10,6 +10,8 @@ use App\Ledger\Repositories\LedgerEntry\LedgerEntryInterface;
 use App\Ledger\Repositories\SubCompany\SubCompanyInterface;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Client;
+use App\Models\SubCompany;
+
 class LedgerEntryController extends Controller
 {
     /**
@@ -22,7 +24,7 @@ class LedgerEntryController extends Controller
      private $subcompany;
      private $client;
      private $clientmapping;
-     
+
      public function __construct(LedgerEntryInterface $ledger,SubCompanyInterface $subcompany,ClientInterface $client,ClientMappingInterface $clientmapping)
      {
          $this->ledger=$ledger;
@@ -30,18 +32,18 @@ class LedgerEntryController extends Controller
          $this->client=$client;
          $this->clientmapping=$clientmapping;
      }
-    public function index()
+    public function index(Request $request)
     {
         try{
-            $ledger = $this->ledger->getAllLedger();
-
+            $subcompany = $request->get('subcompany');
+            $subcompanies = SubCompany::select('id','name')->get();
+            $ledger = $this->ledger->getAllLedger($subcompany);
         } catch(\Exception $e){
-            dd($e->getMessage());
             Toastr::danger($e->getMessage() ,'Danger');
-            return redirect()->route('ledger.index')->with('danger', $e->getMessage());
+            return redirect()->route('ledger.index');
         }
 
-        return view('admin.ledgerentry.index',compact('ledger'));
+        return view('admin.ledgerentry.index',compact('ledger','subcompanies'));
     }
 
     /**
@@ -60,7 +62,7 @@ class LedgerEntryController extends Controller
             return redirect()->route('ledger.index')->with('danger', $e->getMessage());
         }
         return view('admin.ledgerentry.create',compact('subcompanies','clients'));
-       
+
     }
 
     /**
@@ -73,9 +75,9 @@ class LedgerEntryController extends Controller
     {
         try{
             $ledgerentries = $this->ledger->storeLedgerEntry($request);
-           
+
     } catch(\Exception $e){
-        dd($e->getMessage()); 
+        dd($e->getMessage());
         return redirect()->route('admin.ledger.create')->with('danger', $e->getMessage());
     }
     if(!empty($request->edit))
@@ -137,18 +139,14 @@ class LedgerEntryController extends Controller
     {
         $clients = $this->clientmapping->searchSubClient($keyword);
         $clientmappingdetailsArray=[];
-        foreach($clients as $keys=>$clintmappingdetail){
-            $clientArray=[];
-            $clientmappingids = explode(',',$clintmappingdetail->client_id);
-            foreach($clientmappingids as $key => $clientmappingid){
-            $Client = Client::where('id',$clientmappingid)->first();
+        $clientArray=[];
+        foreach($clients as $key=>$clintmappingdetail){
+            $Client = Client::where('id',$clintmappingdetail->client_id)->first();
             $client_name = $Client->name;
             $client_id = $Client->id;
             $clientArray[$key]['id']=$client_id;
             $clientArray[$key]['text']=$client_name;
         }
         return $clientArray;
-    }
-       
     }
 }

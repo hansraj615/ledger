@@ -60,11 +60,12 @@ class SubCompnayController extends Controller
      */
     public function store(Request $request)
     {
-      
+
           try{
             $subcompanies = $this->subcompany->storeSubCompany($request);
-           
+
     } catch(\Exception $e){
+        dd($e->getMessage());
           return redirect()->route('subcompany.index')->with('danger', $e->getMessage());
     }
     if(!empty($request->edit))

@@ -43,12 +43,12 @@ class SubCompanyRepository implements SubCompanyInterface
 
     public function storeSubCompany($request)
     {
-      
+        // dd($request->all());
         if(!empty($request->edit))
         {
             $subcompanies =  SubCompany::find($request->edit);
         }else{
-           
+
         $subcompanies = new SubCompany();
         }
         $subcompanies->company_id = $request->companyname;
@@ -61,8 +61,9 @@ class SubCompanyRepository implements SubCompanyInterface
         $subcompanies->city = $request->city_name;
         $subcompanies->pincode = $request->pincode;
         $subcompanies->address = $request->address;
+        // dd($subcompanies);
         $subcompanies->save();
-        
+
         return $subcompanies;
 
     }

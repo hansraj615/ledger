@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientMappingRepository implements ClientMappingInterface
 {
-   
+
     public function getAllMapping()
     {
         $clientmappingdetailsArray = [];
-        $clintmappingdetails = ClientMapping::all(); 
+        $clintmappingdetails = ClientMapping::all();
         foreach($clintmappingdetails as $keys=>$clintmappingdetail){
         $clientmappingids = explode(',',$clintmappingdetail->client_id);
         $client_name = [];
@@ -29,14 +29,14 @@ class ClientMappingRepository implements ClientMappingInterface
         $client_name[] = $Client->name;
         }
         $clintmappingdetail->client_name = implode(' , ',$client_name);
-        $clientmappingdetailsArray[] = $clintmappingdetail; 
+        $clientmappingdetailsArray[] = $clintmappingdetail;
         }
         return  $clientmappingdetailsArray;
     }
-   
+
     public function storeClientMapping($request)
     {
-       
+
         if(!empty($request->edit))
         {
             $clientmapping=ClientMapping::find($request->edit);
@@ -51,7 +51,7 @@ class ClientMappingRepository implements ClientMappingInterface
         return $clientmapping;
     }
 
-    public function searchSubClient($keyword = null) 
+    public function searchSubClient($keyword = null)
     {
         return  $clint_name =ClientMapping::where('subcompany_id', '=', $keyword)->select('client_id')->get();
     }
@@ -67,5 +67,5 @@ class ClientMappingRepository implements ClientMappingInterface
         return $clientmappingid;
 
     }
-       
+
 }

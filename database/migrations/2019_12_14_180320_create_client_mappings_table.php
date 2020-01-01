@@ -15,9 +15,9 @@ class CreateClientMappingsTable extends Migration
     {
         Schema::create('client_mappings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('subcompany_id');
+            $table->unsignedBigInteger('subcompany_id');
             $table->foreign('subcompany_id')->references('id')->on('sub_companies');
-            $table->bigInteger('client_id');
+            $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
         });
