@@ -70,7 +70,7 @@ class ClientMappingController extends Controller
         }
         catch(\Exception $e)
         {
-           // dd($e->getMessage());
+           dd($e->getMessage());
             Toastr::danger($e->getMessage() ,'Danger');
             return redirect()->route('admin.clientmapping.create');
         }

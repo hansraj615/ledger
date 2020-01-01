@@ -53,6 +53,7 @@ class CompnayController extends Controller
         try{
                 $companies = $this->company->storeCompany($request);
         } catch(\Exception $e){
+            dd($e->getMessage());
             return redirect()->route('company.index')->with('danger', $e->getMessage());
         }
         if(!empty($request->edit))

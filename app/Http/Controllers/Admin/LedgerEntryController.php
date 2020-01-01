@@ -138,15 +138,20 @@ class LedgerEntryController extends Controller
     public function SearchClient($keyword=null)
     {
         $clients = $this->clientmapping->searchSubClient($keyword);
-        $clientmappingdetailsArray=[];
         $clientArray=[];
-        foreach($clients as $key=>$clintmappingdetail){
-            $Client = Client::where('id',$clintmappingdetail->client_id)->first();
+        $clientmappingdetailsArray=[];
+        foreach($clients as $keys=>$clintmappingdetail){
+            $clientArray=[];
+            $clientmappingids = explode(',',$clintmappingdetail->client_id);
+            foreach($clientmappingids as $key => $clientmappingid){
+            $Client = Client::where('id',$clientmappingid)->first();
             $client_name = $Client->name;
             $client_id = $Client->id;
             $clientArray[$key]['id']=$client_id;
             $clientArray[$key]['text']=$client_name;
         }
         return $clientArray;
+       
+        }
     }
 }

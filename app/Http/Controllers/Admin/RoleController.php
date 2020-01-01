@@ -39,7 +39,7 @@ class RoleController extends Controller
 
         $roles = $this->role->getAll();
 
-        return view('admin.roles.index', compact('roles', 'keyword'));
+        return view('admin.roles.index', compact('roles'));
     }
 
     /**
