@@ -2,9 +2,10 @@
 
 namespace App\Http\Requests\Company;
 
+use App\Models\Company;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CompanyRequests extends FormRequest
+class CreateCompanyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class CompanyRequests extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return policy(Company::class)->create($this->user());
     }
 
     /**
@@ -23,8 +24,11 @@ class CompanyRequests extends FormRequest
      */
     public function rules()
     {
-        return [
-            // 'test_id' => 'required',
-        ];
+        return [];
+    }
+
+    public function forbiddenResponse()
+    {
+        return response()->view('errors.403');
     }
 }

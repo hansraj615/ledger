@@ -2,6 +2,9 @@
 
 namespace App;
 
+use App\Models\Company;
+use App\Models\SubCompany;
+use App\Models\UserSubCompany;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -12,6 +15,7 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContracts;
 use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\UserCompany;
 
 class User extends Authenticatable
 {
@@ -43,4 +47,21 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+
+
+    public function usercompany()
+    {
+        return $this->hasOne(UserCompany::class);
+    }
+
+    public function usersubcompany()
+    {
+        return $this->hasOne(UserSubCompany::class);
+    }
 }

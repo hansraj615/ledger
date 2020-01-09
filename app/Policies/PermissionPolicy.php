@@ -51,10 +51,10 @@ class PermissionPolicy
      * @param User $user
      * @return bool
      */
-    // public function show(User $user)
-    // {
-    //     return (Entrust::hasRole(['admin','owner','general-user']) && Entrust::can('show-company')) ? true : false;
-    // }
+    public function show(User $user)
+    {
+        return (Entrust::hasRole(['admin','owner']) && Entrust::can('show-permission')) ? true : false;
+    }
 
     /**
      * @param User $user

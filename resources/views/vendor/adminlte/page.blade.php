@@ -158,6 +158,18 @@
     <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
         <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
         {!! Toastr::message() !!}
+
+
+<script>
+    @if($errors->any())
+        @foreach($errors->all() as $error)
+              toastr.error('{{ $error }}','Error',{
+                  closeButton:true,
+                  progressBar:true,
+               });
+        @endforeach
+    @endif
+</script>
     <!-- InputMask -->
 <script src="{{asset('vendor/adminlte/vendor/input-mask/jquery.inputmask.js') }}"></script>
 <script src="{{asset('vendor/adminlte/vendor/input-mask/jquery.inputmask.date.extensions.js') }}"></script>

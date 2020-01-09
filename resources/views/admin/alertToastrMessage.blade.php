@@ -17,18 +17,18 @@
         @endif
 
         @if ($errors->any())
-        
+
             @php $message='<ul>'; @endphp
                 @foreach ($errors->all() as $error)
                     @php $message=$message.'<li>'.$error.'</li>'; @endphp
                 @endforeach
            @php $message=$message.'</ul>'; @endphp
-           
+
             <script>
                 $(function(){
                     toastr.error('{!! $message !!}');
                 });
-            </script>           
+            </script>
         @endif
     </div>
 </div>

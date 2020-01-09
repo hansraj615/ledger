@@ -62,7 +62,8 @@ class LedgerEntryRepository implements LedgerEntryInterface
     }
     public function getAllClientSubCompany()
     {
-        $subcompanies = ClientMapping::select('subcompany_id')->distinct()->get();
+        $subcompany = \App\Traits\CommonTrait::getUserSubCompanyId();
+        $subcompanies = ClientMapping::select('subcompany_id')->where('subcompany_id',$subcompany)->distinct()->get();
         return $subcompanies;
     }
     public function getAllSubClient()

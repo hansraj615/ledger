@@ -7,6 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Company\EditCompanyRequest;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Ledger\Repositories\Company\CompanyInterface;
+use App\Http\Requests\Company\CreateCompanyRequest;
+use App\Http\Requests\Company\DeleteCompanyRequest;
+use App\Http\Requests\Company\IndexCompanyRequest;
+use App\Http\Requests\Company\ShowCompanyRequest;
+use App\Http\Requests\Company\StoreCompanyRequest;
+use App\Http\Requests\Company\UpdateCompanyRequest;
 
 class CompnayController extends Controller
 {
@@ -19,7 +25,7 @@ class CompnayController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(IndexCompanyRequest $request)
     {
         try{
             $companies = $this->company->getAllCompany();
@@ -37,7 +43,7 @@ class CompnayController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(CreateCompanyRequest $request)
     {
         return view('admin.company.create');
     }
@@ -48,7 +54,7 @@ class CompnayController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreCompanyRequest $request)
     {
         try{
                 $companies = $this->company->storeCompany($request);
@@ -72,7 +78,7 @@ class CompnayController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id,ShowCompanyRequest $request)
     {
         //
     }
@@ -100,7 +106,7 @@ class CompnayController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateCompanyRequest $request, $id)
     {
         //
     }
@@ -111,7 +117,7 @@ class CompnayController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,DeleteCompanyRequest $request)
     {
         try{
             $delete_country = $this->company->deleteCompany($id);
@@ -152,6 +158,16 @@ class CompnayController extends Controller
             $cityArray[$citykey]['text']=$city->city_name;
         }
         return $cityArray;
+    }
+    public function searchSubCompany($keyword=null,Request $request)
+    {
+        $subcompanies = $this->company->searchSubCompany($keyword,$request);
+        $subcompanyArray = [];
+        foreach ($subcompanies as $subcompanykey=>$subcompany){
+            $subcompanyArray[$subcompanykey]['id']=$subcompany->id;
+            $subcompanyArray[$subcompanykey]['text']=$subcompany->name;
+        }
+        return $subcompanyArray;
     }
 
 }

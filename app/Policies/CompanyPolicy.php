@@ -26,7 +26,7 @@ class CompanyPolicy
      */
     public function index(User $user)
     {
-        return (Entrust::hasRole(['admin','owner','general-user']) && Entrust::can('list-company')) ? true : false;
+        return  Entrust::can('list-company') ? true : false;
     }
 
     /**
@@ -35,7 +35,8 @@ class CompanyPolicy
      */
     public function create(User $user)
     {
-        return (Entrust::hasRole(['admin','owner']) && Entrust::can('create-company')) ? true : false;
+        // return (Entrust::hasRole(['admin','owner','general-user']) && Entrust::can('create-company')) ? true : false;
+        return  Entrust::can('create-company') ? true : false;
     }
 
     /**
@@ -44,7 +45,7 @@ class CompanyPolicy
      */
     public function update(User $user)
     {
-        return (Entrust::hasRole(['admin','owner']) && Entrust::can('edit-company')) ? true : false;
+        return Entrust::can('edit-company') ? true : false;
     }
 
     /**
@@ -53,7 +54,7 @@ class CompanyPolicy
      */
     public function show(User $user)
     {
-        return (Entrust::hasRole(['admin','owner','general-user']) && Entrust::can('show-company')) ? true : false;
+        return Entrust::can('show-company') ? true : false;
     }
 
     /**
@@ -62,6 +63,6 @@ class CompanyPolicy
      */
     public function delete(User $user)
     {
-        return (Entrust::hasRole(['admin','owner']) && Entrust::can('delete-company')) ? true : false;
+        return Entrust::can('delete-company') ? true : false;
     }
 }

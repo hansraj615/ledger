@@ -5,20 +5,6 @@
 @section('content')
 
 <section>
-
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Data Tables
-        <small>advanced tables</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
-      </ol>
-    </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
@@ -28,7 +14,7 @@
 
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Data Table With Full Features</h3>
+              <h3 class="box-title">Company Master</h3>
             </div>
 
 
@@ -54,7 +40,7 @@
                   <th>Company Name <span class="text-red">[Company Code]</span> </th>
                   <th>Contact Details <i class="fa fa-phone text-green" aria-hidden="true"></i> | <i class="fa fa-mobile text-green" aria-hidden="true"></i></th>
                   <th>Address</th>
-                  <th>Creted At</th>
+                  <th>Created At</th>
                   <th>Updated At</th>
                   <th>Action</th>
                 </tr>
@@ -78,7 +64,9 @@
                     <td>{{$company->updated_at?$company->updated_at->diffForHumans():''}}</td>
                     <td>
                         <div class="btn-group btn-group-sm">
+                            @permission('edit-company')
                             <a href="{{ route('company.edit',$company->id) }}" class="edit-model btn btn-warning btn-sm " ><i class="fa fa-edit"></i></a>
+                            @endpermission
                             @permission('delete-company')
                                 <button class="delete-model btn btn-danger btn-sm " type="button" onclick="deleteCompany({{ $company->id }})">
                                     <i class="fa fa-trash"></i>
@@ -86,7 +74,7 @@
                                 <form id="delete-form-{{ $company->id }}" action="{{ route('company.destroy',$company->id) }}" method="POST" style="display: none;">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
-                                @endpermission
+                            @endpermission
                         </div>
                         </td>
                     </tr>

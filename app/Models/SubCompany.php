@@ -10,7 +10,7 @@ class SubCompany extends Model
 
     Public function company()
     {
-        return $this->belongsTo(Company::class,'id');
+        return $this->belongsTo(Company::class,'company_id','id');
 
     }
 

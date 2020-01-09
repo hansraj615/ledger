@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 2',
+    'title' => 'Ledger',
 
     'title_prefix' => '',
 
@@ -30,9 +30,9 @@ return [
     |
     */
 
-    'logo' => '<b>Admin</b>LTE',
+    'logo' => '<b>LEDGER |</b> <span style="color:#bb5252;">RIMSOFTECH</span>',
 
-    'logo_mini' => '<b>A</b>LT',
+    'logo_mini' => '',
 
     /*
     |--------------------------------------------------------------------------
@@ -139,13 +139,6 @@ return [
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'pages',
-            'url'         => 'admin/pages',
-            'icon'        => 'far fa-file',
-            'label'       => 4,
-            'label_color' => 'success',
-        ],
-        [
             'text'        => 'Company',
             'url'         => 'admin/company',
             'icon'        => 'far fa-file',
@@ -167,6 +160,12 @@ return [
             'icon'        => 'far fa-file',
             'label'       => 4,
             'label_color' => 'success',
+        ],[
+            'text'        => 'Product',
+            'url'         => 'admin/products',
+            'icon'        => 'far fa-file',
+            'label'       => \App\Traits\CommonTrait::getTotalProduct(),
+            'label_color' => 'success',
         ],
         [
             'text'        => 'Client',
@@ -184,17 +183,18 @@ return [
         ['header' => 'account_settings'],
         [
             'text' => 'profile',
-            'url'  => 'admin/settings',
+            'url'  => 'admin/user-profile',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'change_password',
-            'url'  => 'admin/settings',
+            'url'  => 'admin/user-profile?tab=password',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text'    => 'multilevel',
+            'text'    => 'Manage Permission',
             'icon'    => 'fas fa-fw fa-share',
+            'role'        => ['owner','admin'],
             'submenu' => [
                 [
                     'text' => 'Role',
@@ -210,51 +210,52 @@ return [
                 ],
                 [
                     'text' => 'User Management',
-                    'url'  => '#',
+                    'url'  => 'admin/users',
+                    'role'        => ['owner','admin'],
                 ],
-                [
-                    'text'    => 'qwe',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
+                // [
+                //     'text'    => 'qwe',
+                //     'url'     => '#',
+                //     'submenu' => [
+                //         [
+                //             'text' => 'level_two',
+                //             'url'  => '#',
+                //         ],
+                //         [
+                //             'text'    => 'level_two',
+                //             'url'     => '#',
+                //             'submenu' => [
+                //                 [
+                //                     'text' => 'level_three',
+                //                     'url'  => '#',
+                //                 ],
+                //                 [
+                //                     'text' => 'level_three',
+                //                     'url'  => '#',
+                //                 ],
+                //             ],
+                //         ],
+                //     ],
+                // ],
+                // [
+                //     'text' => 'level_one',
+                //     'url'  => '#',
+                // ],
             ],
         ],
-        ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'aqua',
-        ],
+        // ['header' => 'labels'],
+        // [
+        //     'text'       => 'important',
+        //     'icon_color' => 'red',
+        // ],
+        // [
+        //     'text'       => 'warning',
+        //     'icon_color' => 'yellow',
+        // ],
+        // [
+        //     'text'       => 'information',
+        //     'icon_color' => 'aqua',
+        // ],
     ],
 
     /*

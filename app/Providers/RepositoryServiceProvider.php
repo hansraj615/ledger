@@ -20,6 +20,10 @@ use App\Ledger\Repositories\Role\RoleRepository;
 use App\Ledger\Repositories\Role\RoleInterface;
 use App\Ledger\Repositories\Permission\PermissionInterface;
 use App\Ledger\Repositories\Permission\PermissionRepository;
+use App\Ledger\Repositories\User\UserInterface;
+use App\Ledger\Repositories\User\UserRepository;
+use App\Ledger\Repositories\Product\ProductInterface;
+use App\Ledger\Repositories\Product\ProductRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -40,6 +44,8 @@ class RepositoryServiceProvider extends ServiceProvider
          $this->app->bind(ClientMappingInterface::class, ClientMappingRepository::class);
         $this->app->bind(RoleInterface::class, RoleRepository::class);
         $this->app->bind(PermissionInterface::class, PermissionRepository::class);
+        $this->app->bind(UserInterface::class, UserRepository::class);
+        $this->app->bind(ProductInterface::class, ProductRepository::class);
 
     }
 
@@ -54,6 +60,8 @@ class RepositoryServiceProvider extends ServiceProvider
             ClientMappingInterface::class,
             RoleInterface::class,
             PermissionInterface::class,
+            UserInterface::class,
+            ProductInterface::class,
 
         ];
     }

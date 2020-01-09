@@ -12,6 +12,11 @@ use Illuminate\Support\Facades\Auth;
 class SubCompanyRepository implements SubCompanyInterface
 {
 
+    private $subcompany;
+
+    public function __construct(SubCompany $subcompany){
+        $this->subcompany = $subcompany;
+    }
     public function getAllSubCompany()
     {
         $subcompanies = SubCompany::all();
@@ -95,5 +100,10 @@ class SubCompanyRepository implements SubCompanyInterface
     {
         $company_name = Company::select('id','name')->get();
         return $company_name;
+    }
+
+    public function getAllSubCompanyList()
+    {
+        return $this->subcompany->select('name','id')->get();
     }
 }

@@ -35,8 +35,8 @@ class LedgerEntryController extends Controller
     public function index(Request $request)
     {
         try{
-            $subcompany = $request->get('subcompany');
-            $subcompanies = SubCompany::select('id','name')->get();
+            $subcompany = \App\Traits\CommonTrait::getUserSubCompanyId();
+            $subcompanies = SubCompany::select('id','name')->where('id',$subcompany)->get();
             $ledger = $this->ledger->getAllLedger($subcompany);
         } catch(\Exception $e){
             Toastr::danger($e->getMessage() ,'Danger');
@@ -151,7 +151,7 @@ class LedgerEntryController extends Controller
             $clientArray[$key]['text']=$client_name;
         }
         return $clientArray;
-       
+
         }
     }
 }

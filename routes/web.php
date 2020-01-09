@@ -22,12 +22,21 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::group(["prefix" => "admin", "namespace" => "Admin",'middleware' => 'auth'], function () {
 
+    /********* User Management */
+    Route::get('/users', 'UserController@index')->name('user.index');
+    Route::get('/users/create', 'UserController@create')->name('user.create');
+    Route::get('/users/edit/{reference_id}','UserController@edit')->name('user.edit');
+    Route::post('/users/destroy/{reference_id}','UserController@destroy')->name('user.destroy');
+    Route::post('/users/store', 'UserController@store')->name('user.store');
+    Route::POST('/users/update/{reference_id}', 'UserController@update')->name('user.update');
+     /********* Company Master */
     Route::get('/company','CompnayController@index')->name('company.index');
     Route::get('/company/edit/{reference_id}','CompnayController@edit')->name('company.edit');
     Route::post('/company/destroy/{reference_id}','CompnayController@destroy')->name('company.destroy');
     Route::get('/search-country/{keyword?}', 'CompnayController@searchCountry')->name('admin.search-country');
     Route::get('/search-state/{keyword?}', 'CompnayController@searchState')->name('admin.search-state');
     Route::get('/search-city/{keyword?}', 'CompnayController@searchCity')->name('admin.search-city');
+    Route::get('/search-subcompany/{keyword?}', 'CompnayController@searchSubCompany')->name('admin.search-subcompany');
     Route::POST('/company/store', 'CompnayController@store')->name('admin.company.store');
     Route::get('/company/create', 'CompnayController@create')->name('admin.company.create');
     Route::POST('/company/update/{reference_id}', 'CompnayController@update')->name('admin.company.update');
@@ -76,6 +85,16 @@ Route::group(["prefix" => "admin", "namespace" => "Admin",'middleware' => 'auth'
     Route::resource('/permissions', 'PermissionController');
     Route::post('/permissions/destroy/{reference_id}','PermissionController@destroy')->name('permissions.destroy');
     Route::resource('/pod-users', 'PodUsersController');
+
+    /*******************user profile */
+    Route::resource('/user-profile','UserProfileController');
+    Route::post('/user-profile-password-update','UserProfileController@updatepassword')->name('password.update');
+
+    /*******************Product master */
+    Route::resource('/products','ProductController');
+
+
+
 
 });
 

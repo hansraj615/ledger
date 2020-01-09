@@ -3,25 +3,27 @@
 @section('title', 'LedgerEntry')
 
 @section('content')
-<ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
-</ol>
+
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <form class="form" action="{{route('ledger.index')}}" method="GET">
+                @php
+                $usersubcompanyid = \App\Traits\CommonTrait::getUserSubCompanyId();
+                // dd($usersubcompanyid);
+                @endphp
+                <form class="form form-inline showdetails" action="{{route('ledger.index')}}" name="showdetails" method="GET">
                     <div class="box-header">
-                        <h3 class="box-title">For Subcompany  </h3>
-                        <select class="form-control" name="subcompany">
-                            @foreach($subcompanies as $company)
-                            <option value="{{$company->id}}" @if(Request::get('subcompany')== $company->id) selected @endif>{{$company->name}}</option>
+                        <h3 class="box-title">For Ledger Entry  </h3>
+                        <div class="col-md-12 align-center text-center">
+                        <select class="form-control col-4" name="subcompany" id="subcompany">
+                            @foreach($subcompanies as $key => $company)
+                            <option value="{{$company->id}}" @if(Request::get('subcompany')== $company->id) selected @elseif($usersubcompanyid==$company->id) selected @else  @endif>{{$company->name}}</option>
                             @endforeach
                         </select>
-                        <button type="submit" class="btn btn-primary">search</button>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    </div>
                     </div>
                 </form>
 
@@ -39,10 +41,8 @@
                         </div>
                     </div>
                     <div class="row">&nbsp;</div>
+                    @if(count($ledger)>0)
                     <div class="box">
-                        <div class="box-header">
-                        <h3 class="box-title">Data Table With Full Features</h3>
-                        </div>
                         <div class="box-body">
                             @foreach($ledger as $ledgerrntry)
                             <div class="ledger-list-item ledger-patient-details">
@@ -56,8 +56,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <label class="text-primary"><i class="fas fa-eye"></i></label> |
-                                                <label class="text-primary"><i class="fas fa-edit"></i></label>
+                                            <a href="{{route('client.index')}}" class="text-primary"><i class="fas fa-eye"></i></a>  |
+                                                <a href="{{ route('client.edit',$ledgerrntry->client_id) }}" class="text-primary"><i class="fas fa-edit"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -119,6 +119,14 @@
                             @endforeach
                         </div>
                     </div>
+                    @else
+                        <div class="text-center">
+                            <?php
+                                $results = \App\Ledger\Helpers\customHelper::getsubcompanyName(Request::get('subcompany'));
+                                ?>
+                        <p> No Transaction available for Subcompany <b style="color:red" class="text-capitalize">{{$results}} </b></p>
+                        </div>
+                    @endif
                 </div>
             </div>
         <!-- /.col -->
@@ -126,6 +134,8 @@
       <!-- /.row -->
     </section>
     <!-- /.content -->
+
+
 @endsection
 @push('css')
 <style>
@@ -176,6 +186,29 @@
         'autoWidth'   : false
       })
     })
+  </script>
+  <script>
+      $(document).ready(function() {
+        var getvalue = $("#subcompany option:selected").val();
+        // alert({{Request::get('subcompany')}});
+        var checkUrl = {{ Request::get('subcompany') !=0 ? Request::get('subcompany') : '0' }};
+       if(checkUrl==0) {
+            var $form = $('.showdetails').closest('form');
+            $form.find('button[type=submit]').click();
+        }
+
+    $('#subcompany').on('change', function() {
+        console.log($(this));
+        $(this).data('clicked', true);
+        if($('#subcompany').data('clicked')) {
+        var $form = $('.showdetails').closest('form');
+            $form.find('button[type=submit]').click();
+    }
+
+  });
+
+});
+
   </script>
   <script>
 

@@ -6,10 +6,16 @@ use App\Models\Country;
 use App\Models\City;
 use App\Models\Company;
 use App\Models\State;
+use App\Models\SubCompany;
 use Illuminate\Support\Facades\Auth;
 
 class CompanyRepository implements CompanyInterface
 {
+    private $company;
+
+    public function __construct(Company $company){
+        $this->company = $company;
+    }
 
     public function getAllCompany()
     {
@@ -85,6 +91,15 @@ class CompanyRepository implements CompanyInterface
     public function searchCity($keyword = null,$request)
     {
         return  $states_name =City::where('state_id',$request->state_id)->where('city_name', 'like', '%'.$request->q.'%')->select('id', 'city_name')->get();
+    }
+    public function searchSubCompany($keyword = null,$request)
+    {
+        return  $subcompanies_name =SubCompany::where('company_id',$request->company_id)->where('name', 'like', '%'.$request->q.'%')->select('id', 'name')->get();
+    }
+
+    public function getAllCompanyList()
+    {
+        return $this->company->select('name','id')->get();
     }
 
 }

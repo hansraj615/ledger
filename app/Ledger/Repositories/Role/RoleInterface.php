@@ -16,7 +16,7 @@ interface RoleInterface
 
     // public function getRolePermissionIds($id);
 
-    // public function getList();
+    public function getList();
 
     // public function getCount();
 

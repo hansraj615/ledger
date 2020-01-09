@@ -7,54 +7,23 @@
 @section('content')
 
 <section>
-
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Data Tables
-        <small>advanced tables</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
-      </ol>
-    </section>
-
-    <!-- Main content -->
-    <section class="content-header">
-        <h1>
-          Advanced Form Elements
-          <small>Preview</small>
-        </h1>
-        <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-          <li><a href="#">Forms</a></li>
-          <li class="active">Advanced Elements</li>
-        </ol>
-      </section>
-
       <!-- Main content -->
       <section class="content">
-
-
         <!-- /.box -->
-
-
-
             <div class="box box-danger">
               <div class="box-header">
-                <h3 class="box-title">Input masks</h3>
+                <h3 class="box-title">Create New Company</h3>
               </div>
               <div class="box-body">
-                <div class="row">
+
                 <form class="form" action="{{route('admin.company.store')}}" method="POST">
+                        <div class="row">
                         {{csrf_field()}}
                     <div class="col-md-12">
                   <div class="col-lg-4">
 
                     <div class="form-group">
-                      <label for="name">Compnay Name</label>
+                      <label for="name">Company Name</label>
                       <input type="text" name="name" id="name" class="form-control" placeholder="" aria-describedby="helpId">
                       <small id="helpId" class="text-muted">Help text</small>
                     </div>
@@ -148,10 +117,14 @@
                         <small id="helpId" class="text-muted">Help text</small>
                     </div>
                 </div>
-
-                <button type="submit" class="btn btn-success center-block">Submit</button>
-            </form>
             </div>
+                <div class="row">
+
+                        <button type="submit" class="btn btn-success center-block">Submit</button>
+                </div>
+
+            </form>
+
 
               </div>
               <!-- /.box-body -->

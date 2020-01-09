@@ -7,38 +7,11 @@
 @section('content')
 
 <section>
-
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Data Tables
-        <small>advanced tables</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
-      </ol>
-    </section>
-
-    <!-- Main content -->
-    <section class="content-header">
-        <h1>
-          Advanced Form Elements
-          <small>Preview</small>
-        </h1>
-        <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-          <li><a href="#">Forms</a></li>
-          <li class="active">Advanced Elements</li>
-        </ol>
-      </section>
-
       <!-- Main content -->
       <section class="content">
             <div class="box box-danger">
               <div class="box-header">
-                <h3 class="box-title">Input masks</h3>
+                <h3 class="box-title">Edit Company</h3>
               </div>
               <div class="box-body">
                 <div class="row">
@@ -48,7 +21,7 @@
                   <div class="col-lg-4">
 
                     <div class="form-group">
-                      <label for="name">Compnay Name</label>
+                      <label for="name">Company Name</label>
                       <input type="text" name="name" id="name" value= "{{$companies->name}}" class="form-control" placeholder="" aria-describedby="helpId" autocomplete="off">
                       <small id="helpId" class="text-muted">Help text</small>
                     </div>

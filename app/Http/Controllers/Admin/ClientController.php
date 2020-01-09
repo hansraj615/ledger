@@ -9,7 +9,7 @@ use Brian2694\Toastr\Facades\Toastr;
 
 class ClientController extends Controller
 {
-      
+
      private $client;
     public function __construct(ClientInterface $client){
         $this->client = $client;
@@ -19,7 +19,7 @@ class ClientController extends Controller
     {
         try
         {
-            $clients = $this->client->getClient();           
+            $clients = $this->client->getClient();
         }
         catch(\Exception $e)
         {
@@ -119,7 +119,7 @@ class ClientController extends Controller
         try{
             $delete_client = $this->client->deleteClient($id);
         }catch(\Exception $e){
-            return redirect()->route('client.index')->with('danger', $e->getMessage());
+            return redirect()->route('client.index')->with('error', $e->getMessage());
         }
         Toastr::Warning('Client Successfully Deleted :)','Success');
         return redirect()->route('client.index');
