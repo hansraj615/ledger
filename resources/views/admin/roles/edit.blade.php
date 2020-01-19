@@ -8,10 +8,6 @@
         <div class="header">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="float-left">
-                        <h1>Edit Permission</h1>
-                        <h2>Please edit the form below then update.</h2>
-                    </div>
                     <div class="float-right">
                         <a href="{{route('roles.index')}}" class="btn btn-primary">Back</a>
                     </div>
@@ -19,21 +15,10 @@
             </div>
         </div>
     </section>
-    <section class="content-header">
-        <h1>
-          Data Tables
-          <small>advanced tables</small>
-        </h1>
-        <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-          <li><a href="#">Tables</a></li>
-          <li class="active">Data tables</li>
-        </ol>
-      </section>
       <section class="content">
         <div class="box box-danger">
           <div class="box-header">
-            <h3 class="box-title">Input masks</h3>
+            <h3 class="box-title">Edit Role</h3>
           </div>
           <div class="box-body">
             <div class="row">

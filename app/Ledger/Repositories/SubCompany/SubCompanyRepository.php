@@ -19,7 +19,8 @@ class SubCompanyRepository implements SubCompanyInterface
     }
     public function getAllSubCompany()
     {
-        $subcompanies = SubCompany::all();
+        $subcompany_id = \App\Traits\CommonTrait::getUserSubCompanyId();
+        $subcompanies = SubCompany::where('id',$subcompany_id)->get();
         $subcompany_details = [];
         foreach($subcompanies as $subcompany){
         $countries_name =Country::where('id',$subcompany->country)->select('country_name','country_code')->first();

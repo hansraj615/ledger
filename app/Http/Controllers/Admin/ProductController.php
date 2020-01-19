@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Ledger\Repositories\Product\ProductInterface;
+use Brian2694\Toastr\Facades\Toastr;
+
 class ProductController extends Controller
 {
     /**
@@ -31,7 +33,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view ('admin.product.create');
     }
 
     /**
@@ -42,7 +44,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+        $product = $this->product->storeProducts($request);
+        }
+        catch(\Exception $e){
+            return redirect()->back()->with('danger', $e->getMessage());
+        }
+        Toastr::Warning('Product Successfully Added :)','Success');
+        return redirect()->route('products.index');
+
     }
 
     /**
@@ -56,6 +66,17 @@ class ProductController extends Controller
         //
     }
 
+    public function searchProduct($keyword=null)
+    {
+        $products = $this->product->searchProduct($keyword);
+        $productArray=[];
+        foreach ($products as $productkey=>$product){
+            $productArray[$productkey]['id']=$product->id;
+            $productArray[$productkey]['text']=$product->name;
+        }
+        return $productArray;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -64,7 +85,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = $this->product->findProduct($id);
+        return view('admin.product.edit',compact('product'));
     }
 
     /**
@@ -76,7 +98,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try{
+            $product = $this->product->updateProducts($request,$id);
+            }
+            catch(\Exception $e){
+                return redirect()->back()->with('danger', $e->getMessage());
+            }
+            Toastr::Warning('Product Successfully Updated :)','Success');
+            return redirect()->route('products.index');
     }
 
     /**
@@ -87,6 +116,12 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $delete_product = $this->product->deleteProduct($id);
+        }catch(\Exception $e){
+            return redirect()->route('products.index')->with('danger', $e->getMessage());
+        }
+        Toastr::Warning('Product Successfully Deleted :)','Success');
+        return redirect()->route('products.index');
     }
 }

@@ -24,14 +24,15 @@ class CreateRoleRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-            'name' => 'required|min:3|unique:roles,name',
-            'display_name' => 'required|min:3',
-            'description' => 'required',
-            'permissions' => 'required'
-        ];
+        // $rules = [
+        //     'name' => 'required|min:3|unique:roles,name',
+        //     'display_name' => 'required|min:3',
+        //     'description' => 'required',
+        //     'permissions' => 'required'
+        // ];
 
-        return $rules;
+        // return $rules;
+        return [];
     }
 
     public function messages()

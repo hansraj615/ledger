@@ -19,7 +19,8 @@ class CompanyRepository implements CompanyInterface
 
     public function getAllCompany()
     {
-        $companies = Company::all();
+        $company_id = \App\Traits\CommonTrait::getUserCompanyId();
+        $companies = Company::where('id',$company_id)->get();
         $company_details = [];
         foreach($companies as $company){
         $countries_name =Country::where('id',$company->country)->select('country_name','country_code')->first();

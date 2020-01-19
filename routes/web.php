@@ -92,6 +92,8 @@ Route::group(["prefix" => "admin", "namespace" => "Admin",'middleware' => 'auth'
 
     /*******************Product master */
     Route::resource('/products','ProductController');
+    Route::get('/search-product/{keyword?}', 'ProductController@searchProduct')->name('search-product');
+    Route::post('/products/destroy/{reference_id}','ProductController@destroy')->name('product.destroy');
 
 
 

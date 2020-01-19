@@ -14,7 +14,8 @@ class SubCompanyStockRepository implements SubCompanyStockInterface
 {
     public function getSubComanyStock()
     {
-        $subcompanystock = CompanyStock::get();
+        $subcompany_id = \App\Traits\CommonTrait::getUserSubCompanyId();
+        $subcompanystock = CompanyStock::where('subcompany_id',$subcompany_id)->get();
         return $subcompanystock;
     }
 
@@ -39,7 +40,7 @@ class SubCompanyStockRepository implements SubCompanyStockInterface
         $subcompanystock->save();
         return $subcompanystock;
     }
-    
+
     public function getAllOpening()
     {
         $subcompanystock = CompanyStock::pluck('subcompany_id');
@@ -56,5 +57,5 @@ class SubCompanyStockRepository implements SubCompanyStockInterface
 
     }
 
-   
+
 }

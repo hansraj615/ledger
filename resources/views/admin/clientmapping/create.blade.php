@@ -7,41 +7,12 @@
 @section('content')
 
 <section>
-
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Data Tables
-        <small>advanced tables</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
-      </ol>
-    </section>
-
-    <!-- Main content -->
-    <section class="content-header">
-        <h1>
-          Advanced Form Elements
-          <small>Preview</small>
-        </h1>
-        <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-          <li><a href="#">Forms</a></li>
-          <li class="active">Advanced Elements</li>
-        </ol>
-      </section>
-
       <!-- Main content -->
       <section class="content">
-
-
         <!-- /.box -->
             <div class="box box-danger">
               <div class="box-header">
-                <h3 class="box-title">Input masks</h3>
+                <h3 class="box-title">Create Client Mapping</h3>
               </div>
               <div class="box-body">
                 <div class="row">
@@ -67,8 +38,8 @@
                     <div class="form-group">
                         <label for="name">Client Name</label>
                         {{-- <input type="text" name="name" id="companyname" class="form-control" placeholder="" aria-describedby="helpId"> --}}
-                        <select name="clientname[]" class="form-control select2" id="clientname" data-placeholder="Select Client"multiple>
-                          
+                        <select name="clientname[]" class="form-control SumoSelect" id="clientname" data-placeholder="Select Client"multiple>
+
                           @foreach($clients as $key=>$value)
                           <option value="{{$value->id}}">{{$value->name}}</option>
                           @endforeach
@@ -76,10 +47,10 @@
                         <small id="helpId" class="text-muted">Help text</small>
                       </div>
                   </div>
-               
-            
+
+
             </div>
-           
+
                 <button type="submit" class="btn btn-success center-block">Submit</button>
             </form>
             </div>
@@ -100,6 +71,11 @@
 @endsection
 
 @push('js')
+{!! Html::style('vendor/vendor/sumoselect/sumoselect.css') !!}
+<link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/sumoselect/sumoselect.css') }}">
+
+<script src="{{asset('vendor/vendor/sumoselect/jquery.sumoselect.js')}}"></script>
+{!! Html::script('vendor/adminlte/vendor/sumoselect/jquery.sumoselect.js') !!}
 <script>
     $(function () {
       $('#example1').DataTable()
@@ -112,13 +88,13 @@
         'autoWidth'   : false
       })
     })
-    
+
   </script>
 <script>
   $(function () {
     //Initialize Select2 Elements
     $('.select2').select2()
-
+    $('.SumoSelect').SumoSelect({search: true, searchText: 'Enter here.'});
     //Datemask dd/mm/yyyy
     $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
     //Datemask2 mm/dd/yyyy

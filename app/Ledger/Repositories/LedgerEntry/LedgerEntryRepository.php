@@ -4,7 +4,6 @@ namespace App\Ledger\Repositories\LedgerEntry;
 
 
 use App\Models\Country;
-use App\Models\City;
 use App\Models\Client ;
 use App\Models\ClientMapping;
 use App\Models\Company;
@@ -12,19 +11,25 @@ use App\Models\CompanyStock;
 use App\Models\LedgerEntry;
 use App\Models\State;
 use App\Models\SubCompany;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class LedgerEntryRepository implements LedgerEntryInterface
 {
+    private  $ledgerentries;
+
+    public function __construct(LedgerEntry $ledgerentries)
+    {
+        $this->ledgerentries = $ledgerentries;
+    }
     public function getAllLedger($subcompany)
     {
         $ledgers = LedgerEntry::select('client_id')->where('subcompany_id',$subcompany)->distinct()->get();
         foreach($ledgers as $ledger)
         {
-            $ledger['clientname']=Client::where('id',$ledger->client_id)->first();
-
-            $ledger['clientTotalAmount']=$this->getTotalClientAmount($ledger->client_id,$subcompany);
+            $ledger['clientname'] = Client::where('id',$ledger->client_id)->pluck('name','id');
+            $ledger['clientTotalAmount'] = $this->getTotalClientAmount($ledger->client_id,$subcompany);
             $getsubcompanystock = CompanyStock::select('opening_balance')->where('subcompany_id',$subcompany)->first();
             if($ledger['clientTotalAmount']+$getsubcompanystock->opening_balance > $getsubcompanystock->opening_balance)
             {
@@ -35,7 +40,6 @@ class LedgerEntryRepository implements LedgerEntryInterface
                 $ledger['subcompanyhealth'] = 0;
             }
             $ledger['latesttranaction']=$this->getTransaction($ledger->client_id,$subcompany);
-
         }
         return $ledgers;
     }
@@ -48,17 +52,25 @@ class LedgerEntryRepository implements LedgerEntryInterface
         $clienttotalamount=$clientcredit- $clientdebit;
         return $clienttotalamount;
     }
-    // public function getClientType($client_id)
-    // {
-    //     $clientid=intval($client_id);
-    //     $clientamounttype=LedgerEntry::where([['client_id',$clientid]])->get;
-    //     return $clientamounttype;
-    // }
+
     public function getTransaction($client_id,$subcompany)
     {
-        $clientid=intval($client_id);
-        $clienttranaction=LedgerEntry::select('amount','amount_type','description')->where([['client_id',$clientid],['subcompany_id',$subcompany]])->orderBy('id', 'desc')->take(2)->get();
-        return  $clienttranaction;
+        try{
+            $lasttransatsations = $this->ledgerentries
+            ->where([['client_id',$client_id],['subcompany_id',$subcompany]])
+            ->distinct()
+            ->select('amount_type','transation_id')
+            ->get();
+            foreach($lasttransatsations as $lasttransatsation)
+            {
+                $lasttransatsation['totalamout'] = $this->ledgerentries->where([['client_id',$client_id],['subcompany_id',$subcompany],['transation_id',$lasttransatsation->transation_id]])->sum('amount');
+            }
+            return  $lasttransatsations;
+        }
+        catch(Exception $e)
+        {
+            dd($e->getMessage());
+        }
     }
     public function getAllClientSubCompany()
     {
@@ -78,10 +90,17 @@ class LedgerEntryRepository implements LedgerEntryInterface
 
     public function storeLedgerEntry($request)
     {
+        try{
         $finaltotalamount="0";
         $amounthealth=0;
+        $transation_id = LedgerEntry::select('transation_id')->orderBy('transation_id','desc')->first();
+        if(!empty($transation_id)){
+            $transation = $transation_id->transation_id;
+            $transation = $transation + 1;
+        } else{
+            $transation = 1;
+        }
         $getfinalamount = LedgerEntry::where('subcompany_id','=', $request->subcompanyname)->orderBy('id', 'desc')->first();
-        // dd($request->subcompanyname);
         if(!empty($getfinalamount))
         {
             $lastfinalamount = $getfinalamount->finalamount;
@@ -90,40 +109,55 @@ class LedgerEntryRepository implements LedgerEntryInterface
             $getamount = CompanyStock::where('subcompany_id','=', $request->subcompanyname)->orderBy('id', 'desc')->first();
             $lastfinalamount = $getamount->opening_balance;
         }
+        foreach($request->product as $key=>$product){
 
-        if($request->amounttype ==0)
-        {
-            $finaltotalamount=$lastfinalamount-($request->amount);
-        }
-        if($request->amounttype ==1)
-        {
-            $finaltotalamount=$lastfinalamount+$request->amount;
-            //dd($finaltotalamount);
-        }
-        if($finaltotalamount<0)
-        {
-            $amounthealth="0";
-        }
-        else if($finaltotalamount==0)
-        {
-            $amounthealth="2";
-        }
-        else if($finaltotalamount>0)
-        {
-            $amounthealth ="1";
-        }
+            $ledgerentries = new LedgerEntry();
+            $ledgerentries->subcompany_id = $request->subcompanyname;
+            $ledgerentries->client_id = $request->clientname;
+            $ledgerentries->amount_type = $request->amounttype;
+            $ledgerentries->product_id = $request->product[$key];
+            $ledgerentries->price = $request->price[$key];
+            $ledgerentries->quantity = $request->quantity[$key];
+            $ledgerentries->amount = $request->amount[$key];
+            $getfinalamount = LedgerEntry::where('subcompany_id','=', $request->subcompanyname)->orderBy('id', 'desc')->first();
+                if(!empty($getfinalamount))
+                {
+                    $lastfinalamount = $getfinalamount->finalamount;
 
-        $ledgerentries = new LedgerEntry();
-        $ledgerentries->subcompany_id = $request->subcompanyname;
-        $ledgerentries->client_id = $request->clientname;
-        $ledgerentries->amount_type = $request->amounttype;
-        $ledgerentries->amount = $request->amount;
-        $ledgerentries->finalamount = $finaltotalamount;
-        $ledgerentries->amounthealth = $amounthealth;
-        $ledgerentries->description = $request->description;
+                } else {
+                    $getamount = CompanyStock::where('subcompany_id','=', $request->subcompanyname)->orderBy('id', 'desc')->first();
+                    $lastfinalamount = $getamount->opening_balance;
+                }
+            if($request->amounttype ==0)
+            {
+                $finaltotalamount=$lastfinalamount-($request->amount[$key]);
+            }
+            if($request->amounttype ==1)
+            {
+                $finaltotalamount=$lastfinalamount+$request->amount[$key];
+            }
+            if($finaltotalamount<0)
+            {
+                $amounthealth="0";
+            }
+            else if($finaltotalamount==0)
+            {
+                $amounthealth="2";
+            }
+            else if($finaltotalamount>0)
+            {
+                $amounthealth ="1";
+            }
+            $ledgerentries->finalamount = $finaltotalamount;
+            $ledgerentries->amounthealth = $amounthealth;
+            $ledgerentries->description = $request->description[$key];
+            $ledgerentries->transation_id = $transation;
+            $ledgerentries->save();
+        }
+    }catch(Exception $e){
+        dd($e->getMessage());
 
-        $ledgerentries->save();
-        return $ledgerentries;
+    }
 
     }
 

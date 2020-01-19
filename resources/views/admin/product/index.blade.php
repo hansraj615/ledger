@@ -5,36 +5,19 @@
 @section('content')
 
 <section>
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Data Tables
-        <small>advanced tables</small>
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
-      </ol>
-    </section>
-
     <!-- Main content -->
     <section class="content">
       <div class="row">
         <div class="col-xs-12">
-
           <!-- /.box -->
-
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Data Table With Full Features</h3>
+              <h3 class="box-title">Product Listing</h3>
             </div>
-
-
             <div class="box-body">
                 <div class="row">
                     <div class="col-lg-12">
-                        <a href="{{route('permissions.create')}}">
+                        <a href="{{route('products.create')}}">
                             <button class="btn btn-success pull-right">
                                     Create <span class="badge badge-primary">new</span>
                             </button>
@@ -74,7 +57,7 @@
                                 <button class="delete-model btn btn-danger btn-sm " type="button" onclick="deleteProduct({{ $product->id }})">
                                     <i class="fa fa-trash"></i>
                                 </button>
-                                <form id="delete-form-{{ $product->id }}" action="{{ route('products.destroy',$product->id) }}" method="POST" style="display: none;">
+                                <form id="delete-form-{{ $product->id }}" action="{{ route('product.destroy',$product->id) }}" method="POST" style="display: none;">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
                         </div>

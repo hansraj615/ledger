@@ -164,7 +164,7 @@ return [
             'text'        => 'Product',
             'url'         => 'admin/products',
             'icon'        => 'far fa-file',
-            'label'       => \App\Traits\CommonTrait::getTotalProduct(),
+            'label'       => 4,
             'label_color' => 'success',
         ],
         [
@@ -199,18 +199,21 @@ return [
                 [
                     'text' => 'Role',
                     'url'  => 'admin/roles',
+                    'active' => ['admin/roles','admin/roles/create','admin/roles/*'],
                     'role'        => ['owner','admin'],
                     'permission'  => 'list-role',
                 ],
                 [
                     'text' => 'Permission',
                     'url'  => 'admin/permissions',
+                    'active' => ['admin/permissions','admin/permissions/create','admin/permissions/*'],
                     'role'        => ['owner','admin'],
                     'permission'  => 'list-permission',
                 ],
                 [
                     'text' => 'User Management',
                     'url'  => 'admin/users',
+                    'active' => ['admin/users','admin/users/create','admin/users/*'],
                     'role'        => ['owner','admin'],
                 ],
                 // [

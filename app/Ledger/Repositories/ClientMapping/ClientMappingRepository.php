@@ -20,7 +20,8 @@ class ClientMappingRepository implements ClientMappingInterface
     public function getAllMapping()
     {
         $clientmappingdetailsArray = [];
-        $clintmappingdetails = ClientMapping::all();
+        $subcompany_id = \App\Traits\CommonTrait::getUserSubCompanyId();
+        $clintmappingdetails = ClientMapping::where('subcompany_id',$subcompany_id)->get();
         foreach($clintmappingdetails as $keys=>$clintmappingdetail){
         $clientmappingids = explode(',',$clintmappingdetail->client_id);
         $client_name = [];
@@ -43,7 +44,15 @@ class ClientMappingRepository implements ClientMappingInterface
         }
         else
         {
-            $clientmapping=new ClientMapping();
+            $subcompany_id = \App\Traits\CommonTrait::getUserSubCompanyId();
+            $getmapping = ClientMapping::where('subcompany_id',$subcompany_id)->first();
+            if(!empty($getmapping))
+            {
+                $clientmapping = $getmapping;
+            }else{
+                $clientmapping = new ClientMapping();
+
+            }
         }
         $clientmapping->subcompany_id = $request->subcompanyname;
         $clientmapping->client_id =implode(",",$request->clientname);

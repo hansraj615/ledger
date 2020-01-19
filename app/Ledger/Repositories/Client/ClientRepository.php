@@ -27,7 +27,7 @@ class ClientRepository implements ClientInterface
         $client->state_name = $states_name->state_name;
         $client->country_name = $countries_name->country_name;
         $client->country_code = $countries_name->country_code;
-        
+
         $client_details[] = $client;
         }
         //dd($client_details);

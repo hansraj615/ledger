@@ -19,6 +19,11 @@ class CreateLedgerEntriesTable extends Migration
             $table->foreign('subcompany_id')->references('id')->on('sub_companies');
             $table->unsignedBigInteger('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->bigInteger('price');
+            $table->bigInteger('quantity');
+            $table->bigInteger('transation_id');
             $table->integer('amount_type');
             $table->bigInteger('amount');
             $table->bigInteger('finalamount');

@@ -44,7 +44,7 @@
                     @if(count($ledger)>0)
                     <div class="box">
                         <div class="box-body">
-                            @foreach($ledger as $ledgerrntry)
+                            @foreach($ledger as $ledgerentry)
                             <div class="ledger-list-item ledger-patient-details">
                                 <div class="row">
                                     <div class="col-md-3 br-1-white ">
@@ -52,22 +52,22 @@
                                             <div class="col-md-12 ">
                                                 <div>
                                                     <span class="text-grey">Client Name : </span>
-                                                    <label class="text-default">{{$ledgerrntry->client->name}}</label>
+                                                    <label class="text-default">{{$ledgerentry->client->name}}</label>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
                                             <a href="{{route('client.index')}}" class="text-primary"><i class="fas fa-eye"></i></a>  |
-                                                <a href="{{ route('client.edit',$ledgerrntry->client_id) }}" class="text-primary"><i class="fas fa-edit"></i></a>
+                                                <a href="{{ route('client.edit',$ledgerentry->client_id) }}" class="text-primary"><i class="fas fa-edit"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-3 br-1-white">
                                         <div class="text-center">
                                             <span class="text-grey">Total Earning as of Today : </span>
-                                            <label class="text-default">{{$ledgerrntry['clientTotalAmount']}}
-                                                @if($ledgerrntry['subcompanyhealth'] === 1)
+                                            <label class="text-default">{{$ledgerentry['clientTotalAmount']}}
+                                                @if($ledgerentry['subcompanyhealth'] === 1)
                                                     <i class="fas fa-long-arrow-alt-up text-success" style="font-size: 18px"></i>
-                                                @elseif($ledgerrntry['subcompanyhealth'] === 0)
+                                                @elseif($ledgerentry['subcompanyhealth'] === 0)
                                                     <i class="fas fa-long-arrow-alt-down text-danger" style="font-size: 18px"></i>
                                                 @else
                                                     <i class="fas fa-equals text-warning"></i>
@@ -79,11 +79,11 @@
                                     <div class="col-md-4 br-1-white">
                                         <div>
                                             <p class="text-center">Recent 2 Transaction</p><hr>
-                                                @foreach($ledgerrntry['latesttranaction'] as $key => $lasttransaction)
+                                                @foreach($ledgerentry['latesttranaction'] as $key => $lasttransaction)
                                                     <div class="row">
                                                         <div class="col-lg-12">
                                                             <div class="col-lg-4">
-                                                                <p>{{$lasttransaction->amount}} |
+                                                                <p>{{$lasttransaction->totalamout}} |
                                                                     @if($lasttransaction->amount_type==1)
                                                                         <span class="text-success">{{config('constant.amount_type')[$lasttransaction->amount_type]}}</span>
                                                                     @else
@@ -92,27 +92,26 @@
                                                                 </p>
                                                             </div>
                                                             <div class="col-lg-4">
-                                                                <a href="#" class="">Settle Up</a>
+                                                                <a href="#" id ="" class="viewinvoice" data-id="{{$lasttransaction->transation_id}}">Send Invoice</a>
                                                             </div>
                                                             <div class="col-lg-4">
-                                                                <span class="text-grey">Description : </span>
-                                                                <label class="text-default">{{$lasttransaction->description}}</label>
+                                                                    <a href="#" class="">View Transation</a>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                <hr>
+                                                <span class="br-1-bottom"></span>
                                                 @endforeach
                                         </div>
                                         <br>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="align-center p-3 px-2 ml-1">
-                                            <a href="#" class="btn mb-3 btn-block btn-primary">View</a>
+                                            <a href="#" class="btn mb-3 btn-block btn-primary outline btn-md">View</a>
                                         </div>
                                         <div class="ml-1">
-                                            <a href="#" class="btn mb-3 btn-block btn-info">Cancel</a>
+                                            <a href="#" class="btn mb-3 btn-block btn-primary outline btn-md">Cancel</a>
                                         </div>
-                                        <button type="submit" class="btn mb-3 btn-block btn-primary" title="View Request" style="padding: 0.5rem 0rem;">View Request</button>
+                                        <button type="submit" class="btn mb-3 btn-block btn-primary outline btn-md" title="View Request" style="padding: 0.5rem 0rem;">View Request</button>
                                     </div>
                                 </div>
                             </div>
@@ -132,6 +131,25 @@
         <!-- /.col -->
         </div>
       <!-- /.row -->
+      <div class="modal " id="showinvoicemodel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Invoice</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                    <div class="row">
+                                        @include('admin.ledgerentry/invoice')
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <!-- /.content -->
 
@@ -140,15 +158,21 @@
 @push('css')
 <style>
 .br-1-white {
-    border-right: 1px solid #fff;
+    border-right: 1px solid #dbe5e8;
     height: 200px;
+}
+
+.br-1-bottom {
+    border-bottom: 1px solid #dbe5e8;
+    height: auto;
 }
 .ledger-list-view .ledger-list-item, .ledger-patient-details, .ledger-doctor-details {
     padding: 1rem;
-    background-color: #d5dbef;
+    background-color: #fffff;
     margin-bottom: 1.5rem;
-    border: 1px solid #e1eae5;
-    border-radius: 3px;
+    border: 1px solid #fffff;
+    border-radius: 6px;
+    box-shadow: 0px 3px 9px 0 rgba(0, 0, 0, 0.2), 0 6px 37px 0 rgba(0, 0, 0, 0.19);
 }
 .ledger-patient-image>img {
     border: 2px solid #e7ecea;
@@ -171,11 +195,44 @@
 .p-3 {
   padding: $spacer !important;
 }
+
+.outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .25s;
+}
+.btn-primary.outline {
+    color: #428bca;
+}
+.btn-success.outline {
+    color: #5cb85c;
+}
+.btn-info.outline {
+    color: #5bc0de;
+}
+.btn-warning.outline {
+    color: #f0ad4e;
+}
+.btn-danger.outline {
+    color: #d9534f;
+}
+.btn-primary.outline:hover,
+.btn-success.outline:hover,
+.btn-info.outline:hover,
+.btn-warning.outline:hover,
+.btn-danger.outline:hover {
+    color: #fff;
+}
 </style>
 @endpush
 @push('js')
 <script>
     $(function () {
+        $('#showinvoicemodel').on('shown.bs.modal', function () {
+        $(this).find('.modal-dialog').css({width:'90%',
+                               height:'auto',
+                              'max-height':'90%'});
+        });
       $('#example1').DataTable()
       $('#example2').DataTable({
         'paging'      : true,
@@ -211,43 +268,11 @@
 
   </script>
   <script>
+ $('.viewinvoice').on('click', function() {
+    $("#showinvoicemodel").modal('show');
 
-(function ($) {
-    // size = flag size + spacing
-    var default_size = {
-        w: 20,
-        h: 15
-    };
 
-    function calcPos(letter, size) {
-        return -(letter.toLowerCase().charCodeAt(0) - 97) * size;
-    }
-
-    $.fn.setFlagPosition = function (iso, size) {
-        size || (size = default_size);
-
-        var x = calcPos(iso[1], size.w),
-            y = calcPos(iso[0], size.h);
-
-        return $(this).css('background-position', [x, 'px ', y, 'px'].join(''));
-    };
-})(jQuery);
-
-// USAGE:
-$(document).on('click', '.panel-heading span.clickable', function(e){
-    var $this = $(this);
-	if(!$this.hasClass('panel-collapsed')) {
-		$this.parents('.panel').find('.panel-body').slideUp();
-		$this.addClass('panel-collapsed');
-		$this.find('i').removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
-
-	} else {
-		$this.parents('.panel').find('.panel-body').slideDown();
-		$this.removeClass('panel-collapsed');
-		$this.find('i').removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
-
-	}
-})
+ });
   </script>
 
 @endpush

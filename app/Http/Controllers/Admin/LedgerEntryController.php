@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Ledger\Repositories\Client\ClientInterface;
 use App\Ledger\Repositories\ClientMapping\ClientMappingInterface;
 use App\Ledger\Repositories\LedgerEntry\LedgerEntryInterface;
+use App\Ledger\Repositories\Product\ProductInterface;
 use App\Ledger\Repositories\SubCompany\SubCompanyInterface;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Client;
@@ -23,13 +24,15 @@ class LedgerEntryController extends Controller
      private $ledger;
      private $subcompany;
      private $client;
+     private $product;
      private $clientmapping;
 
-     public function __construct(LedgerEntryInterface $ledger,SubCompanyInterface $subcompany,ClientInterface $client,ClientMappingInterface $clientmapping)
+     public function __construct(LedgerEntryInterface $ledger,SubCompanyInterface $subcompany,ClientInterface $client,ClientMappingInterface $clientmapping,ProductInterface $product)
      {
          $this->ledger=$ledger;
          $this->subcompany=$subcompany;
          $this->client=$client;
+         $this->product=$product;
          $this->clientmapping=$clientmapping;
      }
     public function index(Request $request)
@@ -56,12 +59,13 @@ class LedgerEntryController extends Controller
         try{
             $subcompanies = $this->ledger->getAllClientSubCompany();
             $clients = $this->ledger->getAllSubClient();
+            $products = $this->product->getAllProducts();
 
         } catch(\Exception $e){
             Toastr::danger($e->getMessage() ,'Danger');
             return redirect()->route('ledger.index')->with('danger', $e->getMessage());
         }
-        return view('admin.ledgerentry.create',compact('subcompanies','clients'));
+        return view('admin.ledgerentry.create',compact('subcompanies','clients','products'));
 
     }
 

@@ -23,7 +23,41 @@ class ProductRepository implements ProductInterface
         $products = Product::all();
         return $products;
     }
+    public function storeProducts($request)
+    {
+        $product = $this->product;
+        $product->name = $request->name;
+        $product->serial_number = $request->serial_number;
+        $product->description = $request->description;
+        $product->save();
+        return $product;
+    }
 
+    public function findProduct($id)
+    {
+        $product = $this->product->findOrFail($id);
+        return $product;
+    }
+
+    public function updateProducts($request,$id)
+    {
+        $product = $this->product->findOrFail($id);
+        $product->name = $request->name;
+        $product->serial_number = $request->serial_number;
+        $product->description = $request->description;
+        $product->save();
+        return $product;
+    }
+    public function deleteProduct($id)
+    {
+        $product = $this->product->findOrFail($id);
+        $product->delete();
+        return $product;
+    }
+    public function searchProduct($keyword = null)
+    {
+        return  $products_name = $this->product->where('name', 'like', '%'.$keyword.'%')->select('id', 'name')->limit(10)->get();
+    }
 
 
 }

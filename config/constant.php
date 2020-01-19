@@ -1,8 +1,9 @@
 <?php
     return [
         'amount_type'=>[
-            1=>'credit',
-            0=>'debit'
+            0=>'debit',
+            1=>'credit'
+
         ],
         'amount_health'=>[
             1=>'profit',
