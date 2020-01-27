@@ -8,6 +8,8 @@ interface LedgerEntryInterface
      public function getAllClientSubCompany();
      public function getAllSubClient();
      public function storeLedgerEntry($request);
+     public function getinvoicedetails($id);
+     public function generatepdf($id);
 
 
 }

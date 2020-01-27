@@ -2,7 +2,9 @@
 
 namespace App\Ledger\Repositories\LedgerEntry;
 
-
+use App\Ledger\Repositories\Client\ClientInterface;
+use App\Ledger\Repositories\Product\ProductInterface;
+use App\Ledger\Repositories\SubCompany\SubCompanyInterface;
 use App\Models\Country;
 use App\Models\Client ;
 use App\Models\ClientMapping;
@@ -12,16 +14,23 @@ use App\Models\LedgerEntry;
 use App\Models\State;
 use App\Models\SubCompany;
 use Exception;
+use PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class LedgerEntryRepository implements LedgerEntryInterface
 {
     private  $ledgerentries;
+    private $product;
+    private $client;
+    private $subcompany;
 
-    public function __construct(LedgerEntry $ledgerentries)
+    public function __construct(LedgerEntry $ledgerentries,ProductInterface $product,ClientInterface $client,SubCompanyInterface $subcompany)
     {
         $this->ledgerentries = $ledgerentries;
+        $this->product = $product;
+        $this->client = $client;
+        $this->subcompany = $subcompany;
     }
     public function getAllLedger($subcompany)
     {
@@ -60,6 +69,8 @@ class LedgerEntryRepository implements LedgerEntryInterface
             ->where([['client_id',$client_id],['subcompany_id',$subcompany]])
             ->distinct()
             ->select('amount_type','transation_id')
+            ->orderBy('transation_id','Desc')
+            ->take(5)
             ->get();
             foreach($lasttransatsations as $lasttransatsation)
             {
@@ -158,6 +169,26 @@ class LedgerEntryRepository implements LedgerEntryInterface
         dd($e->getMessage());
 
     }
+
+    }
+
+    public function getinvoicedetails($id)
+    {
+        $getinvoices = $this->ledgerentries->where('transation_id',$id)->get();
+        foreach($getinvoices as $getinvoice){
+        $getinvoice['productname'] = $this->product->getProductName($getinvoice->product_id);
+        $getinvoice['clientname'] = $this->client->getClientName($getinvoice->client_id);
+        $getinvoice['subcompanyname'] = $this->subcompany->getSubcompanyName($getinvoice->subcompany_id);
+        $getinvoice['totalamout'] = $this->ledgerentries->where('transation_id',$id)->sum('amount');
+        }
+        // dd($getinvoice['totalamout']);
+        return $getinvoices;
+    }
+
+    public function generatepdf($id)
+    {
+        $data = $this->ledgerentries::get();
+        return $data;
 
     }
 

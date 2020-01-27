@@ -24,7 +24,14 @@ class CreateLedgerEntriesTable extends Migration
             $table->bigInteger('price');
             $table->bigInteger('quantity');
             $table->bigInteger('transation_id');
+            $table->integer('payment_type');
+            $table->integer('card_type');
+            $table->integer('bank');
+            $table->integer('otherbank');
             $table->integer('amount_type');
+            $table->integer('account');
+            $table->string('checknumber');
+            $table->string('ddnumber');
             $table->bigInteger('amount');
             $table->bigInteger('finalamount');
             $table->bigInteger('amounthealth');

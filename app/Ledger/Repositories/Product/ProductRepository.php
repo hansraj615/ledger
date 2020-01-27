@@ -59,5 +59,10 @@ class ProductRepository implements ProductInterface
         return  $products_name = $this->product->where('name', 'like', '%'.$keyword.'%')->select('id', 'name')->limit(10)->get();
     }
 
+    public function getProductName($id)
+    {
+        return  $this->product->where('id',$id)->first();
+    }
+
 
 }

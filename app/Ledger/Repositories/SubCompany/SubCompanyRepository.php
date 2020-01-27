@@ -107,4 +107,9 @@ class SubCompanyRepository implements SubCompanyInterface
     {
         return $this->subcompany->select('name','id')->get();
     }
+
+    public function getSubcompanyName($id)
+    {
+        return $this->subcompany->where('id',$id)->first(['name','address']);
+    }
 }

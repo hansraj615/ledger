@@ -78,7 +78,8 @@
                                     </div>
                                     <div class="col-md-4 br-1-white">
                                         <div>
-                                            <p class="text-center">Recent 2 Transaction</p><hr>
+                                            <p class="text-center">Recent 5 Transaction</p>
+                                            <p class="br-1-bottom"></p>
                                                 @foreach($ledgerentry['latesttranaction'] as $key => $lasttransaction)
                                                     <div class="row">
                                                         <div class="col-lg-12">
@@ -95,7 +96,7 @@
                                                                 <a href="#" id ="" class="viewinvoice" data-id="{{$lasttransaction->transation_id}}">Send Invoice</a>
                                                             </div>
                                                             <div class="col-lg-4">
-                                                                    <a href="#" class="">View Transation</a>
+                                                                    <a href="#" class="showtransation" data-id="{{$lasttransaction->transation_id}}">View Transation</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -132,7 +133,7 @@
         </div>
       <!-- /.row -->
       <div class="modal " id="showinvoicemodel">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title">Invoice</h4>
@@ -150,6 +151,12 @@
                 </div>
             </div>
         </div>
+        <div class="modal " id="showtransationmodel">
+                <div class="modal-dialog modal-dialog-centered">
+                    @include('admin.ledgerentry/transation')
+
+                </div>
+            </div>
     </section>
     <!-- /.content -->
 
@@ -230,8 +237,8 @@
     $(function () {
         $('#showinvoicemodel').on('shown.bs.modal', function () {
         $(this).find('.modal-dialog').css({width:'90%',
-                               height:'auto',
-                              'max-height':'90%'});
+                               height:'auto'
+                              });
         });
       $('#example1').DataTable()
       $('#example2').DataTable({
@@ -269,11 +276,74 @@
   </script>
   <script>
  $('.viewinvoice').on('click', function() {
+    $( ".showdata" ).find('tbody').html('');
+    $( ".subcompanyinfo" ).find('address').html('');
+    $( ".clientinfo" ).find('address').html('');
+     var id = $(this).data('id');
+     $.ajax({
+        type: "GET",
+        url: "{{route('ledger.getinvoicedetails')}}",
+        data:{'id':id},
+
+    success: function (data) {
+        console.log(data);
+        var invoiceinfo = '';
+        var pdfexportlink = '';
+        var amountArray = new Array();
+        var subtotal = 0;
+        $.each( data, function( key, value ) {
+            var priceamount = data[key].amount;
+            amountArray.push(data[key].amount);
+
+            // subtotal = subtotal + parseInt(amountArray);
+        var dataproduct = '<tr><td>'+data[key].quantity+'</td><td>'+data[key].productname['name']+'</td><td>'+data[key].price+'</td><td>'+data[key].productname['serial_number']+'</td><td>'+data[key].description+'</td><td>'+data[key].amount+'</td></tr>';
+        invoiceinfosubcompanyname = '<strong>'+data[key].subcompanyname['name']+'</strong><br>'+data[key].subcompanyname['address'].match(/.{1,25}/g).join("<br/>")+'';
+        invoiceinfoclientname = '<strong>'+data[key].clientname['name']+'</strong><br>'+data[key].subcompanyname['address'].match(/.{1,25}/g).join("<br/>")+'';
+        $( ".showdata" ).find('tbody').append(dataproduct);
+        var url = '{{ route("ledger.exportpdf", ["id" => "id"]) }}';
+        url = url.replace('id',  data[key].transation_id);
+         pdfexportlink = '<a href="'+url+'" class="btn btn-primary pull-right" style="margin-right: 5px;"><i class="fa fa-download"></i> Generate PDF </a>';
+        });
+        for (var i = 0; i < amountArray.length; i++) {
+                subtotal += amountArray[i];
+            }
+        $( ".subtotal" ).find('td').html(subtotal);
+        $( ".total" ).find('td').html(subtotal);
+        $( ".subcompanyinfo" ).find('address').append(invoiceinfosubcompanyname);
+        $( ".clientinfo" ).find('address').append(invoiceinfoclientname);
+        $( "#generatepdf" ).html(pdfexportlink);
+    }
+});
     $("#showinvoicemodel").modal('show');
 
 
  });
   </script>
+  <script>
+
+$('.showtransation').on('click',function(){
+
+    var id = $(this).data('id');
+    $.ajax({
+        type: "GET",
+        url: "{{route('ledger.getinvoicedetails')}}",
+        data:{'id':id},
+
+    success: function (data) {
+        console.log(data);
+
+        $.each( data, function( key, value ) {
+        transationclientname = '<p>Client Name : <span class="text-red"> '+data[key].clientname['name']+'</span></p>';
+        var dataproduct = '<tr><td>'+data[key].quantity+'</td><td>'+data[key].productname['name']+'</td><td>'+data[key].price+'</td><td>'+data[key].productname['serial_number']+'</td><td>'+data[key].description+'</td><td>'+data[key].amount+'</td></tr>';
+        $( ".showdataproddetails" ).find('tbody').append(dataproduct);
+        });
+        $( ".transationclientname" ).find('h4').html(transationclientname);
+    }
+    });
+    $("#showtransationmodel").modal('show');
+
+})
+      </script>
 
 @endpush
 @yield('js')

@@ -13,6 +13,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ClientRepository implements ClientInterface
 {
+    private $client;
+
+    public function __construct(Client $client)
+    {
+      $this->client = $client;
+    }
     public function getClient()
     {
         // $client = Client::get();
@@ -92,6 +98,10 @@ class ClientRepository implements ClientInterface
     public function searchCity($keyword = null,$request)
     {
         return  $states_name =City::where('state_id',$request->state_id)->where('city_name', 'like', '%'.$request->q.'%')->select('id', 'city_name')->get();
+    }
+    public function getClientName($id)
+    {
+        return $this->client->where('id',$id)->first(['name','address']);
     }
 
 }

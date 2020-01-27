@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\Admin\CompnayController;
+use App\Http\Controllers\Admin\LedgerEntryController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -70,6 +71,8 @@ Route::group(["prefix" => "admin", "namespace" => "Admin",'middleware' => 'auth'
     Route::post('/ledger/destroy/{reference_id}','LedgerEntryController@destroy')->name('ledger.destroy');
     Route::get('/ledger/create', 'LedgerEntryController@create')->name('admin.ledger.create');
     Route::get('/search-client/{keyword?}', 'LedgerEntryController@SearchClient')->name('ledger.search-client');
+    Route::get('/getinvoicedetails','LedgerEntryController@getinvoice')->name('ledger.getinvoicedetails');
+    Route::get('/generateinvoicepdf/pdf/{reference_id}','LedgerEntryController@exportpdf')->name('ledger.exportpdf');
 
     /***********************CLient Mapping */
     Route::get('/clientmapping', 'ClientMappingController@index')->name('admin.clientmapping.index');

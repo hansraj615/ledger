@@ -11,7 +11,11 @@ use App\Ledger\Repositories\Product\ProductInterface;
 use App\Ledger\Repositories\SubCompany\SubCompanyInterface;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Client;
+use PDF;
 use App\Models\SubCompany;
+use App\Notifications\Invoice;
+use App\User;
+use Illuminate\Support\Facades\Notification;
 
 class LedgerEntryController extends Controller
 {
@@ -157,5 +161,24 @@ class LedgerEntryController extends Controller
         return $clientArray;
 
         }
+    }
+
+    public function getinvoice(Request $request)
+    {
+        $getledgerinvoice = $this->ledger->getinvoicedetails($request->get('id'));
+        return $getledgerinvoice;
+    }
+
+    public function exportpdf($id)
+    {
+        $getpdf = $this->ledger->getinvoicedetails($id);
+        // dd($getpdf[0]);
+        $user = User::where('id',34)->get();
+         // Send data to the view using loadView function of PDF facade
+         $pdf = PDF::loadView('admin.ledgerentry.invoicepdf', compact('getpdf'));
+         Notification::send($user,new Invoice($pdf));
+         // If you want to store the generated pdf to the server then you can use the store function
+         $pdf->save(storage_path().'_filename.pdf');
+        return $pdf->download('customers.pdf');
     }
 }

@@ -8,6 +8,7 @@ interface ClientInterface
      public function storeClient($request);
      public function editClient($id);
      public function deleteClient($id);
-    
+     public function getClientName($id);
+
 }
 

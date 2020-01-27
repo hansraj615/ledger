@@ -13,5 +13,6 @@ interface SubCompanyInterface
     public function getCompany();
     public function deleteSubCompany($id);
     public function getAllSubCompanyList();
+    public function getSubcompanyName($id);
 }
 
