@@ -17,7 +17,7 @@
                     <form class="form" action="{{route('admin.ledger.store')}}" method="POST">
                         {{csrf_field()}}
                         <div class="col-lg-12">
-                            <div class="col-lg-3 col-md-offset-3">
+                            <div class="col-lg-3">
                                 <div class="form-group">
                                     <label for="name">SubCompany Name</label>
                                     <select name="subcompanyname" class="form-control select2 subcompany-select2" id="subcompanyname">
@@ -40,6 +40,53 @@
                             </div>
                             <div class="col-lg-3">
                                 <div class="form-group">
+                                    <label for="name">Payment Type</label>
+                                    <div class="form-group">
+                                        @foreach(config('constant.payment_type') as $key => $value)
+                                            <label> <input type="radio" name="paymenttype" id="paymenttype" class="flat-red paymenttype" value="{{$key}}">  {{$value}} </label>
+                                        @endforeach
+                                    </div>
+                                    <small id="helpId" class="text-muted">Help text</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-3" style='display:none' id="bankname">
+                                <div class="form-group">
+                                    <label for="name">Bank Name</label>
+                                    <div class="form-group" >
+                                        <select class="form-control" name="bank" id="bank">
+                                        @foreach(config('constant.bank') as $key => $value)
+                                    <option value="{{$key}}">  {{$value}} </option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                    <small id="helpId" class="text-muted">Help text</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-3" style='display:none' id="cardtype">
+                                <div class="form-group">
+                                    <label for="name">Card Type</label>
+                                    <div class="form-group" >
+                                        <select class="form-control" name="cardtype" id="cardtype">
+                                        @foreach(config('constant.card_type') as $key => $value)
+                                    <option value="{{$key}}">  {{$value}} </option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+                                    <small id="helpId" class="text-muted">Help text</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-3" style='display:none' id="transactionnumber">
+                                <div class="form-group">
+                                    <label for="name">Transaction Number</label>
+                                    <div class="form-group" >
+                                        <input type="text" class="form-control" id= "transactionnumber"name="transactionnumber">
+                                    </div>
+                                    <small id="helpId" class="text-muted">Help text</small>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group">
                                     <label for="name">Amount Type</label>
                                     <div class="form-group">
                                         @foreach(config('constant.amount_type') as $key => $value)
@@ -49,6 +96,7 @@
                                     <small id="helpId" class="text-muted">Help text</small>
                                 </div>
                             </div>
+
                             <table class="table table-striped table order-list">
                                 <thead>
                                     <tr>
@@ -111,9 +159,35 @@
 @endsection
 
 @push('js')
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> --}}
 <script>
 $(function () {
-
+    $('input[name="paymenttype"]').on('ifClicked', function (event) {
+       var value =  this.value;
+       if(value == 4){
+           $('#bankname').show();
+           $('#transactionnumber').hide();
+           $('#cardtype').hide();
+       }else if(value == 3){
+           $('#transactionnumber label').text('Transaction Number');
+           $('#transactionnumber').show();
+           $('#bankname').hide();
+           $('#cardtype').hide();
+       }else if(value == 2){
+           $('#transactionnumber label').text('DD Number');
+           $('#transactionnumber').show();
+           $('#bankname').hide();
+           $('#cardtype').hide();
+       }else if(value == 1){
+           $('#transactionnumber label').text('Transaction Number');
+           $('#transactionnumber').show();
+           $('#cardtype').show();
+           $('#bankname').hide();
+       }else{
+           $('#bankname').hide();
+           $('#transactionnumber').hide();
+       }
+    });
     $(".select2").select2();
     //iCheck for checkbox and radio inputs
     //iCheck for checkbox and radio inputs
@@ -298,7 +372,9 @@ function calculateGrandTotal() {
     //   radioClass   : 'iradio_minimal-blue'
     // })
   </script>
+    <script>
 
+    </script>
 
 @endpush
 @yield('js')

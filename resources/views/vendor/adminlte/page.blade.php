@@ -184,6 +184,7 @@
 <script src="{{asset('vendor/adminlte/vendor/input-mask/jquery.inputmask.js') }}"></script>
 <script src="{{asset('vendor/adminlte/vendor/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
 <script src="{{asset('vendor/adminlte/vendor/input-mask/jquery.inputmask.extensions.js') }}"></script>
+<script src="{{asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     @stack('js')
     @yield('js')
 @stop

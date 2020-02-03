@@ -36,8 +36,12 @@
 @yield('body')
 
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.js') }}"></script>
+<script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('vendor/adminlte/dist/js/adminlte.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/iCheck/icheck.min.js') }}"></script>
 
 @include('adminlte::plugins', ['type' => 'js'])

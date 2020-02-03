@@ -47,7 +47,7 @@
                             @foreach($ledger as $ledgerentry)
                             <div class="ledger-list-item ledger-patient-details">
                                 <div class="row">
-                                    <div class="col-md-3 br-1-white ">
+                                    <div class="col-md-3 box-content right ">
                                         <div class="row text-center">
                                             <div class="col-md-12 ">
                                                 <div>
@@ -61,7 +61,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 br-1-white">
+                                    <div class="col-md-3 box-content right">
                                         <div class="text-center">
                                             <span class="text-grey">Total Earning as of Today : </span>
                                             <label class="text-default">{{$ledgerentry['clientTotalAmount']}}
@@ -76,7 +76,7 @@
                                             <br>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 br-1-white">
+                                    <div class="col-md-4 box-content right">
                                         <div>
                                             <p class="text-center">Recent 5 Transaction</p>
                                             <p class="br-1-bottom"></p>
@@ -164,11 +164,19 @@
 @endsection
 @push('css')
 <style>
-.br-1-white {
-    border-right: 1px solid #dbe5e8;
-    height: 200px;
-}
+.box-content {
+        display: inline-block;
+        min-height: 150px;
+        padding: 10px;
+    }
 
+    .bottom {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .right {
+        border-right: 1px solid #ccc;
+    }
 .br-1-bottom {
     border-bottom: 1px solid #dbe5e8;
     height: auto;
@@ -235,7 +243,7 @@
 @push('js')
 <script>
     $(function () {
-        $('#showinvoicemodel').on('shown.bs.modal', function () {
+        $('#showinvoicemodel,#showtransationmodel').on('shown.bs.modal', function () {
         $(this).find('.modal-dialog').css({width:'90%',
                                height:'auto'
                               });
@@ -322,8 +330,19 @@
   <script>
 
 $('.showtransation').on('click',function(){
-
+    $( ".showdataproddetails" ).find('tbody').html('');
     var id = $(this).data('id');
+    $( ".clientname" ).html('');
+    $( ".transationdate" ).html('');
+    $( ".transationamounttype" ).html('');
+    $( ".paymenttype" ).html('');
+    $( ".bank" ).html('');
+    var transationclientname = '';
+    var transationdate = '';
+    var bankname = '';
+    var amount_type_constant = {!! json_encode(config('constant.amount_type'))!!};
+    var payment_type_constant = {!! json_encode(config('constant.payment_type'))!!};
+    var bank_name_constant = {!! json_encode(config('constant.bank'))!!};
     $.ajax({
         type: "GET",
         url: "{{route('ledger.getinvoicedetails')}}",
@@ -331,13 +350,30 @@ $('.showtransation').on('click',function(){
 
     success: function (data) {
         console.log(data);
-
         $.each( data, function( key, value ) {
-        transationclientname = '<p>Client Name : <span class="text-red"> '+data[key].clientname['name']+'</span></p>';
+
+         transationclientname = '<span>Client Name :</span> <label class="text-black"> '+data[key].clientname['name']+'</label>';
+         transationdate = '<span>Created Date : </span><label class="text-black"> '+data[key].created_at+'</label>';
+         transationamounttype = '<label class="text-white badge">'+amount_type_constant[data[key].amount_type]+'</label>';
+         paymenttype = '<span>Payment Type :</span> <label class="text-black">'+payment_type_constant[data[key].payment_type]+'</label>';
+         if (data[key].bank != null ) {
+            bankname = '<span>Bank Name : </span><label class="text-black">'+bank_name_constant[data[key].bank]+'</label>';
+                // $(this).parents('p').addClass('warning');
+            }
         var dataproduct = '<tr><td>'+data[key].quantity+'</td><td>'+data[key].productname['name']+'</td><td>'+data[key].price+'</td><td>'+data[key].productname['serial_number']+'</td><td>'+data[key].description+'</td><td>'+data[key].amount+'</td></tr>';
         $( ".showdataproddetails" ).find('tbody').append(dataproduct);
         });
-        $( ".transationclientname" ).find('h4').html(transationclientname);
+        $( ".clientname" ).html(transationclientname);
+        $( ".transationdate" ).html(transationdate);
+        $( ".transationamounttype" ).html(transationamounttype);
+        $( ".paymenttype" ).html(paymenttype);
+        if(bankname.length != 0){
+        $( ".bank" ).html(bankname);
+        $(".bank").show();
+        }else{
+            $( ".bank" ).html('');
+            $(".bank").hide();
+        }
     }
     });
     $("#showtransationmodel").modal('show');

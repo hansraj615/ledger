@@ -6,8 +6,18 @@
     <div class="row">
         <div class="col-lg-12">
             <div class="col-lg-12 p-3">
-                <div class="callout callout-info transationclientname">
-                    <h4> </h4>
+                <div class="callout callout-info transationclientname detailstrans">
+                        <div class="row">
+                        <div class="col-lg-12">
+                    <div class="col-lg-3 box-content right">
+                        <div class="clientname"> </div>
+                        <div class="transationdate"></div>
+                        <div class="transationamounttype text-uppercase"></div>
+                    </div>
+                    <div class="col-lg-3 align-left box-content right">
+                        <div class="paymenttype align-left"> </div>
+                        <div class="bank align-left" style="display: none"></div>
+                    </div></div></div>
                 </div>
             </div>
         </div>
@@ -33,3 +43,4 @@
         </div>
     </div>
 </div>
+

@@ -159,7 +159,25 @@ class LedgerEntryRepository implements LedgerEntryInterface
             {
                 $amounthealth ="1";
             }
+            $card_type ='';
+            $bank = '';
+            if($request->paymenttype!= 1)
+            {
+                 $card_type = null;
+            }else{
+                $card_type = $request->cardtype;
+            }
+            if($request->paymenttype == 4)
+            {
+                 $bank = $request->bank;
+            }else{
+                $bank = null;
+            }
             $ledgerentries->finalamount = $finaltotalamount;
+            $ledgerentries->bank = $bank;
+            $ledgerentries->payment_type = $request->paymenttype;
+            $ledgerentries->transactionnumber = $request->transactionnumber?$request->transactionnumber:null;
+            $ledgerentries->card_type = $card_type;
             $ledgerentries->amounthealth = $amounthealth;
             $ledgerentries->description = $request->description[$key];
             $ledgerentries->transation_id = $transation;
