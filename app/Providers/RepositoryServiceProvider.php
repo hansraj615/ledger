@@ -24,6 +24,11 @@ use App\Ledger\Repositories\User\UserInterface;
 use App\Ledger\Repositories\User\UserRepository;
 use App\Ledger\Repositories\Product\ProductInterface;
 use App\Ledger\Repositories\Product\ProductRepository;
+use App\Ledger\Repositories\LedgerLogin\LedgerLoginInterface;
+use App\Ledger\Repositories\LedgerLogin\LedgerLoginRepository;
+/*********************************** */
+use App\Ledger\Repositories\Api\Company\CompanyApiInterface;
+use App\Ledger\Repositories\Api\Company\CompanyApiRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -46,6 +51,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PermissionInterface::class, PermissionRepository::class);
         $this->app->bind(UserInterface::class, UserRepository::class);
         $this->app->bind(ProductInterface::class, ProductRepository::class);
+        $this->app->bind(LedgerLoginInterface::class, LedgerLoginRepository::class);
+        $this->app->bind(CompanyApiInterface::class,CompanyApiRepository::class);
 
     }
 
@@ -62,6 +69,8 @@ class RepositoryServiceProvider extends ServiceProvider
             PermissionInterface::class,
             UserInterface::class,
             ProductInterface::class,
+            LedgerLoginInterface::class,
+            CompanyApiInterface::class,
 
         ];
     }

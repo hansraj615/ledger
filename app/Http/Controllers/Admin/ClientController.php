@@ -52,7 +52,7 @@ class ClientController extends Controller
         }
         catch(\Exception $e)
         {
-            dd($e->getMessage());
+            // dd($e->getMessage());
             return redirect()->route('client.index')->with('danger',$e->getMessage());
         }
 

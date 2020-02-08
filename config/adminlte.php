@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logo' => '<b>LEDGER |</b> <span style="color:#bb5252;">RIMSOFTECH</span>',
+    'logo' => '<b>LEDGER |</b> <span style="color:#bb5252;"> - </span>',
 
     'logo_mini' => '',
 
