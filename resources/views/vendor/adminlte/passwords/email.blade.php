@@ -23,7 +23,7 @@
                 {{ csrf_field() }}
 
                 <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
-                    <input type="email" name="email" class="form-control" value="{{ isset($email) ? $email : old('email') }}"
+                    <input type="email" name="email" class="form-control form-rounded" value="{{ isset($email) ? $email : old('email') }}"
                            placeholder="{{ trans('adminlte::adminlte.email') }}">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('email'))
@@ -32,7 +32,7 @@
                         </span>
                     @endif
                 </div>
-                <button type="submit" class="btn btn-primary btn-block btn-flat">
+                <button type="submit" class="btn btn-primary btn-block form-rounded">
                     {{ trans('adminlte::adminlte.send_password_reset_link') }}
                 </button>
             </form>

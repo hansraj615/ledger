@@ -118,7 +118,7 @@
                 {{ csrf_field() }}
 
                 <div class="form-group has-feedback {{ $errors->has('email') ? 'has-error' : '' }}">
-                    <input type="email" name="email" class="form-control" value="{{ old('email') }}"
+                    <input type="email" name="email" class="form-control form-rounded" value="{{ old('email') }}"
                            placeholder="{{ trans('adminlte::adminlte.email') }}">
                     <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     @if ($errors->has('email'))
@@ -128,7 +128,7 @@
                     @endif
                 </div>
                 <div class="form-group has-feedback {{ $errors->has('password') ? 'has-error' : '' }}">
-                    <input type="password" name="password" class="form-control"
+                    <input type="password" name="password" class="form-control form-rounded"
                            placeholder="{{ trans('adminlte::adminlte.password') }}">
                     <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     @if ($errors->has('password'))
@@ -141,12 +141,12 @@
                     <div class="col-xs-8">
                         <div class="icheck-primary">
                             <input type="checkbox" name="remember" id="remember">
-                            <label for="remember">{{ trans('adminlte::adminlte.remember_me') }}</label>
+                            <label for="remember" class="text-white">{{ trans('adminlte::adminlte.remember_me') }}</label>
                         </div>
                     </div>
                     <!-- /.col -->
                     <div class="col-xs-4">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">
+                        <button type="submit" class="btn btn-primary btn-block form-rounded">
                             {{ trans('adminlte::adminlte.sign_in') }}
                         </button>
                     </div>
@@ -155,13 +155,13 @@
             </form>
             <br>
             <p>
-                <a href="{{ url(config('adminlte.password_reset_url', 'password/reset')) }}" class="text-center">
+                <a href="{{ url(config('adminlte.password_reset_url', 'password/reset')) }}" class="text-center text-white">
                     {{ trans('adminlte::adminlte.i_forgot_my_password') }}
                 </a>
             </p>
             @if (config('adminlte.register_url', 'register'))
                 <p>
-                    <a href="{{ url(config('adminlte.register_url', 'register')) }}" class="text-center">
+                    <a href="{{ url(config('adminlte.register_url', 'register')) }}" class="text-center text-white">
                         {{ trans('adminlte::adminlte.register_a_new_membership') }}
                     </a>
                 </p>

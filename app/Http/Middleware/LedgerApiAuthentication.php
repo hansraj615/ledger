@@ -54,7 +54,7 @@ class LedgerApiAuthentication {
                 return response()->json($response, 400);
             }
 
-            if ($ledgeruser->is_active != 'Active') {
+            if ($ledgeruser->is_active != 1) {
                 $response = ['message' => 'Sorry! your account is not in active state'];
                 return response()->json($response, 400);
             }

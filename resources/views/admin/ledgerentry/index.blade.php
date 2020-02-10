@@ -166,7 +166,6 @@
 <style>
 .box-content {
         display: inline-block;
-        min-height: 150px;
         padding: 10px;
     }
 

@@ -1127,6 +1127,9 @@ img {
 .img-rounded {
   border-radius: 6px;
 }
+.form-rounded {
+    border-radius: 1rem;
+    }
 .img-thumbnail {
   padding: 4px;
   line-height: 1.42857143;

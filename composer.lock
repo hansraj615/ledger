@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7cf68ac7d6a20eede6b0029839c0d27a",
+    "content-hash": "ccd6ae2739167c2c45b4461075958a48",
     "packages": [
         {
             "name": "barryvdh/laravel-dompdf",
@@ -1351,16 +1351,16 @@
         },
         {
             "name": "league/flysystem",
-            "version": "1.0.63",
+            "version": "1.0.64",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/flysystem.git",
-                "reference": "8132daec326565036bc8e8d1876f77ec183a7bd6"
+                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/8132daec326565036bc8e8d1876f77ec183a7bd6",
-                "reference": "8132daec326565036bc8e8d1876f77ec183a7bd6",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/d13c43dbd4b791f815215959105a008515d1a2e0",
+                "reference": "d13c43dbd4b791f815215959105a008515d1a2e0",
                 "shasum": ""
             },
             "require": {
@@ -1372,7 +1372,7 @@
             },
             "require-dev": {
                 "phpspec/phpspec": "^3.4",
-                "phpunit/phpunit": "^5.7.10"
+                "phpunit/phpunit": "^5.7.26"
             },
             "suggest": {
                 "ext-fileinfo": "Required for MimeType",
@@ -1431,7 +1431,7 @@
                 "sftp",
                 "storage"
             ],
-            "time": "2020-01-04T16:30:31+00:00"
+            "time": "2020-02-05T18:14:17+00:00"
         },
         {
             "name": "mongodb/mongodb",
@@ -4392,111 +4392,6 @@
                 "test"
             ],
             "time": "2016-01-20T08:20:44+00:00"
-        },
-        {
-            "name": "laracasts/generators",
-            "version": "1.1.6",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laracasts/Laravel-5-Generators-Extended.git",
-                "reference": "a71d2b705f1e4d0e6b97aa1ba3746907b5bc1f1b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laracasts/Laravel-5-Generators-Extended/zipball/a71d2b705f1e4d0e6b97aa1ba3746907b5bc1f1b",
-                "reference": "a71d2b705f1e4d0e6b97aa1ba3746907b5bc1f1b",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "~5.0|~6.0",
-                "laravel/helpers": "^1.1",
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpspec/phpspec": "~2.1"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Laracasts\\Generators\\GeneratorsServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Laracasts\\Generators\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jeffrey Way",
-                    "email": "jeffrey@laracasts.com"
-                }
-            ],
-            "description": "Extend Laravel 5's generators.",
-            "keywords": [
-                "generators",
-                "laravel"
-            ],
-            "time": "2019-09-04T04:55:05+00:00"
-        },
-        {
-            "name": "laravel/helpers",
-            "version": "v1.1.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/laravel/helpers.git",
-                "reference": "b8eae9ddd461e89d0296f74fd069c413bf83b6fa"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/laravel/helpers/zipball/b8eae9ddd461e89d0296f74fd069c413bf83b6fa",
-                "reference": "b8eae9ddd461e89d0296f74fd069c413bf83b6fa",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/support": "~5.8.0|^6.0",
-                "php": ">=7.1.3"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylor@laravel.com"
-                },
-                {
-                    "name": "Dries Vints",
-                    "email": "dries.vints@gmail.com"
-                }
-            ],
-            "description": "Provides backwards compatibility for helpers in the latest Laravel release.",
-            "keywords": [
-                "helpers",
-                "laravel"
-            ],
-            "time": "2019-07-30T15:25:31+00:00"
         },
         {
             "name": "mockery/mockery",

@@ -86,7 +86,20 @@
     <!-- /.content -->
 </section>
 @endsection
-@push('css')
+@push('js')
+<script>
+    $(function () {
+      $('#example1').DataTable({
+        'paging'      : true,
+        'lengthChange': true,
+        'searching'   : true,
+        'ordering'    : true,
+        'info'        : true,
+        'autoWidth'   : false,
+        "scrollX": true
+      })
+    })
+  </script>
   <script type="text/javascript">
   function deleteSubCompany(id) {
    const swalWithBootstrapButtons = Swal.mixin({
