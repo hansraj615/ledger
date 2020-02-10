@@ -22,7 +22,9 @@
                             <option value="{{$company->id}}" @if(Request::get('subcompany')== $company->id) selected @elseif($usersubcompanyid==$company->id) selected @else  @endif>{{$company->name}}</option>
                             @endforeach
                         </select>
+                        <div class="form-group mr-2">
                         <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                        </div>
                     </div>
                     </div>
                 </form>
@@ -47,7 +49,7 @@
                             @foreach($ledger as $ledgerentry)
                             <div class="ledger-list-item ledger-patient-details">
                                 <div class="row">
-                                    <div class="col-md-3 box-content right ">
+                                    <div class="col-md-3  right ">
                                         <div class="row text-center">
                                             <div class="col-md-12 ">
                                                 <div>
@@ -61,7 +63,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-3 box-content right">
+                                    <div class="col-md-3  right">
                                         <div class="text-center">
                                             <span class="text-grey">Total Earning as of Today : </span>
                                             <label class="text-default">{{$ledgerentry['clientTotalAmount']}}
@@ -76,12 +78,12 @@
                                             <br>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 box-content right">
+                                    <div class="col-md-4  right">
                                         <div>
                                             <p class="text-center">Recent 5 Transaction</p>
                                             <p class="br-1-bottom"></p>
                                                 @foreach($ledgerentry['latesttranaction'] as $key => $lasttransaction)
-                                                    <div class="row">
+                                                    <div class="row text-center">
                                                         <div class="col-lg-12">
                                                             <div class="col-lg-4">
                                                                 <p>{{$lasttransaction->totalamout}} |
@@ -165,17 +167,17 @@
 @push('css')
 <style>
 .box-content {
-        display: inline-block;
-        padding: 10px;
-    }
+    display: inline-block;
+    padding: 10px;
+}
 
-    .bottom {
-        border-bottom: 1px solid #ccc;
-    }
+.bottom {
+    border-bottom: 1px solid #ccc;
+}
 
-    .right {
-        border-right: 1px solid #ccc;
-    }
+.right {
+    border-right: 1px solid #ccc;
+}
 .br-1-bottom {
     border-bottom: 1px solid #dbe5e8;
     height: auto;

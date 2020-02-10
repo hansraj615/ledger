@@ -13,6 +13,8 @@
 
 use App\Http\Controllers\Admin\CompnayController;
 use App\Http\Controllers\Admin\LedgerEntryController;
+use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');

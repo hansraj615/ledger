@@ -14,6 +14,7 @@
                 <h3 class="box-title">Edit Company</h3>
               </div>
               <div class="box-body">
+                <a href="{{ route('company.index') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a><br><br>
                 <div class="row">
                 <form class="form" action="{{route('admin.company.store')}}" method="POST">
                         {{csrf_field()}}

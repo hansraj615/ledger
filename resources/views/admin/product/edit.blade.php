@@ -29,7 +29,6 @@
                 <div class="col-md-5">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
                                         {!! Html::decode(Form::label('name', 'Name <span class="required">*</span>', ['class' => 'control-label'])) !!}
@@ -39,10 +38,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group {{ $errors->has('serial_number') ? 'has-error' : ''}}">
                                         {!! Html::decode(Form::label('serial_number','Serial Number<span class="required">*</span>', ['class' => ' control-label'])) !!}
@@ -59,7 +56,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>

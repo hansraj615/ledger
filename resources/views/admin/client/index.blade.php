@@ -139,14 +139,14 @@ foreach($clients as $client) { ?>
 @push('js')
 <script>
     $(function () {
-      $('#example1').DataTable()
-      $('#example2').DataTable({
+      $('#example1').DataTable({
         'paging'      : true,
-        'lengthChange': false,
-        'searching'   : false,
+        'lengthChange': true,
+        'searching'   : true,
         'ordering'    : true,
         'info'        : true,
-        'autoWidth'   : false
+        'autoWidth'   : false,
+        "scrollX": true
       })
     })
   </script>

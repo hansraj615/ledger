@@ -15,6 +15,7 @@
                 <h3 class="box-title">Create Client Mapping</h3>
               </div>
               <div class="box-body">
+                <a href="{{ route('admin.clientmapping.index') }}" title="Back"><button class="btn btn-warning btn-xs"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button></a><br><br>
                 <div class="row">
                 <form class="form" action="{{route('admin.clientmapping.store')}}" method="POST">
                         {{csrf_field()}}
