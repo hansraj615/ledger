@@ -15,9 +15,9 @@ return [
 
     'title' => 'Ledger',
 
-    'title_prefix' => '',
+    'title_prefix' => 'Ledger',
 
-    'title_postfix' => '',
+    'title_postfix' => 'RIM Softtech',
 
     /*
     |--------------------------------------------------------------------------
@@ -72,6 +72,7 @@ return [
     */
 
     'collapse_sidebar' => false,
+    'sidebar_nav_accordion' => true,
 
     /*
     |--------------------------------------------------------------------------

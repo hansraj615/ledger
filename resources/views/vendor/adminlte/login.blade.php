@@ -10,10 +10,10 @@
 @section('body')
 
     <div class="login-box">
-        <div class="row"><br><br><br><br><br></div>
+        <div class="row"><br><br><br><br><br><br><br><br><br></div>
 
         <div class="login-logo">
-            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Ledger |</b>RIM SOFTTECH') !!}</a>
+            <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo') !!}</a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">

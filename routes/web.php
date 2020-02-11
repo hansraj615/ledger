@@ -23,7 +23,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::group(["prefix" => "admin", "namespace" => "Admin",'middleware' => 'auth'], function () {
+Route::group(["prefix" => "admin", "namespace" => "Admin",'middleware' => 'auth,use.ssl'], function () {
 
     /********* User Management */
     Route::get('/users', 'UserController@index')->name('user.index');

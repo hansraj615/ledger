@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\JwtAuth;
+use App\Http\Middleware\UseSSL;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'ability' => \Zizaco\Entrust\Middleware\EntrustAbility::class,
         'jwt-auth' => JwtAuth::class,
         'cors' => \App\Http\Middleware\Cors::class,
+        'use.ssl' => UseSSL::class,
         'check-json' => \App\Http\Middleware\CheckProperJson::class,
         'users-api-auth' => \App\Http\Middleware\LedgerApiAuthentication::class,
     ];
