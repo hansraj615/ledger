@@ -11,6 +11,7 @@ use App\Models\ClientMapping;
 use App\Models\Company;
 use App\Models\CompanyStock;
 use App\Models\LedgerEntry;
+use App\Models\Product;
 use App\Models\State;
 use App\Models\SubCompany;
 use Exception;
@@ -208,6 +209,72 @@ class LedgerEntryRepository implements LedgerEntryInterface
         $data = $this->ledgerentries::get();
         return $data;
 
+    }
+
+    public function getallclientdetails($client_id)
+    {
+        $allData =[];
+        $usersubcompanyid = \App\Traits\CommonTrait::getUserSubCompanyId();
+        $getclientalltransation = $this->ledgerentries->select('transation_id')
+                                ->where([['client_id',$client_id],['subcompany_id',$usersubcompanyid]])
+                                ->groupBy('transation_id')->get();
+        foreach($getclientalltransation as $value){
+        $value['created_date']  = $this->ledgerentries->select('payment_type','created_at','card_type','bank','transactionnumber','amount_type','product_id')->where('transation_id',$value->transation_id)->first();
+        $value['total_amount']  = $this->ledgerentries->where([['transation_id',$value->transation_id]])->sum('amount');
+        $value['payment_type']  = $this->ledgerentries->where('transation_id',$value->transation_id)->pluck('payment_type')->first();
+        $value['client_id']=$client_id;
+        $value['prod'] = $this->ledgerentries->where('transation_id',$value->transation_id)->get();
+        $value['finalamount'] = $this->ledgerentries->where('transation_id',$value->transation_id)->pluck('finalamount')->first();
+
+        foreach($getclientalltransation as $vlaue3432)
+            {
+
+            }
+
+        }
+        return [
+            // 'requestcallback' => $value['sad'],
+            'AS' =>$getclientalltransation
+        ];
+
+
+
+    }
+
+    public function getClientDetailsAjax($request)
+    {
+        $client_id = $request->input('client_id');
+        $usersubcompanyid = \App\Traits\CommonTrait::getUserSubCompanyId();
+        $amount_type = (strlen($request->amount_type)!=0 || $request->amount_type===0)?$request->amount_type:'';
+        $payment_type = (strlen($request->payment_type)!=0 || $request->payment_type===0)?$request->payment_type:'';
+        $product = (strlen($request->product)!=0 || $request->product===0)?$request->product:'';
+        $query = $this->ledgerentries::query();
+        $query = $query->select('transation_id');
+        $query = $query->where('client_id',$client_id);
+        $query = $query->where('subcompany_id',$usersubcompanyid);
+        if($amount_type!='')
+        {
+            $query = $query->Where('amount_type',$amount_type);
+        }
+        if($payment_type!='')
+        {
+            $query = $query->Where('payment_type',$payment_type);
+        }
+        if($product!='')
+        {
+            $query = $query->Where('product_id',$product);
+        }
+
+        $query = $query->whereBetween(DB::raw('DATE(created_at)'), [$request->startDate, $request->endDate]);
+        $query = $query->groupBy('transation_id')->get();
+        foreach($query as $value){
+        $value['created_date']  = $this->ledgerentries->select('payment_type','created_at','card_type','bank','transactionnumber','amount_type','product_id')->where('transation_id',$value->transation_id)->first();
+        $value['total_amount']  = $this->ledgerentries->where([['transation_id',$value->transation_id]])->sum('amount');
+        $value['payment_type']  = $this->ledgerentries->where('transation_id',$value->transation_id)->pluck('payment_type')->first();
+        // dd($value['created_date']->product_id);
+        $value['client_id']=$client_id;
+        }
+        return $query;
     }
 
 

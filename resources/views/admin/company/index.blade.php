@@ -67,14 +67,14 @@
                             @permission('edit-company')
                             <a href="{{ route('company.edit',$company->id) }}" class="edit-model btn btn-warning btn-sm " ><i class="fa fa-edit"></i></a>
                             @endpermission
-                            @permission('delete-company')
+                            @role('admin')
                                 <button class="delete-model btn btn-danger btn-sm " type="button" onclick="deleteCompany({{ $company->id }})">
                                     <i class="fa fa-trash"></i>
                                 </button>
                                 <form id="delete-form-{{ $company->id }}" action="{{ route('company.destroy',$company->id) }}" method="POST" style="display: none;">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
-                            @endpermission
+                            @endrole
                         </div>
                         </td>
                     </tr>

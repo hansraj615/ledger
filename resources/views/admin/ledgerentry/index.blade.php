@@ -109,7 +109,7 @@
                                     </div>
                                     <div class="col-md-2">
                                         <div class="align-center p-3 px-2 ml-1">
-                                            <a href="#" class="btn mb-3 btn-block btn-primary outline btn-md">View</a>
+                                            <a href="{{ route("ledger.viewdetails", ["id" => $ledgerentry->client->id]) }}" class="btn mb-3 btn-block btn-primary outline btn-md">View</a>
                                         </div>
                                         <div class="ml-1">
                                             <a href="#" class="btn mb-3 btn-block btn-primary outline btn-md">Cancel</a>

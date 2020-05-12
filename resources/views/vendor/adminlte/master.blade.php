@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/font-awesome/css/all.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
+
+
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/iCheck/all.css') }}">
     <link rel="stylesheet" href="../../plugins/iCheck/all.css">
     @include('adminlte::plugins', ['type' => 'css'])
@@ -39,10 +41,12 @@
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.js') }}"></script>
+<script src="{{ asset('vendor/adminlte/vendor/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('vendor/adminlte/vendor/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/dist/js/adminlte.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/dist/js/adminlte.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/iCheck/icheck.min.js') }}"></script>
+<script src="{{ asset('vendor/adminlte/vendor/moment/min/moment.min.js') }}"></script>
 
 @include('adminlte::plugins', ['type' => 'js'])
 

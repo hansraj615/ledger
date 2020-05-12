@@ -1,6 +1,6 @@
 
 @extends('adminlte::master')
-{{dd(1)}}
+
 @section('adminlte_css')
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     @yield('css')

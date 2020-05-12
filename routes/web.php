@@ -13,17 +13,17 @@
 
 use App\Http\Controllers\Admin\CompnayController;
 use App\Http\Controllers\Admin\LedgerEntryController;
-use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::group(["prefix" => "admin", "namespace" => "Admin",'middleware' => 'auth,use.ssl'], function () {
+Route::group(["prefix" => "admin", "namespace" => "Admin",'middleware' => 'auth'], function () {
 
     /********* User Management */
     Route::get('/users', 'UserController@index')->name('user.index');
@@ -75,6 +75,8 @@ Route::group(["prefix" => "admin", "namespace" => "Admin",'middleware' => 'auth,
     Route::get('/search-client/{keyword?}', 'LedgerEntryController@SearchClient')->name('ledger.search-client');
     Route::get('/getinvoicedetails','LedgerEntryController@getinvoice')->name('ledger.getinvoicedetails');
     Route::get('/generateinvoicepdf/pdf/{reference_id}','LedgerEntryController@exportpdf')->name('ledger.exportpdf');
+    Route::get('/ledger/view-client/{reference_id}','LedgerEntryController@viewClient')->name('ledger.viewdetails');
+    Route::POST('/ledger/view-client/details','LedgerEntryController@viewClientAjax')->name('ledger.viewdetailsajax');
 
     /***********************CLient Mapping */
     Route::get('/clientmapping', 'ClientMappingController@index')->name('admin.clientmapping.index');

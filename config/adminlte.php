@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'logo' => '<b>LEDGER |</b> <span style="color:#bb5252;"> - </span>',
+    'logo' => '<b> |</b> <span style="color:#bb5252;"> - </span>',
 
     'logo_mini' => '',
 
@@ -142,7 +142,7 @@ return [
         [
             'text'        => 'Company',
             'url'         => 'admin/company',
-            'icon'        => 'far fa-file',
+            'icon'        => 'far fa-building',
             'label'       => 4,
             'role'        => ['owner','admin','general-user'],
             'permission'  => 'list-company',
@@ -152,6 +152,7 @@ return [
             'text'        => 'SubComapny',
             'url'         => 'admin/subcompany',
             'icon'        => 'far fa-file',
+            'icon_color'  => 'warning',
             'label'       => 4,
             'label_color' => 'success',
         ],

@@ -181,4 +181,20 @@ class LedgerEntryController extends Controller
          $pdf->save(storage_path().'_filename.pdf');
         return $pdf->download('customers.pdf');
     }
+
+    public function viewClient($client_id,Request $request)
+    {
+        // dd($client_id,$startDate,$endDate);
+        $getClientDetails = $this->ledger->getallclientdetails($client_id,$request);
+        $products = $this->product->getAllProducts();
+        return view('admin.ledgerentry.viewcompany',compact('getClientDetails','products'));
+        // dd( $getClientDetails);
+    }
+
+    public function viewClientAjax(Request $request)
+    {
+         $request = $request;
+        $getClientDetails = $this->ledger->getClientDetailsAjax($request);
+        return $getClientDetails;
+    }
 }

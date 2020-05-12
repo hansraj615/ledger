@@ -29,7 +29,14 @@ trait CommonTrait
     {
         return Auth::user()->usersubcompany->subcompany->id;
     }
-
+    public static function getProductDetails($id=null)
+    {
+        return $productdetails = Product::findorFail($id);
+    }
+    public static function getClientDetails($id=null)
+    {
+        return $clientdetails = Client::findorFail($id);
+    }
     public static function getTotalProduct()
     {
        $product = Product::all();

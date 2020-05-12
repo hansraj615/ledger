@@ -69,10 +69,12 @@
                     <td>{{$client->updated_at?$client->updated_at->diffForHumans():''}}</td>
                     <td>
                         <div class="btn-group btn-group-sm">
+                            @permission('edit-company')
                             <a href="{{ route('client.edit',$client->id) }}" class="edit-model btn btn-warning btn-sm " ><i class="fa fa-edit"></i></a>
                                 <button class="delete-model btn btn-danger btn-sm " type="button" onclick="deleteCompany({{ $client->id }})">
                                     <i class="fa fa-trash"></i>
                                 </button>
+                                @endpermission
                                 <form id="delete-form-{{ $client->id }}" action="{{ route('client.destroy',$client->id) }}" method="POST" style="display: none;">
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 </form>
